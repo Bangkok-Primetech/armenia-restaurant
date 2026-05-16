@@ -369,10 +369,11 @@
   .banner-area {
     margin-bottom: 26px;
     border: 1px solid var(--gold-soft);
-    background: var(--surface);
+    background: #000;
     overflow: hidden;
     position: relative;
-    aspect-ratio: 21/6;
+    aspect-ratio: 16/9;
+    max-height: 400px;
     display: none;
   }
   .banner-area.show { display: block; }
@@ -381,10 +382,25 @@
     object-fit: cover;
     display: block;
   }
-  .banner-area iframe {
+  .banner-area iframe,
+  .banner-area video {
     width: 100%; height: 100%;
     border: none;
     display: block;
+    pointer-events: none; /* hide all controls/UI from user */
+  }
+  .banner-area .yt-cover {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+  .banner-area .yt-frame-wrap {
+    position: absolute;
+    top: -60px; bottom: -60px;
+    left: 0; right: 0;
+    pointer-events: none;
+  }
+  .banner-area .yt-frame-wrap iframe {
+    width: 100%; height: 100%;
   }
   .banner-area .placeholder {
     width: 100%; height: 100%;
@@ -1751,6 +1767,41 @@
     overflow: hidden;
   }
   .idle-screen.show { display: flex; }
+
+  /* Staff settings button — discreet, top-right on idle & table-select */
+  .staff-settings-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(184, 134, 11, 0.3);
+    background: rgba(255, 251, 243, 0.15);
+    color: var(--gold-soft);
+    font-size: 17px;
+    cursor: pointer;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s;
+    display: grid;
+    place-items: center;
+  }
+  .staff-settings-btn:hover {
+    background: rgba(255, 251, 243, 0.3);
+    border-color: var(--gold);
+    transform: rotate(45deg);
+  }
+  /* On table-select (light bg), use darker styling */
+  .table-select .staff-settings-btn {
+    background: var(--surface);
+    border-color: var(--line);
+    color: var(--ink-soft);
+  }
+  .table-select .staff-settings-btn:hover {
+    border-color: var(--gold);
+    color: var(--burgundy);
+  }
   .idle-video {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
@@ -1940,6 +1991,7 @@
   <div class="idle-static-bg"></div>
   <div class="idle-video" id="idleVideoArea"></div>
   <div class="idle-overlay"></div>
+  <button class="staff-settings-btn" id="staffBtnIdle" title="Staff Settings">⚙</button>
   <div class="idle-content">
     <div class="idle-logo">A</div>
     <div class="idle-title">ARMENIA</div>
@@ -1950,6 +2002,7 @@
 
 <!-- ============ TABLE SELECT + LANGUAGE (combined) ============ -->
 <div class="table-select" id="tableSelect">
+  <button class="staff-settings-btn" id="staffBtnTable" title="Staff Settings">⚙</button>
   <div class="ts-header">
     <div class="ts-logo-wrap" id="tsLogoWrap">
       <div class="ts-mark" id="tsLogoMark">A</div>
@@ -2136,7 +2189,7 @@
   <div class="bill-card">
     <div class="bill-head">
       <div class="bill-restaurant" id="billRestName">ARMENIA RESTAURANT</div>
-      <div class="bill-address">Jomtien Beach, Pattaya · +66 62 664 0700</div>
+      <div class="bill-address" id="billAddress">Jomtien Beach, Pattaya · +66 62 664 0700</div>
     </div>
     <hr class="bill-divider">
     <div class="bill-meta"><strong data-i18n="table">Table</strong>: <strong id="billTableNum">07</strong></div>
@@ -2318,14 +2371,15 @@
           <label>Banner Type</label>
           <select id="bannerType">
             <option value="none">None</option>
-            <option value="image">Image URL</option>
-            <option value="youtube">YouTube Video</option>
+            <option value="image">Image</option>
+            <option value="youtube">Video (YouTube / Vimeo / .mp4)</option>
           </select>
+          <div class="help">Banner shows at 16:9 aspect ratio. Video plays without title, controls, or branding.</div>
         </div>
         <div class="field" id="bannerUrlField">
-          <label>Banner Image URL or YouTube URL</label>
-          <input type="text" id="bannerUrl" placeholder="https://example.com/banner.jpg or https://youtube.com/watch?v=...">
-          <div class="help">For YouTube, paste any standard URL — auto-converts to embed format.</div>
+          <label>URL</label>
+          <input type="text" id="bannerUrl" placeholder="https://...">
+          <div class="help">Image: direct .jpg/.png link. Video: YouTube URL, Vimeo URL, or direct .mp4/.webm file.</div>
         </div>
         <button class="save-btn" id="saveBanner">Save Banner</button>
       </div>
@@ -2357,8 +2411,8 @@
         <h3>Restaurant <em>Information</em></h3>
         <div class="field"><label>Restaurant Name</label><input type="text" id="settingName" value="ARMENIA"></div>
         <div class="field"><label>Tagline</label><input type="text" id="settingTagline" value="Restaurant · Pattaya"></div>
-        <div class="field"><label>Phone</label><input type="text" value="+66 62 664 0700"></div>
-        <div class="field"><label>Address</label><input type="text" value="334/113-115 M12, Jomtien Beach, Pattaya"></div>
+        <div class="field"><label>Phone</label><input type="text" id="settingPhone" placeholder="+66 62 664 0700"></div>
+        <div class="field"><label>Address</label><input type="text" id="settingAddress" placeholder="334/113-115 M12, Jomtien Beach, Pattaya"></div>
         <button class="save-btn" id="saveInfo">Save</button>
       </div>
 
@@ -2400,13 +2454,14 @@
         <h3>Kitchen <em>Printer</em></h3>
         <div class="field">
           <label>Printer Type</label>
-          <select>
-            <option>ESC/POS Network Printer</option>
-            <option>Bluetooth Thermal Printer</option>
-            <option>PrintNode Cloud</option>
+          <select id="printerType">
+            <option value="escpos">ESC/POS Network Printer</option>
+            <option value="bluetooth">Bluetooth Thermal Printer</option>
+            <option value="printnode">PrintNode Cloud</option>
           </select>
         </div>
-        <div class="field"><label>Printer IP Address</label><input type="text" value="192.168.1.100"></div>
+        <div class="field"><label>Printer IP Address</label><input type="text" id="printerIP" placeholder="192.168.1.100"></div>
+        <button class="save-btn" id="savePrinter">Save Printer</button>
       </div>
     </div>
   </div>
@@ -2954,6 +3009,23 @@
   let selectedTable = null;
   let _orders = []; // local cache, kept in sync by listener
 
+  // Categories — defined here so Firebase listener can reference DEFAULT_CATS
+  const DEFAULT_CATS = [
+    { id: 'all', en: 'All', th: 'ทั้งหมด', ru: 'Всё', visible: true },
+    { id: 'appetizers', en: 'Appetizers', th: 'อาหารทานเล่น', ru: 'Закуски', visible: true },
+    { id: 'salads', en: 'Salads', th: 'สลัด', ru: 'Салаты', visible: true },
+    { id: 'soups', en: 'Soups', th: 'ซุป', ru: 'Супы', visible: true },
+    { id: 'barbecue', en: 'Barbecue', th: 'บาร์บีคิว', ru: 'Шашлык', visible: true },
+    { id: 'mains', en: 'Main Courses', th: 'จานหลัก', ru: 'Горячее', visible: true },
+    { id: 'sides', en: 'Side Dishes', th: 'เครื่องเคียง', ru: 'Гарниры', visible: true },
+    { id: 'pastry', en: 'Pastry', th: 'แป้ง', ru: 'Выпечка', visible: true },
+    { id: 'bread', en: 'Hand Molding', th: 'ขนมปังทำมือ', ru: 'Хлеб ручной работы', visible: true },
+    { id: 'desserts', en: 'Desserts', th: 'ของหวาน', ru: 'Десерты', visible: true },
+    { id: 'drinks', en: 'Soft Drinks', th: 'เครื่องดื่ม', ru: 'Напитки', visible: true },
+    { id: 'extra', en: 'Extra', th: 'พิเศษ', ru: 'Дополнительно', visible: true },
+  ];
+  let appCats = JSON.parse(JSON.stringify(DEFAULT_CATS));
+
   function generateDefaultTables() {
     const arr = [];
     for (let i = 1; i <= 12; i++) {
@@ -2980,7 +3052,7 @@
   // tables: stored in Firebase (realtime)
   // settings: stored in Firebase (shared config)
   // counter: stored in Firebase (global order number)
-  // dishes, cats, featured: localStorage only (large data, per-device)
+  // dishes, cats, featured: Firebase + localStorage backup
 
   // Show connection status
   db.ref('.info/connected').on('value', snap => {
@@ -3080,13 +3152,8 @@
 
   // ---- SETTINGS ----
   function saveSettings() {
-    // Strip large binary data before saving to Firebase
-    const slim = { ...appSettings };
-    delete slim.logoData; // logo stays in localStorage only
-    db.ref('settings').set(slim);
-    // Also save logo locally
-    if (appSettings.logoData) localStorage.setItem('armenia_logo', appSettings.logoData);
-    else localStorage.removeItem('armenia_logo');
+    // All settings (including logo) go to Firebase so they sync across devices
+    db.ref('settings').set(appSettings);
   }
 
   function loadSettingsFromFirebase() {
@@ -3095,13 +3162,12 @@
         const data = snap.val();
         if (data) {
           appSettings = data;
-          // Restore logo from localStorage (not in Firebase)
-          const logo = localStorage.getItem('armenia_logo');
-          if (logo) appSettings.logoData = logo;
         } else {
           appSettings = {
             headerText: '', footerText: '', bannerType: 'none', bannerUrl: '',
-            font: 'cormorant', restaurantName: 'ARMENIA', tagline: 'Restaurant · Pattaya'
+            font: 'cormorant', restaurantName: 'ARMENIA', tagline: 'Restaurant · Pattaya',
+            phone: '+66 62 664 0700', address: '334/113-115 M12, Jomtien Beach, Pattaya',
+            printerType: 'escpos', printerIP: '192.168.1.100'
           };
         }
         resolve();
@@ -3113,9 +3179,7 @@
   db.ref('settings').on('value', snap => {
     const data = snap.val();
     if (!data) return;
-    const logo = appSettings.logoData; // preserve local logo
-    appSettings = { ...data };
-    if (logo) appSettings.logoData = logo;
+    appSettings = data;
     applyBranding();
   });
 
@@ -3141,8 +3205,107 @@
     });
   }
 
-  // ---- FEATURED (localStorage, per-device) ----
-  function saveFeatured() { localStorage.setItem(STORAGE.featured, JSON.stringify(featuredIds)); }
+  // ---- FEATURED, DISHES, CATEGORIES — Firebase sync ----
+  // These were localStorage-only before. Now all tablets stay in sync.
+
+  function saveFeatured() {
+    db.ref('featuredIds').set(featuredIds);
+    localStorage.setItem(STORAGE.featured, JSON.stringify(featuredIds)); // local backup
+  }
+
+  function saveDishes() {
+    // Dishes may have large imgData (base64). Firebase Realtime DB has 256MB limit per write.
+    // For ~50 dishes with photos ~50KB each = ~2.5MB, well within limits.
+    db.ref('dishes').set(dishes);
+    localStorage.setItem('armenia_dishes_v2', JSON.stringify(dishes));
+  }
+
+  function saveCats(cats) {
+    db.ref('cats').set(cats);
+    localStorage.setItem('armenia_cats_v2', JSON.stringify(cats));
+  }
+
+  // Listen for changes from other tablets
+  db.ref('featuredIds').on('value', snap => {
+    const data = snap.val();
+    if (!data) return;
+    featuredIds = data;
+    renderFeatured();
+    if (isAdminMode && document.querySelector('.admin-tab.active')?.dataset.tab === 'menu') renderAdminMenu();
+  });
+
+  db.ref('dishes').on('value', snap => {
+    const data = snap.val();
+    if (!data || !Array.isArray(data) || !data.length) return;
+    dishes.length = 0;
+    dishes.push(...data);
+    renderMenu();
+    renderFeatured();
+    if (isAdminMode && document.querySelector('.admin-tab.active')?.dataset.tab === 'menu') renderAdminMenu();
+  });
+
+  db.ref('cats').on('value', snap => {
+    const data = snap.val();
+    if (!data) return;
+    appCats = data;
+    // Update i18n from cats
+    appCats.forEach(c => {
+      if (i18n.en.cats[c.id] !== undefined) {
+        i18n.en.cats[c.id] = c.en;
+        i18n.th.cats[c.id] = c.th;
+        i18n.ru.cats[c.id] = c.ru;
+      }
+    });
+    renderCategories();
+    if (isAdminMode && document.querySelector('.admin-tab.active')?.dataset.tab === 'categories') renderAdminCategories();
+  });
+
+  function loadDishesFromFirebase() {
+    return new Promise(resolve => {
+      db.ref('dishes').once('value', snap => {
+        const data = snap.val();
+        if (data && Array.isArray(data) && data.length) {
+          dishes.length = 0;
+          dishes.push(...data);
+        } else {
+          // Use local backup if Firebase is empty
+          const saved = localStorage.getItem('armenia_dishes_v2');
+          if (saved) {
+            try { const d = JSON.parse(saved); if (Array.isArray(d) && d.length) { dishes.length = 0; dishes.push(...d); } } catch {}
+          }
+        }
+        resolve();
+      });
+    });
+  }
+
+  function loadFeaturedFromFirebase() {
+    return new Promise(resolve => {
+      db.ref('featuredIds').once('value', snap => {
+        const data = snap.val();
+        if (data && Array.isArray(data)) featuredIds = data;
+        else {
+          const stored = localStorage.getItem(STORAGE.featured);
+          featuredIds = stored ? JSON.parse(stored) : [11, 16, 22, 42];
+        }
+        resolve();
+      });
+    });
+  }
+
+  function loadCatsFromFirebase() {
+    return new Promise(resolve => {
+      db.ref('cats').once('value', snap => {
+        const data = snap.val();
+        if (data && Array.isArray(data)) appCats = data;
+        else {
+          const stored = localStorage.getItem('armenia_cats_v2');
+          appCats = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_CATS));
+        }
+        resolve();
+      });
+    });
+  }
 
   function playNotificationSound() {
     try {
@@ -3275,30 +3438,58 @@
 
   function renderBanner() {
     const ba = document.getElementById('bannerArea');
-    if (!appSettings.bannerType || appSettings.bannerType === 'none') {
+    if (!appSettings.bannerType || appSettings.bannerType === 'none' || !appSettings.bannerUrl) {
       ba.classList.remove('show');
       ba.innerHTML = '';
       return;
     }
-    if (appSettings.bannerType === 'image' && appSettings.bannerUrl) {
-      ba.innerHTML = `<img src="${appSettings.bannerUrl}" alt="banner" onerror="this.parentElement.innerHTML='<div class=placeholder>Banner image failed to load</div>'">`;
+    const url = appSettings.bannerUrl.trim();
+    // IMAGE
+    if (appSettings.bannerType === 'image') {
+      ba.innerHTML = `<img src="${url}" alt="" onerror="this.parentElement.innerHTML='<div class=placeholder>Banner image failed to load</div>'">`;
       ba.classList.add('show');
-    } else if (appSettings.bannerType === 'youtube' && appSettings.bannerUrl) {
-      const videoId = extractYouTubeId(appSettings.bannerUrl);
-      if (videoId) {
-        ba.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-        ba.classList.add('show');
-      } else {
-        ba.innerHTML = '<div class="placeholder">Invalid YouTube URL</div>';
-        ba.classList.add('show');
-      }
+      return;
+    }
+    // VIDEO (auto-detect type)
+    const ytId = extractYouTubeId(url);
+    const vimeoId = extractVimeoId(url);
+    if (ytId) {
+      // YouTube — hide all UI: use embed params + zoom-crop wrapper to hide title bar
+      const params = 'autoplay=1&mute=1&loop=1&playlist=' + ytId +
+                     '&controls=0&rel=0&showinfo=0&modestbranding=1' +
+                     '&iv_load_policy=3&fs=0&disablekb=1&playsinline=1' +
+                     '&cc_load_policy=0&start=0';
+      ba.innerHTML = `
+        <div class="yt-frame-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/${ytId}?${params}"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+        </div>
+        <div class="yt-cover"></div>`;
+      ba.classList.add('show');
+    } else if (vimeoId) {
+      ba.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&muted=1&loop=1&background=1&controls=0&title=0&byline=0&portrait=0" allow="autoplay" frameborder="0"></iframe>`;
+      ba.classList.add('show');
+    } else if (/\.(mp4|webm|ogg|mov)(\?|$)/i.test(url)) {
+      // Direct video file
+      ba.innerHTML = `<video src="${url}" autoplay muted loop playsinline></video>`;
+      ba.classList.add('show');
     } else {
-      ba.classList.remove('show');
+      ba.innerHTML = '<div class="placeholder">Unsupported video URL. Use YouTube, Vimeo, or direct .mp4/.webm link.</div>';
+      ba.classList.add('show');
     }
   }
 
   function extractYouTubeId(url) {
     const re = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const m = url.match(re);
+    return m ? m[1] : null;
+  }
+
+  function extractVimeoId(url) {
+    const re = /vimeo\.com\/(?:video\/)?(\d+)/;
     const m = url.match(re);
     return m ? m[1] : null;
   }
@@ -3610,6 +3801,7 @@
 
   function showBillModal(orderNum, items, total) {
     document.getElementById('billRestName').textContent = appSettings.restaurantName || 'ARMENIA RESTAURANT';
+    document.getElementById('billAddress').textContent = [appSettings.address, appSettings.phone].filter(Boolean).join(' · ');
     document.getElementById('billTableNum').textContent = selectedTable || '?';
     document.getElementById('billOrderNum').textContent = orderNum;
     document.getElementById('billTimeRow').innerHTML = `Time: <strong>${new Date().toLocaleTimeString()}</strong>`;
@@ -3778,8 +3970,29 @@
   // ============ ADMIN ============
   // ============ ADMIN PIN ============
   const DEFAULT_PIN = '000000';
-  function getAdminPin() { return localStorage.getItem('armenia_admin_pin') || DEFAULT_PIN; }
-  function setAdminPin(p) { localStorage.setItem('armenia_admin_pin', p); }
+  let _adminPin = DEFAULT_PIN;
+
+  function getAdminPin() { return _adminPin; }
+  function setAdminPin(p) {
+    _adminPin = p;
+    db.ref('adminPin').set(p);
+  }
+
+  // Listen for PIN changes from other devices
+  db.ref('adminPin').on('value', snap => {
+    const val = snap.val();
+    if (val) _adminPin = val;
+  });
+
+  function loadAdminPinFromFirebase() {
+    return new Promise(resolve => {
+      db.ref('adminPin').once('value', snap => {
+        const val = snap.val();
+        if (val) _adminPin = val;
+        resolve();
+      });
+    });
+  }
 
   let pinBuffer = '';
 
@@ -3852,21 +4065,52 @@
     if (e.key === 'Escape') closePinModal();
   });
 
-  document.getElementById('adminBtn').onclick = () => {
+  function openAdminDashboard() {
+    // Hide idle/table-select screens if visible
+    document.getElementById('idleScreen').classList.remove('show');
+    document.getElementById('tableSelect').classList.remove('show', 'hide');
+    document.getElementById('admin').classList.add('show');
+    isAdminMode = true;
+    clearIdleTimer();
+    renderAdminOrders();
+    renderAdminTables();
+    renderAdminMenu();
+    populateSettingsFields();
+  }
+
+  function requestAdminAccess() {
     if (getAdminPin() === DEFAULT_PIN) {
-      // First time — go straight in, prompt to change PIN
-      document.getElementById('admin').classList.add('show');
-      isAdminMode = true;
-      clearIdleTimer();
-      renderAdminOrders();
-      renderAdminTables();
-      renderAdminMenu();
-      populateSettingsFields();
+      openAdminDashboard();
       showToast('Default PIN is 000000 — please change it in Settings');
     } else {
       openPinModal();
     }
-  };
+  }
+
+  // Override the PIN success path to use the shared function
+  // (overrides the inline openAdmin code in pin-key handler)
+  document.querySelectorAll('.pin-key').forEach(k => {
+    k.onclick = () => {
+      const v = k.dataset.v;
+      if (v === 'clear') { pinBuffer = ''; updatePinDots(); return; }
+      if (v === 'back') { pinBuffer = pinBuffer.slice(0, -1); updatePinDots(); return; }
+      if (pinBuffer.length >= 6) return;
+      pinBuffer += v;
+      updatePinDots();
+      if (pinBuffer.length === 6) {
+        if (pinBuffer === getAdminPin()) {
+          closePinModal();
+          openAdminDashboard();
+        } else {
+          pinError('Incorrect PIN');
+        }
+      }
+    };
+  });
+
+  document.getElementById('adminBtn').onclick = requestAdminAccess;
+  document.getElementById('staffBtnIdle').onclick = (e) => { e.stopPropagation(); requestAdminAccess(); };
+  document.getElementById('staffBtnTable').onclick = (e) => { e.stopPropagation(); requestAdminAccess(); };
   document.getElementById('savePinBtn').onclick = () => {
     const cur = document.getElementById('pinCurrent').value;
     const nw  = document.getElementById('pinNew').value;
@@ -3886,6 +4130,10 @@
   document.getElementById('adminClose').onclick = () => {
     document.getElementById('admin').classList.remove('show');
     isAdminMode = false;
+    // If staff was in admin without selecting a table, go back to idle
+    if (!selectedTable) {
+      document.getElementById('idleScreen').classList.add('show');
+    }
     resetIdleTimer();
   };
 
@@ -4019,6 +4267,7 @@
     const order = getOrders().find(o => o.num === num);
     if (!order) return;
     document.getElementById('billRestName').textContent = appSettings.restaurantName || 'ARMENIA RESTAURANT';
+    document.getElementById('billAddress').textContent = [appSettings.address, appSettings.phone].filter(Boolean).join(' · ');
     document.getElementById('billTableNum').textContent = order.table || '?';
     document.getElementById('billOrderNum').textContent = order.num;
     document.getElementById('billTimeRow').innerHTML = `Time: <strong>${new Date().toLocaleTimeString()}</strong>`;
@@ -4377,7 +4626,7 @@
     showToast(editingDishId ? 'Dish updated' : 'Dish added');
   };
 
-  function saveDishes() { localStorage.setItem('armenia_dishes_v2', JSON.stringify(dishes)); }
+  // saveDishes moved to Firebase sync block
 
   // ============ PRINT BILL ============
   function printBill(orderNum, items, total, tableNum) {
@@ -4395,7 +4644,7 @@
         .thanks { text-align: center; margin-top: 14px; font-size: 12px; }
       </style></head><body>
         <h2>${restName}</h2>
-        <p class="sub">Jomtien Beach, Pattaya · +66 62 664 0700</p>
+        <p class="sub">${[appSettings.address, appSettings.phone].filter(Boolean).join(' · ')}</p>
         <div class="line"></div>
         <div class="item"><span>Order:</span><strong>${orderNum}</strong></div>
         <div class="item"><span>Table:</span><strong>${tableNum || '?'}</strong></div>
@@ -4541,6 +4790,10 @@
     document.getElementById('fontSelect').value = appSettings.font || 'cormorant';
     document.getElementById('settingName').value = appSettings.restaurantName || 'ARMENIA';
     document.getElementById('settingTagline').value = appSettings.tagline || 'Restaurant · Pattaya';
+    document.getElementById('settingPhone').value = appSettings.phone || '';
+    document.getElementById('settingAddress').value = appSettings.address || '';
+    document.getElementById('printerType').value = appSettings.printerType || 'escpos';
+    document.getElementById('printerIP').value = appSettings.printerIP || '';
     // Logo preview
     const prev = document.getElementById('logoPreview');
     if (appSettings.logoData) prev.innerHTML = `<img src="${appSettings.logoData}" style="width:100%;height:100%;object-fit:contain">`;
@@ -4590,9 +4843,18 @@
   document.getElementById('saveInfo').onclick = () => {
     appSettings.restaurantName = document.getElementById('settingName').value.trim();
     appSettings.tagline = document.getElementById('settingTagline').value.trim();
+    appSettings.phone = document.getElementById('settingPhone').value.trim();
+    appSettings.address = document.getElementById('settingAddress').value.trim();
     saveSettings();
     applyBranding();
     showToast('Restaurant info saved');
+  };
+
+  document.getElementById('savePrinter').onclick = () => {
+    appSettings.printerType = document.getElementById('printerType').value;
+    appSettings.printerIP = document.getElementById('printerIP').value.trim();
+    saveSettings();
+    showToast('Printer settings saved');
   };
   document.getElementById('deviceModeSelect').onchange = (e) => {
     isAdminMode = e.target.value === 'admin';
@@ -4605,28 +4867,7 @@
   };
 
   // ============ CATEGORIES ADMIN ============
-  const DEFAULT_CATS = [
-    { id: 'all', en: 'All', th: 'ทั้งหมด', ru: 'Всё', visible: true },
-    { id: 'appetizers', en: 'Appetizers', th: 'อาหารทานเล่น', ru: 'Закуски', visible: true },
-    { id: 'salads', en: 'Salads', th: 'สลัด', ru: 'Салаты', visible: true },
-    { id: 'soups', en: 'Soups', th: 'ซุป', ru: 'Супы', visible: true },
-    { id: 'barbecue', en: 'Barbecue', th: 'บาร์บีคิว', ru: 'Шашлык', visible: true },
-    { id: 'mains', en: 'Main Courses', th: 'จานหลัก', ru: 'Горячее', visible: true },
-    { id: 'sides', en: 'Side Dishes', th: 'เครื่องเคียง', ru: 'Гарниры', visible: true },
-    { id: 'pastry', en: 'Pastry', th: 'แป้ง', ru: 'Выпечка', visible: true },
-    { id: 'bread', en: 'Hand Molding', th: 'ขนมปังทำมือ', ru: 'Хлеб ручной работы', visible: true },
-    { id: 'desserts', en: 'Desserts', th: 'ของหวาน', ru: 'Десерты', visible: true },
-    { id: 'drinks', en: 'Soft Drinks', th: 'เครื่องดื่ม', ru: 'Напитки', visible: true },
-    { id: 'extra', en: 'Extra', th: 'พิเศษ', ru: 'Дополнительно', visible: true },
-  ];
-
-  function loadCats() {
-    const stored = localStorage.getItem('armenia_cats_v2');
-    return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_CATS));
-  }
-  function saveCats(cats) { localStorage.setItem('armenia_cats_v2', JSON.stringify(cats)); }
-
-  let appCats = loadCats();
+  // DEFAULT_CATS, appCats, loadCats now defined at top (before Firebase listeners)
 
   function renderAdminCategories() {
     const list = document.getElementById('catAdminList');
@@ -4687,12 +4928,31 @@
   function showIdle() {
     clearIdleTimer();
     const area = document.getElementById('idleVideoArea');
+    area.innerHTML = '';
     if (appSettings.bannerType === 'youtube' && appSettings.bannerUrl) {
-      const vid = extractYouTubeId(appSettings.bannerUrl);
-      if (vid) area.innerHTML = `<iframe src="https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&playlist=${vid}&controls=0&rel=0&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+      const url = appSettings.bannerUrl.trim();
+      const ytId = extractYouTubeId(url);
+      const vimeoId = extractVimeoId(url);
+      if (ytId) {
+        const params = 'autoplay=1&mute=1&loop=1&playlist=' + ytId +
+                       '&controls=0&rel=0&showinfo=0&modestbranding=1' +
+                       '&iv_load_policy=3&fs=0&disablekb=1&playsinline=1' +
+                       '&cc_load_policy=0';
+        area.innerHTML = `
+          <div style="position:absolute;top:-80px;bottom:-80px;left:0;right:0;pointer-events:none">
+            <iframe style="width:100%;height:100%;border:none;pointer-events:none"
+              src="https://www.youtube.com/embed/${ytId}?${params}"
+              allow="autoplay; encrypted-media"></iframe>
+          </div>
+          <div style="position:absolute;inset:0;pointer-events:none"></div>`;
+      } else if (vimeoId) {
+        area.innerHTML = `<iframe style="width:100%;height:100%;border:none;pointer-events:none" src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&muted=1&loop=1&background=1" allow="autoplay"></iframe>`;
+      } else if (/\.(mp4|webm|ogg|mov)(\?|$)/i.test(url)) {
+        area.innerHTML = `<video src="${url}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>`;
+      }
     } else if (appSettings.bannerType === 'image' && appSettings.bannerUrl) {
       area.innerHTML = `<img src="${appSettings.bannerUrl}" style="width:100%;height:100%;object-fit:cover;">`;
-    } else { area.innerHTML = ''; }
+    }
     if (selectedTable) {
       const t = tables.find(x => x.num === selectedTable);
       if (t && t.status === 'occupied' && Object.keys(cart).length === 0) { t.status = 'free'; saveTables(); }
@@ -4746,31 +5006,31 @@
 
   // ============ INIT ============
   async function initApp() {
-    // 1. Load local-only state
-    const storedFeatured = localStorage.getItem(STORAGE.featured);
-    featuredIds = storedFeatured ? JSON.parse(storedFeatured) : [11, 16, 22, 42];
-    const savedDishes = localStorage.getItem('armenia_dishes_v2');
-    if (savedDishes) {
-      try { const d = JSON.parse(savedDishes); if (Array.isArray(d) && d.length) dishes.length = 0, dishes.push(...d); } catch {}
-    }
-    appCats = loadCats();
-    appCats.forEach(c => {
-      if (i18n.en.cats[c.id] !== undefined) { i18n.en.cats[c.id] = c.en; i18n.th.cats[c.id] = c.th; i18n.ru.cats[c.id] = c.ru; }
-    });
-
-    // 2. Load Firebase state — wait for first fetch
+    // Load all state from Firebase
     await Promise.all([
       loadSettingsFromFirebase(),
-      loadTablesFromFirebase()
+      loadTablesFromFirebase(),
+      loadDishesFromFirebase(),
+      loadFeaturedFromFirebase(),
+      loadCatsFromFirebase(),
+      loadAdminPinFromFirebase()
     ]);
 
-    // 3. Render
+    // Apply category translations
+    appCats.forEach(c => {
+      if (i18n.en.cats[c.id] !== undefined) {
+        i18n.en.cats[c.id] = c.en;
+        i18n.th.cats[c.id] = c.th;
+        i18n.ru.cats[c.id] = c.ru;
+      }
+    });
+
+    // Render
     applyBranding();
     renderCategories();
     renderMenu();
     renderCart();
     renderFeatured();
-    // Pre-render table select so it's ready when idle screen is tapped
     renderTableSelect();
   }
 
