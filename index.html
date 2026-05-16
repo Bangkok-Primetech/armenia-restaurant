@@ -2362,6 +2362,28 @@
       </div>
 
       <div class="settings-section">
+        <h3>Admin <em>PIN</em></h3>
+        <div class="help" style="margin-bottom:14px">6-digit PIN required to access Admin Dashboard. Default: <strong>000000</strong></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:400px">
+          <div class="field">
+            <label>Current PIN</label>
+            <input type="password" id="pinCurrent" maxlength="6" placeholder="••••••" style="letter-spacing:0.3em;font-size:18px;text-align:center">
+          </div>
+          <div></div>
+          <div class="field">
+            <label>New PIN</label>
+            <input type="password" id="pinNew" maxlength="6" placeholder="••••••" style="letter-spacing:0.3em;font-size:18px;text-align:center">
+          </div>
+          <div class="field">
+            <label>Confirm New PIN</label>
+            <input type="password" id="pinConfirm" maxlength="6" placeholder="••••••" style="letter-spacing:0.3em;font-size:18px;text-align:center">
+          </div>
+        </div>
+        <button class="save-btn" id="savePinBtn" style="margin-top:10px">Change PIN</button>
+        <div id="pinChangeMsg" style="margin-top:8px;font-size:13px;height:18px"></div>
+      </div>
+
+      <div class="settings-section">
         <h3>Device <em>Mode</em></h3>
         <div class="field">
           <label>This device is</label>
@@ -2474,6 +2496,56 @@
     </div>
   </div>
 </div>
+
+<!-- ============ ADMIN PIN MODAL ============ -->
+<div id="pinModal" style="
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(26,18,9,0.85);
+  display:none;align-items:center;justify-content:center;
+">
+  <div style="
+    background:var(--surface);border:1px solid var(--gold);
+    padding:40px 36px;max-width:340px;width:90%;text-align:center;
+  ">
+    <div style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.2em;color:var(--gold);margin-bottom:6px">ADMIN ACCESS</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--ink-soft);margin-bottom:24px">Enter 6-digit PIN</div>
+    <div id="pinDots" style="display:flex;gap:10px;justify-content:center;margin-bottom:24px">
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">
+      <button class="pin-key" data-v="1">1</button><button class="pin-key" data-v="2">2</button><button class="pin-key" data-v="3">3</button>
+      <button class="pin-key" data-v="4">4</button><button class="pin-key" data-v="5">5</button><button class="pin-key" data-v="6">6</button>
+      <button class="pin-key" data-v="7">7</button><button class="pin-key" data-v="8">8</button><button class="pin-key" data-v="9">9</button>
+      <button class="pin-key" data-v="clear" style="font-size:11px;letter-spacing:0.05em">CLR</button>
+      <button class="pin-key" data-v="0">0</button>
+      <button class="pin-key" data-v="back" style="font-size:18px">⌫</button>
+    </div>
+    <div id="pinError" style="color:#c0392b;font-size:12px;height:16px;margin-bottom:8px"></div>
+    <button id="pinCancel" style="font-size:11px;letter-spacing:0.15em;color:var(--ink-soft);background:none;border:none;cursor:pointer;text-transform:uppercase;padding:4px 8px">Cancel</button>
+  </div>
+</div>
+
+<style>
+.pin-dot {
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--gold);background:transparent;
+  transition:background 0.15s;
+}
+.pin-dot.filled { background:var(--burgundy);border-color:var(--burgundy); }
+.pin-key {
+  padding:16px 10px;
+  border:1px solid var(--line);
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size:20px;font-weight:500;
+  cursor:pointer;
+  transition:all 0.1s;
+  border-radius:4px;
+}
+.pin-key:active { background:var(--burgundy);color:var(--gold-soft);transform:scale(0.95); }
+</style>
 
 <script>
   // ============ I18N ============
@@ -2972,7 +3044,7 @@
           tables = Object.values(data).sort((a, b) => a.num.localeCompare(b.num));
         } else {
           tables = generateDefaultTables();
-          saveTables(); // write defaults to Firebase
+          saveTables(); // write defaults to Firebase on first run
         }
         resolve();
       });
@@ -3063,6 +3135,14 @@
   let appSettings = {};
   let tables = [];
   let selectedTable = null;
+
+  function generateDefaultTables() {
+    const arr = [];
+    for (let i = 1; i <= 12; i++) {
+      arr.push({ num: String(i).padStart(2, '0'), maxSeats: i <= 4 ? 2 : (i <= 8 ? 4 : 6), status: 'free' });
+    }
+    return arr;
+  }
 
   function playNotificationSound() {
     try {
@@ -3663,14 +3743,112 @@
   };
 
   // ============ ADMIN ============
+  // ============ ADMIN PIN ============
+  const DEFAULT_PIN = '000000';
+  function getAdminPin() { return localStorage.getItem('armenia_admin_pin') || DEFAULT_PIN; }
+  function setAdminPin(p) { localStorage.setItem('armenia_admin_pin', p); }
+
+  let pinBuffer = '';
+
+  function updatePinDots() {
+    document.querySelectorAll('.pin-dot').forEach((d, i) => {
+      d.classList.toggle('filled', i < pinBuffer.length);
+    });
+  }
+
+  function pinError(msg) {
+    const el = document.getElementById('pinError');
+    el.textContent = msg;
+    document.querySelectorAll('.pin-dot').forEach(d => {
+      d.style.borderColor = '#c0392b';
+      d.style.background = d.classList.contains('filled') ? '#c0392b' : '';
+    });
+    setTimeout(() => {
+      pinBuffer = '';
+      updatePinDots();
+      el.textContent = '';
+      document.querySelectorAll('.pin-dot').forEach(d => {
+        d.style.borderColor = ''; d.style.background = '';
+      });
+    }, 900);
+  }
+
+  function openPinModal() {
+    pinBuffer = '';
+    updatePinDots();
+    document.getElementById('pinError').textContent = '';
+    document.querySelectorAll('.pin-dot').forEach(d => { d.style.borderColor = ''; d.style.background = ''; });
+    document.getElementById('pinModal').style.display = 'flex';
+  }
+  function closePinModal() {
+    pinBuffer = '';
+    document.getElementById('pinModal').style.display = 'none';
+  }
+
+  document.querySelectorAll('.pin-key').forEach(k => {
+    k.onclick = () => {
+      const v = k.dataset.v;
+      if (v === 'clear') { pinBuffer = ''; updatePinDots(); return; }
+      if (v === 'back') { pinBuffer = pinBuffer.slice(0, -1); updatePinDots(); return; }
+      if (pinBuffer.length >= 6) return;
+      pinBuffer += v;
+      updatePinDots();
+      if (pinBuffer.length === 6) {
+        if (pinBuffer === getAdminPin()) {
+          closePinModal();
+          // Open admin
+          document.getElementById('admin').classList.add('show');
+          isAdminMode = true;
+          clearIdleTimer();
+          renderAdminOrders();
+          renderAdminTables();
+          renderAdminMenu();
+          populateSettingsFields();
+        } else {
+          pinError('Incorrect PIN');
+        }
+      }
+    };
+  });
+  document.getElementById('pinCancel').onclick = closePinModal;
+  // Also allow physical keyboard
+  document.addEventListener('keydown', (e) => {
+    if (document.getElementById('pinModal').style.display !== 'flex') return;
+    if (e.key >= '0' && e.key <= '9') document.querySelector(`.pin-key[data-v="${e.key}"]`)?.click();
+    if (e.key === 'Backspace') document.querySelector('.pin-key[data-v="back"]')?.click();
+    if (e.key === 'Escape') closePinModal();
+  });
+
   document.getElementById('adminBtn').onclick = () => {
-    document.getElementById('admin').classList.add('show');
-    isAdminMode = true;
-    clearIdleTimer();
-    renderAdminOrders();
-    renderAdminTables();
-    renderAdminMenu();
-    populateSettingsFields();
+    if (getAdminPin() === DEFAULT_PIN) {
+      // First time — go straight in, prompt to change PIN
+      document.getElementById('admin').classList.add('show');
+      isAdminMode = true;
+      clearIdleTimer();
+      renderAdminOrders();
+      renderAdminTables();
+      renderAdminMenu();
+      populateSettingsFields();
+      showToast('Default PIN is 000000 — please change it in Settings');
+    } else {
+      openPinModal();
+    }
+  };
+  document.getElementById('savePinBtn').onclick = () => {
+    const cur = document.getElementById('pinCurrent').value;
+    const nw  = document.getElementById('pinNew').value;
+    const cfm = document.getElementById('pinConfirm').value;
+    const msg = document.getElementById('pinChangeMsg');
+    if (cur !== getAdminPin()) { msg.style.color='#c0392b'; msg.textContent='Current PIN is incorrect'; return; }
+    if (!/^\d{6}$/.test(nw)) { msg.style.color='#c0392b'; msg.textContent='New PIN must be exactly 6 digits'; return; }
+    if (nw !== cfm) { msg.style.color='#c0392b'; msg.textContent='PINs do not match'; return; }
+    setAdminPin(nw);
+    document.getElementById('pinCurrent').value = '';
+    document.getElementById('pinNew').value = '';
+    document.getElementById('pinConfirm').value = '';
+    msg.style.color = 'var(--green)';
+    msg.textContent = '✓ PIN changed successfully';
+    setTimeout(() => { msg.textContent = ''; }, 3000);
   };
   document.getElementById('adminClose').onclick = () => {
     document.getElementById('admin').classList.remove('show');
@@ -4374,7 +4552,7 @@
 
   // ============ INIT ============
   async function initApp() {
-    // 1. Load local-only state (dishes, cats, featured)
+    // 1. Load local-only state
     const storedFeatured = localStorage.getItem(STORAGE.featured);
     featuredIds = storedFeatured ? JSON.parse(storedFeatured) : [11, 16, 22, 42];
     const savedDishes = localStorage.getItem('armenia_dishes_v2');
@@ -4386,19 +4564,20 @@
       if (i18n.en.cats[c.id] !== undefined) { i18n.en.cats[c.id] = c.en; i18n.th.cats[c.id] = c.th; i18n.ru.cats[c.id] = c.ru; }
     });
 
-    // 2. Load Firebase state (settings, tables) — wait for first fetch
+    // 2. Load Firebase state — wait for first fetch
     await Promise.all([
       loadSettingsFromFirebase(),
       loadTablesFromFirebase()
     ]);
 
-    // 3. Render everything
+    // 3. Render
     applyBranding();
     renderCategories();
     renderMenu();
     renderCart();
     renderFeatured();
-    // idle screen is already .show from HTML
+    // Pre-render table select so it's ready when idle screen is tapped
+    renderTableSelect();
   }
 
   initApp();
