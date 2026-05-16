@@ -236,25 +236,34 @@
 
   /* ============ APP ============ */
   .app {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
     height: 100vh;
+    height: 100dvh; /* dynamic viewport height for mobile browsers */
     position: relative;
     z-index: 2;
+    overflow: hidden;
+  }
+  .app > main {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+  }
+  .app > .bottom-bar {
+    flex-shrink: 0;
   }
 
-  /* CUSTOM HEADER */
+  /* CUSTOM HEADER — same color on light & dark theme */
   .custom-header {
     display: none;
     padding: 8px 32px;
     text-align: center;
-    background: var(--burgundy);
-    color: var(--gold-soft);
+    background: #722f37;
+    color: #f4dca5;
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 14px;
-    border-bottom: 1px solid var(--gold);
+    font-size: var(--font-size-header, 14px);
+    border-bottom: 1px solid #b8860b;
   }
   .custom-header.show { display: block; }
 
@@ -294,14 +303,14 @@
   .brand-mark::before { content: ''; position: absolute; inset: 2px; border: 1px solid var(--gold); opacity: 0.5; }
   .brand-text h1 {
     font-family: 'Cinzel', serif;
-    font-size: 19px;
+    font-size: var(--font-size-brand, 19px);
     font-weight: 500;
     letter-spacing: 0.06em;
   }
   .brand-text p {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 13px;
+    font-size: var(--font-size-tagline, 13px);
     color: var(--burgundy);
     margin-top: 1px;
   }
@@ -367,40 +376,53 @@
 
   /* BANNER / VIDEO */
   .banner-area {
-    margin-bottom: 26px;
+    margin: 0 auto 26px;
     border: 1px solid var(--gold-soft);
     background: #000;
     overflow: hidden;
     position: relative;
+    width: 100%;
     aspect-ratio: 16/9;
     max-height: 400px;
     display: none;
   }
   .banner-area.show { display: block; }
   .banner-area img {
+    position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
   }
   .banner-area iframe,
   .banner-area video {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%; height: 100%;
     border: none;
     display: block;
-    pointer-events: none; /* hide all controls/UI from user */
+    pointer-events: none;
+    object-fit: cover;
+  }
+  .banner-area .yt-frame-wrap {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: calc(100% + 160px); /* extra height to crop YouTube top/bottom UI */
+    pointer-events: none;
+  }
+  .banner-area .yt-frame-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    transform: none;
   }
   .banner-area .yt-cover {
     position: absolute; inset: 0;
     pointer-events: none;
-  }
-  .banner-area .yt-frame-wrap {
-    position: absolute;
-    top: -60px; bottom: -60px;
-    left: 0; right: 0;
-    pointer-events: none;
-  }
-  .banner-area .yt-frame-wrap iframe {
-    width: 100%; height: 100%;
+    z-index: 1;
   }
   .banner-area .placeholder {
     width: 100%; height: 100%;
@@ -643,7 +665,7 @@
   }
   .dish-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
+    font-size: var(--font-size-dish-name, 20px);
     font-weight: 600;
     line-height: 1.15;
   }
@@ -651,12 +673,12 @@
     font-style: italic;
     font-weight: 500;
     color: var(--burgundy);
-    font-size: 15px;
+    font-size: calc(var(--font-size-dish-name, 20px) * 0.75);
     display: block;
     margin-top: 1px;
   }
   .dish-desc {
-    font-size: 12px;
+    font-size: var(--font-size-dish-desc, 12px);
     color: var(--ink-soft);
     line-height: 1.4;
     flex: 1;
@@ -756,12 +778,12 @@
     display: none;
     padding: 8px 32px;
     text-align: center;
-    background: var(--ink);
-    color: var(--gold-soft);
+    background: #1a1209;
+    color: #f4dca5;
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 12px;
-    border-top: 1px solid var(--gold);
+    font-size: var(--font-size-footer, 12px);
+    border-top: 1px solid #b8860b;
   }
   .custom-footer.show { display: block; }
 
@@ -1982,6 +2004,130 @@
   .de-actions { display: flex; gap: 10px; margin-top: 16px; }
   .de-btn { flex: 1; padding: 12px; border: 1px solid var(--line); background: transparent; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; color: var(--ink); }
   .de-btn.primary { background: var(--burgundy); color: var(--gold-soft); border-color: var(--gold); font-family: 'Cinzel',serif; }
+
+  /* ===================================================================
+     RESPONSIVE
+     =================================================================== */
+
+  /* TABLET */
+  @media (max-width: 1024px) {
+    header { padding: 0 18px; height: 70px; }
+    header::after { left: 18px; right: 18px; }
+    .brand-mark { width: 42px; height: 42px; font-size: 19px; }
+    main { padding: 18px 18px; }
+    .featured-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .menu-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+    .banner-area { max-height: 320px; margin-bottom: 22px; }
+
+    /* Admin */
+    .admin-tabs { overflow-x: auto; padding: 0 16px; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
+    .admin-tabs::-webkit-scrollbar { display: none; }
+    .admin-tab { white-space: nowrap; flex-shrink: 0; }
+    #fbStatus { display: none; }
+    .order-card { grid-template-columns: auto 1fr auto; gap: 12px; }
+    .order-actions { flex-wrap: wrap; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    header {
+      padding: 0 12px;
+      height: auto;
+      min-height: 60px;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+    header::after { display: none; }
+    .brand { gap: 10px; }
+    .brand-mark { width: 36px; height: 36px; font-size: 16px; }
+    .header-right { gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+    .table-badge { padding: 5px 9px; font-size: 9px; }
+    .table-badge strong { font-size: 12px; }
+    .lang-btn { padding: 5px 8px; font-size: 9px; }
+    .icon-btn { width: 32px; height: 32px; font-size: 13px; }
+
+    main { padding: 12px 10px; }
+
+    /* Banner */
+    .banner-area { max-height: 230px; margin-bottom: 14px; }
+
+    /* Featured */
+    .featured-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .featured-img { aspect-ratio: 4/3; font-size: 32px; }
+    .featured-name { font-size: 14px; }
+    .featured-price { font-size: 13px !important; }
+
+    /* Categories — horizontal scroll */
+    .categories { overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; flex-wrap: nowrap !important; }
+    .categories::-webkit-scrollbar { display: none; }
+    .cat-btn { white-space: nowrap; flex-shrink: 0; padding: 7px 14px; font-size: 12px; }
+
+    /* Menu grid */
+    .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .dish-add { width: 30px; height: 30px; font-size: 18px; }
+    .dish-body { padding: 10px 11px 12px; }
+
+    /* Bottom bar — must always stay visible */
+    .bottom-bar {
+      padding: 10px 10px;
+      gap: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      flex-wrap: nowrap;
+    }
+    .bottom-bar::-webkit-scrollbar { display: none; }
+    .bb-btn { padding: 9px 12px; font-size: 12px; flex-shrink: 0; gap: 5px; white-space: nowrap; }
+    .bb-voice .mic-icon { width: 22px; height: 22px; font-size: 11px; }
+    .bb-spacer { display: none; }
+    .bb-cart { margin-left: auto; }
+
+    /* Modal */
+    .modal-card { max-width: 95vw; max-height: 92vh; }
+    .modal-foot { flex-direction: column; gap: 10px; align-items: stretch; }
+    .modal-foot .qty-controls { justify-content: center; }
+    .modal-add { width: 100%; justify-content: center; }
+
+    /* Idle */
+    .idle-title { font-size: 38px; }
+    .idle-sub { font-size: 18px; }
+    .idle-cta { padding: 14px 28px; font-size: 12px; }
+
+    /* Table select */
+    .ts-title { font-size: 18px; }
+    .ts-sub { font-size: 13px; }
+    .ts-lang-btn { padding: 7px 14px; font-size: 12px; }
+    .ts-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 8px; }
+    .ts-card { padding: 12px 8px; }
+    .ts-card-num { font-size: 24px; }
+
+    /* Admin */
+    .stats-row { grid-template-columns: 1fr 1fr !important; gap: 8px; }
+    .order-card { grid-template-columns: 1fr; gap: 8px; padding: 14px; }
+    .order-num { font-size: 22px !important; }
+    .order-actions { flex-wrap: wrap; gap: 6px; }
+    .order-actions .order-btn { flex: 1 1 auto; padding: 9px 12px; font-size: 11px; }
+    .admin-tab { padding: 8px 11px; font-size: 11px; }
+    .settings-section { padding: 16px 14px; }
+    .de-row { grid-template-columns: 1fr !important; }
+
+    /* PIN modal */
+    .pin-key { padding: 14px 8px; font-size: 18px; }
+  }
+
+  /* SMALL PHONES */
+  @media (max-width: 440px) {
+    .menu-grid { grid-template-columns: 1fr; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .featured-img { aspect-ratio: 16/9; }
+    .ts-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* SAFE AREA for notched iPhones */
+  @supports (padding: max(0px)) {
+    .bottom-bar { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  }
 </style>
 </head>
 <body>
@@ -2055,16 +2201,6 @@
   <main>
     <!-- BANNER / VIDEO -->
     <div class="banner-area" id="bannerArea"></div>
-
-    <!-- HERO -->
-    <div class="hero">
-      <div class="hero-text">
-        <h2 data-i18n="hero1">Welcome.<br><em data-i18n="hero2">Բարի գալուստ</em></h2>
-        <p data-i18n="heroSub">Authentic Armenian cuisine since 2024 — tap to explore, or speak to our assistant in any language.</p>
-      </div>
-      <div class="hero-divider"></div>
-      <div class="hero-num">№ <span id="dishCount">50</span> · <span data-i18n="dishes">DISHES</span></div>
-    </div>
 
     <!-- FEATURED -->
     <div class="featured-section" id="featuredSection">
@@ -2403,6 +2539,56 @@
         </div>
       </div>
 
+      <div class="settings-section">
+        <h3>Font <em>Sizes</em></h3>
+        <div class="help" style="margin-bottom:14px">Customize the size of each text element individually (in pixels).</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+          <div class="field"><label>Restaurant Name (header)</label><input type="number" id="fsBrand" min="10" max="40" placeholder="19"></div>
+          <div class="field"><label>Tagline (header)</label><input type="number" id="fsTagline" min="8" max="22" placeholder="13"></div>
+          <div class="field"><label>Dish Name</label><input type="number" id="fsDishName" min="12" max="32" placeholder="20"></div>
+          <div class="field"><label>Dish Description</label><input type="number" id="fsDishDesc" min="9" max="18" placeholder="12"></div>
+          <div class="field"><label>Top Header Banner</label><input type="number" id="fsHeader" min="10" max="22" placeholder="14"></div>
+          <div class="field"><label>Bottom Footer Banner</label><input type="number" id="fsFooter" min="9" max="20" placeholder="12"></div>
+        </div>
+        <button class="save-btn" id="saveFontSizes" style="margin-top:14px">Save Font Sizes</button>
+        <button class="save-btn" id="resetFontSizes" style="margin-top:14px;background:transparent;color:var(--ink-soft);border-color:var(--line)">Reset to Default</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>Button <em>Labels</em></h3>
+        <div class="help" style="margin-bottom:14px">Customize labels for the bottom action buttons (Ask Assistant · Call Waiter · Bill). Leave blank to use default.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+          <div style="font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;font-weight:600">🇬🇧 English</div>
+          <div style="font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;font-weight:600">🇹🇭 ไทย</div>
+          <div style="font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;font-weight:600">🇷🇺 Русский</div>
+        </div>
+        <div class="field" style="margin-bottom:6px">
+          <label style="font-size:9px">Ask Assistant button</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <input type="text" id="lbl_askMe_en" placeholder="Ask Assistant">
+            <input type="text" id="lbl_askMe_th" placeholder="ถามผู้ช่วย">
+            <input type="text" id="lbl_askMe_ru" placeholder="Спросить">
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:6px">
+          <label style="font-size:9px">Call Waiter button</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <input type="text" id="lbl_callWaiter_en" placeholder="Call Waiter">
+            <input type="text" id="lbl_callWaiter_th" placeholder="เรียกพนักงาน">
+            <input type="text" id="lbl_callWaiter_ru" placeholder="Позвать официанта">
+          </div>
+        </div>
+        <div class="field">
+          <label style="font-size:9px">Bill button</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <input type="text" id="lbl_askBill_en" placeholder="Bill">
+            <input type="text" id="lbl_askBill_th" placeholder="ขอบิล">
+            <input type="text" id="lbl_askBill_ru" placeholder="Счёт">
+          </div>
+        </div>
+        <button class="save-btn" id="saveBtnLabels" style="margin-top:14px">Save Button Labels</button>
+      </div>
+
     </div>
 
     <!-- SETTINGS -->
@@ -2462,6 +2648,28 @@
         </div>
         <div class="field"><label>Printer IP Address</label><input type="text" id="printerIP" placeholder="192.168.1.100"></div>
         <button class="save-btn" id="savePrinter">Save Printer</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>Telegram <em>Notifications</em></h3>
+        <div class="help" style="margin-bottom:14px">
+          Send new order notifications to a Telegram chat or group.<br>
+          <strong>Setup:</strong> 1) Message @BotFather on Telegram to create a bot, get the Bot Token. 2) Add the bot to your group (or DM it). 3) Visit <code style="background:var(--bg);padding:2px 5px">https://api.telegram.org/bot[YOUR_TOKEN]/getUpdates</code> after sending a message to find your Chat ID.
+        </div>
+        <div class="field">
+          <label>Enable Telegram Notifications</label>
+          <select id="telegramEnabled">
+            <option value="no">Disabled</option>
+            <option value="yes">Enabled</option>
+          </select>
+        </div>
+        <div class="field"><label>Bot Token</label><input type="text" id="telegramToken" placeholder="123456789:ABCDEFghijk-LMNOPqrstuvWXYZ"></div>
+        <div class="field"><label>Chat ID (group: starts with -100; personal: positive number)</label><input type="text" id="telegramChatId" placeholder="-1001234567890 or 987654321"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="save-btn" id="saveTelegram">Save Telegram</button>
+          <button class="save-btn" id="testTelegram" style="background:transparent;color:var(--ink);border-color:var(--line)">📨 Send Test Message</button>
+        </div>
+        <div id="telegramTestMsg" style="margin-top:8px;font-size:13px;height:18px"></div>
       </div>
     </div>
   </div>
@@ -2629,6 +2837,11 @@
       billRequested: 'Your bill will be brought shortly',
       free: 'Available', occupied: 'Occupied', reserved: 'Reserved',
       editNote: 'Edit Note', cancel: 'Cancel', save: 'Save',
+      activeOrder: 'YOUR ACTIVE ORDER', newItems: 'NEW ITEMS TO ORDER', subtotal: 'Active Subtotal',
+      cancelOrder: '✕ Cancel Order', cannotCancel: 'Cannot cancel — being prepared',
+      confirmCancel: 'Cancel this order?', orderCancelled: 'Order cancelled',
+      statusReceived: 'ORDER RECEIVED', statusPreparing: 'IN PROGRESS',
+      statusPartial: 'PARTIALLY PREPARING', statusServed: 'SERVED', statusBillReq: 'BILL REQUESTED',
       cats: { all: 'All', appetizers: 'Appetizers', salads: 'Salads', soups: 'Soups', barbecue: 'Barbecue', mains: 'Main Courses', sides: 'Side Dishes', pastry: 'Pastry', bread: 'Hand Molding', desserts: 'Desserts', extra: 'Extra', drinks: 'Soft Drinks' },
       aiSays: {
         meat: 'Our khorovats is grilled over open flame in the traditional way.',
@@ -2661,6 +2874,11 @@
       waiterCalled: 'พนักงานกำลังมาค่ะ', billRequested: 'จะนำบิลมาให้ค่ะ',
       free: 'ว่าง', occupied: 'มีลูกค้า', reserved: 'จองแล้ว',
       editNote: 'แก้ไขหมายเหตุ', cancel: 'ยกเลิก', save: 'บันทึก',
+      activeOrder: 'ออเดอร์ของคุณ', newItems: 'รายการใหม่ที่จะสั่ง', subtotal: 'ยอดรวมออเดอร์',
+      cancelOrder: '✕ ยกเลิกออเดอร์', cannotCancel: 'ไม่สามารถยกเลิก — กำลังเตรียม',
+      confirmCancel: 'ยกเลิกออเดอร์นี้?', orderCancelled: 'ยกเลิกออเดอร์แล้ว',
+      statusReceived: 'รับออเดอร์แล้ว', statusPreparing: 'กำลังเตรียม',
+      statusPartial: 'เตรียมบางส่วน', statusServed: 'เสิร์ฟแล้ว', statusBillReq: 'ขอบิลแล้ว',
       cats: { all: 'ทั้งหมด', appetizers: 'อาหารทานเล่น', salads: 'สลัด', soups: 'ซุป', barbecue: 'บาร์บีคิว', mains: 'จานหลัก', sides: 'เครื่องเคียง', pastry: 'แป้ง', bread: 'ขนมปังทำมือ', desserts: 'ของหวาน', extra: 'พิเศษ', drinks: 'เครื่องดื่ม' },
       aiSays: {
         meat: 'โคโรวัทของเราย่างไฟตามแบบดั้งเดิม',
@@ -2693,6 +2911,11 @@
       waiterCalled: 'Официант идёт', billRequested: 'Сейчас принесём счёт',
       free: 'Свободен', occupied: 'Занят', reserved: 'Бронь',
       editNote: 'Изменить заметку', cancel: 'Отмена', save: 'Сохранить',
+      activeOrder: 'ВАШ ЗАКАЗ', newItems: 'НОВЫЕ ПОЗИЦИИ', subtotal: 'Промежуточный итог',
+      cancelOrder: '✕ Отменить заказ', cannotCancel: 'Нельзя отменить — готовится',
+      confirmCancel: 'Отменить этот заказ?', orderCancelled: 'Заказ отменён',
+      statusReceived: 'ЗАКАЗ ПРИНЯТ', statusPreparing: 'ГОТОВИТСЯ',
+      statusPartial: 'ЧАСТИЧНО ГОТОВИТСЯ', statusServed: 'ПОДАНО', statusBillReq: 'СЧЁТ ЗАПРОШЕН',
       cats: { all: 'Всё', appetizers: 'Закуски', salads: 'Салаты', soups: 'Супы', barbecue: 'Шашлык', mains: 'Горячее', sides: 'Гарниры', pastry: 'Выпечка', bread: 'Хлеб ручной работы', desserts: 'Десерты', extra: 'Дополнительно', drinks: 'Напитки' },
       aiSays: {
         meat: 'Наш хоровац готовится на открытом огне по традиции.',
@@ -3112,6 +3335,11 @@
     if (isAdminMode && document.getElementById('admin').classList.contains('show')) {
       const activeTab = document.querySelector('.admin-tab.active')?.dataset.tab;
       if (activeTab === 'orders') renderAdminOrders();
+      if (activeTab === 'history') renderHistory(document.querySelector('.hist-filter-btn.active')?.dataset.period || 'day');
+    }
+    // Customer side: re-render cart if it's open or selectedTable is set
+    if (!isAdminMode && selectedTable) {
+      renderCart();
     }
   });
 
@@ -3409,6 +3637,17 @@
   }
 
   // ============ APP RENDER ============
+  function applyFontSizes() {
+    const fs = appSettings.fontSizes || {};
+    const root = document.documentElement.style;
+    root.setProperty('--font-size-brand', (fs.brand || 19) + 'px');
+    root.setProperty('--font-size-tagline', (fs.tagline || 13) + 'px');
+    root.setProperty('--font-size-dish-name', (fs.dishName || 20) + 'px');
+    root.setProperty('--font-size-dish-desc', (fs.dishDesc || 12) + 'px');
+    root.setProperty('--font-size-header', (fs.header || 14) + 'px');
+    root.setProperty('--font-size-footer', (fs.footer || 12) + 'px');
+  }
+
   function applyBranding() {
     const name = appSettings.restaurantName || 'ARMENIA';
     document.getElementById('brandName').textContent = name;
@@ -3434,6 +3673,9 @@
     if (appSettings.footerText) { cf.textContent = appSettings.footerText; cf.classList.add('show'); } else { cf.classList.remove('show'); }
     renderBanner();
     document.documentElement.setAttribute('data-font', appSettings.font || 'cormorant');
+    applyFontSizes();
+    // Apply button labels (re-run setLang)
+    if (typeof setLang === 'function') setLang(currentLang || 'en');
   }
 
   function renderBanner() {
@@ -3525,7 +3767,8 @@
 
   function renderMenu() {
     const list = currentCat === 'all' ? dishes : dishes.filter(d => d.cat === currentCat);
-    document.getElementById('dishCount').textContent = String(dishes.length).padStart(2, '0');
+    const dc = document.getElementById('dishCount');
+    if (dc) dc.textContent = String(dishes.length).padStart(2, '0');
     document.getElementById('menuGrid').innerHTML = list.map(d => `
       <div class="dish" data-id="${d.id}">
         <div class="dish-img ${d.bg}">
@@ -3553,41 +3796,101 @@
     const ids = Object.keys(cart);
     let count = 0, total = 0;
     Object.values(cart).forEach(item => { count += item.qty; total += item.price * item.qty; });
-    document.getElementById('cartCount').textContent = count;
-    if (ids.length === 0) {
+
+    // Get this table's active orders (not yet billed/done)
+    const activeOrders = selectedTable
+      ? getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed' && o.status !== 'done')
+      : [];
+    const activeItemCount = activeOrders.reduce((s, o) => s + (o.itemCount || 0), 0);
+    const activeTotal = activeOrders.reduce((s, o) => s + (o.total || 0), 0);
+
+    // Cart count = items in cart + active items already ordered
+    document.getElementById('cartCount').textContent = count + activeItemCount;
+
+    let activeOrdersHtml = '';
+    if (activeOrders.length > 0) {
+      activeOrdersHtml = `
+        <div style="margin: 6px 0 14px 0; padding: 12px 14px; background: var(--bg); border: 1px solid var(--line-gold);">
+          <div style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.15em; color: var(--burgundy); text-transform: uppercase; font-weight: 600; margin-bottom: 10px;">
+            ${i18n[currentLang].activeOrder || 'YOUR ACTIVE ORDER'}
+          </div>
+          ${activeOrders.map(o => {
+            const allPrinted = o.items.every(i => i.printed);
+            const statusInfo = getOrderStatusInfo(o);
+            return `
+              <div style="padding: 10px 0; border-bottom: 1px solid var(--line);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <div style="font-family:'Helvetica Neue',sans-serif;font-weight:600;color:var(--burgundy)">#${o.num}</div>
+                  <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border-radius:100px;background:${statusInfo.bg};color:${statusInfo.color};font-weight:600">${statusInfo.label}</div>
+                </div>
+                ${o.items.map(i => `
+                  <div style="font-size:13px;color:var(--ink);display:flex;justify-content:space-between;padding:2px 0">
+                    <span>${i.qty}× ${i.nameLocal || i.name}${i.printed ? '' : ' <span style="color:#f39c12;font-size:10px">●</span>'}</span>
+                    <span style="font-family:'Helvetica Neue',sans-serif;color:var(--burgundy);font-weight:500">${(i.price * i.qty).toLocaleString()} ฿</span>
+                  </div>
+                `).join('')}
+                ${!allPrinted ? `
+                  <button onclick="window._cancelOrder('${o.num}')" style="margin-top:8px;width:100%;padding:7px;border:1px solid #c0392b;background:transparent;color:#c0392b;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;border-radius:4px;font-weight:600">${i18n[currentLang].cancelOrder || '✕ Cancel Order'}</button>
+                ` : `
+                  <div style="margin-top:6px;font-size:10px;color:var(--ink-soft);font-style:italic;text-align:center">${i18n[currentLang].cannotCancel || 'Order is being prepared — cannot cancel'}</div>
+                `}
+              </div>
+            `;
+          }).join('')}
+          <div style="display:flex;justify-content:space-between;padding-top:10px;margin-top:4px;font-family:'Helvetica Neue',sans-serif;font-weight:600">
+            <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-soft)">${i18n[currentLang].subtotal || 'Active Subtotal'}</span>
+            <span style="color:var(--burgundy)">${activeTotal.toLocaleString()} ฿</span>
+          </div>
+        </div>
+      `;
+    }
+
+    if (ids.length === 0 && activeOrders.length === 0) {
       list.innerHTML = `<div class="cart-empty"><div class="icon">🍷</div><p>${i18n[currentLang].emptyCart}</p></div>`;
       document.getElementById('cartTotal').textContent = '0';
       document.getElementById('checkoutBtn').disabled = true;
       return;
     }
-    list.innerHTML = ids.map(key => {
-      const item = cart[key];
-      const d = dishes.find(x => x.id == item.dishId);
-      const meta = [];
-      if (item.opts.size && item.opts.size !== 'full') meta.push(item.opts.size === 'half' ? '½' : '×2');
-      if (item.opts.spice > 0) meta.push('🌶'.repeat(item.opts.spice + 1));
-      if (item.opts.toppings && item.opts.toppings.length) meta.push('+ ' + item.opts.toppings.join(', '));
-      return `
-        <div class="cart-item">
-          <div class="cart-item-img">${d.emoji}</div>
-          <div class="cart-item-info">
-            <div class="cart-item-name">${d.name[currentLang]}</div>
-            <div class="cart-item-meta">${item.price} ฿ × ${item.qty}${meta.length ? ' · ' + meta.join(' · ') : ''}</div>
-            ${item.opts.note ? `<div class="cart-item-note">"${item.opts.note}"</div>` : ''}
-          </div>
-          <div class="cart-item-actions">
-            <button class="note-btn ${item.opts.note ? 'has-note' : ''}" data-key="${key}" data-act="note">📝</button>
-            <div class="qty-controls">
-              <button class="qty-btn" data-key="${key}" data-act="-">−</button>
-              <span class="qty-val">${item.qty}</span>
-              <button class="qty-btn" data-key="${key}" data-act="+">+</button>
+
+    let newCartHtml = '';
+    if (ids.length > 0) {
+      newCartHtml = `
+        <div style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.15em; color: var(--ink-soft); text-transform: uppercase; font-weight: 600; margin: 6px 0 10px 0;">
+          ${i18n[currentLang].newItems || 'NEW ITEMS TO ORDER'}
+        </div>
+      ` + ids.map(key => {
+        const item = cart[key];
+        const d = dishes.find(x => x.id == item.dishId);
+        const meta = [];
+        if (item.opts.addonNames && item.opts.addonNames.length) meta.push('+ ' + item.opts.addonNames.join(', '));
+        return `
+          <div class="cart-item">
+            <div class="cart-item-img">${d.imgData ? `<img src="${d.imgData}" style="width:100%;height:100%;object-fit:cover">` : d.emoji}</div>
+            <div class="cart-item-info">
+              <div class="cart-item-name">${d.name[currentLang]}</div>
+              <div class="cart-item-meta">${item.price} ฿ × ${item.qty}${meta.length ? ' · ' + meta.join(' · ') : ''}</div>
+              ${item.opts.note ? `<div class="cart-item-note">"${item.opts.note}"</div>` : ''}
+            </div>
+            <div class="cart-item-actions">
+              <button class="note-btn ${item.opts.note ? 'has-note' : ''}" data-key="${key}" data-act="note">📝</button>
+              <div class="qty-controls">
+                <button class="qty-btn" data-key="${key}" data-act="-">−</button>
+                <span class="qty-val">${item.qty}</span>
+                <button class="qty-btn" data-key="${key}" data-act="+">+</button>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-    }).join('');
-    document.getElementById('cartTotal').textContent = total.toLocaleString();
-    document.getElementById('checkoutBtn').disabled = false;
+        `;
+      }).join('');
+    }
+
+    list.innerHTML = activeOrdersHtml + newCartHtml;
+
+    // Total = active orders + new cart (so Bill total is correct)
+    const grandTotal = total + activeTotal;
+    document.getElementById('cartTotal').textContent = grandTotal.toLocaleString();
+    document.getElementById('checkoutBtn').disabled = ids.length === 0;
+
     document.querySelectorAll('.cart-item .qty-btn').forEach(b => {
       b.onclick = () => {
         const k = b.dataset.key;
@@ -3600,6 +3903,41 @@
       b.onclick = () => openNoteEdit(b.dataset.key);
     });
   }
+
+  function getOrderStatusInfo(o) {
+    const allPrinted = o.items.every(i => i.printed);
+    const anyPrinted = o.items.some(i => i.printed);
+    if (o.status === 'served') return { label: i18n[currentLang].statusServed || 'SERVED', bg: '#2d6a4f', color: '#fff' };
+    if (o.status === 'bill_requested') return { label: i18n[currentLang].statusBillReq || 'BILL REQUESTED', bg: '#722f37', color: '#f4dca5' };
+    if (allPrinted) return { label: i18n[currentLang].statusPreparing || 'IN PROGRESS', bg: '#f39c12', color: '#fff' };
+    if (anyPrinted) return { label: i18n[currentLang].statusPartial || 'PARTIALLY PREPARING', bg: '#f39c12', color: '#fff' };
+    return { label: i18n[currentLang].statusReceived || 'ORDER RECEIVED', bg: '#3498db', color: '#fff' };
+  }
+
+  // Customer cancel order (only allowed if no items printed yet)
+  window._cancelOrder = (num) => {
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    const anyPrinted = order.items.some(i => i.printed);
+    if (anyPrinted) {
+      showToast(i18n[currentLang].cannotCancel || 'Cannot cancel — order is being prepared');
+      return;
+    }
+    if (!confirm(i18n[currentLang].confirmCancel || 'Cancel this order?')) return;
+    deleteOrder(num);
+    // Free up table
+    const t = tables.find(x => x.num === order.table);
+    if (t && t.status === 'occupied') {
+      // Check if there are other active orders for this table
+      const others = getOrders().filter(o => o.table === order.table && o.num !== num && !o.type && o.status !== 'billed' && o.status !== 'done');
+      if (others.length === 0) { t.status = 'free'; saveTables(); }
+    }
+    renderCart();
+    showToast(i18n[currentLang].orderCancelled || 'Order cancelled');
+    // Notify admin (optional alert)
+    const notify = { num: 'CANCEL-' + Date.now(), table: order.table, type: 'cancel', time: Date.now(), itemCount: 1, total: 0, orderRef: num, status: 'alert' };
+    saveOrder(notify);
+  };
 
   function openNoteEdit(key) {
     editingNoteKey = key;
@@ -3747,8 +4085,11 @@
         total: newTotal,
         itemCount: merged.reduce((s,i)=>s+i.qty,0),
         lastBatch: batchTime,
-        hasNewItems: true  // signal admin: new batch needs printing
+        hasNewItems: true
       });
+      // Telegram notify (only new items)
+      const tgOrder = { ...existingOrders[0], items: newItems, total: newItems.reduce((s,i)=>s+i.price*i.qty,0), num: orderNum, language: currentLang };
+      notifyTelegramNewOrder(tgOrder);
     } else {
       orderNum = await getNextOrderNum();
       const total = newItems.reduce((s, i) => s + i.price * i.qty, 0);
@@ -3762,6 +4103,7 @@
         hasNewItems: true
       };
       saveOrder(order);
+      notifyTelegramNewOrder(order);
     }
     document.getElementById('orderNum').textContent = orderNum;
     closeCart();
@@ -3855,7 +4197,12 @@
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.dataset.i18n;
-      if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+      let text = i18n[lang][key];
+      // Override with custom button labels if set in admin
+      if (appSettings.btnLabels && appSettings.btnLabels[lang] && appSettings.btnLabels[lang][key]) {
+        text = appSettings.btnLabels[lang][key];
+      }
+      if (text) el.innerHTML = text;
     });
     renderCategories(); renderMenu(); renderCart(); renderFeatured();
     if (document.getElementById('tableSelect').classList.contains('show')) renderTableSelect();
@@ -4243,12 +4590,22 @@
             ` : `
               <button class="order-btn assign-table" onclick="window._reassign('${o.num}')">Reassign</button>
               <button class="order-btn ${hasNew ? 'primary' : 'gold'}" onclick="window._printKitchen('${o.num}')">🍳 ${hasNew ? 'Print Kitchen' : 'Reprint Kitchen'}</button>
+              ${!hasNew && o.status !== 'served' ? `<button class="order-btn assign-table" onclick="window._markServed('${o.num}')">🍽 Mark Served</button>` : ''}
               <button class="order-btn primary" onclick="window._markDone('${o.num}')">✓ Done</button>
             `}
           </div>
         </div>`;
     }).join('');
   }
+
+  // Mark items as served (customer sees status update)
+  window._markServed = (num) => {
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    updateOrder(num, { status: 'served', servedTime: Date.now() });
+    renderAdminOrders();
+    showToast(`Order #${num} marked as Served`);
+  };
 
   // Acknowledge waiter alert
   window._acknowledgeAlert = (num) => {
@@ -4740,21 +5097,46 @@
     document.getElementById('histOrdersList').innerHTML = allOrders.map(o => {
       const itemsStr = (o.items || []).map(i => `${i.qty}× ${i.name}`).join(' · ');
       const t = new Date(o.time).toLocaleString();
+      const statusLabel = o.status === 'done' ? '<span style="display:inline-block;padding:2px 8px;background:#2d6a4f;color:#fff;font-size:9px;letter-spacing:0.1em;border-radius:100px;margin-left:6px">DONE</span>'
+                        : o.status === 'billed' ? '<span style="display:inline-block;padding:2px 8px;background:var(--burgundy);color:var(--gold-soft);font-size:9px;letter-spacing:0.1em;border-radius:100px;margin-left:6px">BILLED</span>'
+                        : o.status === 'open' ? '<span style="display:inline-block;padding:2px 8px;background:#f39c12;color:#fff;font-size:9px;letter-spacing:0.1em;border-radius:100px;margin-left:6px">OPEN</span>'
+                        : '';
+      const canReopen = o.status === 'done' || o.status === 'billed';
       return `
         <div class="order-card">
           <div class="order-num">#${o.num}</div>
           <div class="order-info">
-            <div class="order-table">Table <strong>${o.table}</strong></div>
+            <div class="order-table">Table <strong>${o.table}</strong>${statusLabel}</div>
             <div class="order-items">${itemsStr}</div>
             <div class="order-time">${t}</div>
           </div>
           <div class="order-total">${(o.total || 0).toLocaleString()} ฿</div>
           <div class="order-actions">
-            <button class="order-btn gold" onclick="window._printOrder('${o.num}')">🖨 Print</button>
+            <button class="order-btn gold" onclick="window._printOrder('${o.num}')">🖨 Print Bill</button>
+            ${canReopen ? `<button class="order-btn assign-table" onclick="window._reopenOrder('${o.num}')">↻ Reopen</button>` : ''}
           </div>
         </div>`;
     }).join('');
   }
+
+  // Reopen a closed order — put it back into Live Orders so customer can add more
+  window._reopenOrder = (num) => {
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    if (!confirm(`Reopen order #${num}? It will become active again so the customer can add more items.`)) return;
+    updateOrder(num, { status: 'open', reopenedAt: Date.now() });
+    // Reoccupy table
+    const t = tables.find(x => x.num === order.table);
+    if (t) { t.status = 'occupied'; saveTables(); }
+    // Switch to Live Orders tab
+    document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active'));
+    document.querySelector('.admin-tab[data-tab="orders"]').classList.add('active');
+    ['orders', 'tables', 'menu', 'categories', 'history', 'branding', 'settings'].forEach(name => {
+      document.getElementById('tab-' + name).classList.toggle('hidden', name !== 'orders');
+    });
+    renderAdminOrders();
+    showToast(`Order #${num} reopened`);
+  };
 
   document.querySelectorAll('.hist-filter-btn').forEach(b => {
     b.onclick = () => renderHistory(b.dataset.period);
@@ -4798,6 +5180,26 @@
     const prev = document.getElementById('logoPreview');
     if (appSettings.logoData) prev.innerHTML = `<img src="${appSettings.logoData}" style="width:100%;height:100%;object-fit:contain">`;
     else prev.textContent = (appSettings.restaurantName || 'A').charAt(0);
+    // Font sizes
+    const fs = appSettings.fontSizes || {};
+    document.getElementById('fsBrand').value = fs.brand || '';
+    document.getElementById('fsTagline').value = fs.tagline || '';
+    document.getElementById('fsDishName').value = fs.dishName || '';
+    document.getElementById('fsDishDesc').value = fs.dishDesc || '';
+    document.getElementById('fsHeader').value = fs.header || '';
+    document.getElementById('fsFooter').value = fs.footer || '';
+    // Button labels
+    const lbl = appSettings.btnLabels || {};
+    ['askMe', 'callWaiter', 'askBill'].forEach(k => {
+      ['en', 'th', 'ru'].forEach(lang => {
+        const el = document.getElementById(`lbl_${k}_${lang}`);
+        if (el) el.value = (lbl[lang] && lbl[lang][k]) || '';
+      });
+    });
+    // Telegram
+    document.getElementById('telegramEnabled').value = appSettings.telegramEnabled || 'no';
+    document.getElementById('telegramToken').value = appSettings.telegramToken || '';
+    document.getElementById('telegramChatId').value = appSettings.telegramChatId || '';
   }
 
   document.getElementById('logoUpload').onchange = (e) => {
@@ -4856,6 +5258,103 @@
     saveSettings();
     showToast('Printer settings saved');
   };
+
+  // ---- Font Sizes ----
+  document.getElementById('saveFontSizes').onclick = () => {
+    appSettings.fontSizes = {
+      brand: parseInt(document.getElementById('fsBrand').value) || 19,
+      tagline: parseInt(document.getElementById('fsTagline').value) || 13,
+      dishName: parseInt(document.getElementById('fsDishName').value) || 20,
+      dishDesc: parseInt(document.getElementById('fsDishDesc').value) || 12,
+      header: parseInt(document.getElementById('fsHeader').value) || 14,
+      footer: parseInt(document.getElementById('fsFooter').value) || 12,
+    };
+    saveSettings();
+    applyFontSizes();
+    showToast('Font sizes saved');
+  };
+  document.getElementById('resetFontSizes').onclick = () => {
+    if (!confirm('Reset all font sizes to default?')) return;
+    delete appSettings.fontSizes;
+    saveSettings();
+    applyFontSizes();
+    populateSettingsFields();
+    showToast('Font sizes reset');
+  };
+
+  // ---- Button Labels ----
+  document.getElementById('saveBtnLabels').onclick = () => {
+    const labels = { en: {}, th: {}, ru: {} };
+    ['askMe', 'callWaiter', 'askBill'].forEach(k => {
+      ['en', 'th', 'ru'].forEach(lang => {
+        const v = document.getElementById(`lbl_${k}_${lang}`).value.trim();
+        if (v) labels[lang][k] = v;
+      });
+    });
+    appSettings.btnLabels = labels;
+    saveSettings();
+    setLang(currentLang || 'en');
+    showToast('Button labels saved');
+  };
+
+  // ---- Telegram ----
+  document.getElementById('saveTelegram').onclick = () => {
+    appSettings.telegramEnabled = document.getElementById('telegramEnabled').value;
+    appSettings.telegramToken = document.getElementById('telegramToken').value.trim();
+    appSettings.telegramChatId = document.getElementById('telegramChatId').value.trim();
+    saveSettings();
+    showToast('Telegram settings saved');
+  };
+  document.getElementById('testTelegram').onclick = async () => {
+    const token = document.getElementById('telegramToken').value.trim();
+    const chatId = document.getElementById('telegramChatId').value.trim();
+    const msg = document.getElementById('telegramTestMsg');
+    if (!token || !chatId) {
+      msg.style.color = '#c0392b';
+      msg.textContent = 'Please enter both Bot Token and Chat ID first';
+      return;
+    }
+    msg.style.color = 'var(--ink-soft)';
+    msg.textContent = 'Sending test message...';
+    const ok = await sendTelegram('🧪 *Test Message*\n\nArmenia Restaurant ordering system is connected to Telegram successfully!', token, chatId);
+    if (ok) { msg.style.color = 'var(--green)'; msg.textContent = '✓ Test message sent successfully'; }
+    else { msg.style.color = '#c0392b'; msg.textContent = '✗ Failed — check Bot Token and Chat ID'; }
+    setTimeout(() => { msg.textContent = ''; }, 5000);
+  };
+
+  async function sendTelegram(text, token, chatId) {
+    if (!token) token = appSettings.telegramToken;
+    if (!chatId) chatId = appSettings.telegramChatId;
+    if (!token || !chatId) return false;
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: 'Markdown' })
+      });
+      const data = await res.json();
+      return data.ok === true;
+    } catch (e) { console.error('Telegram error:', e); return false; }
+  }
+
+  function notifyTelegramNewOrder(order) {
+    if (appSettings.telegramEnabled !== 'yes') return;
+    if (!appSettings.telegramToken || !appSettings.telegramChatId) return;
+    const restName = appSettings.restaurantName || 'ARMENIA';
+    const itemsText = (order.items || []).filter(i => !i.printed || !i.notifiedTelegram).map(i => {
+      let line = `• ${i.qty}× *${i.name}* — ${(i.price * i.qty).toLocaleString()} ฿`;
+      if (i.opts?.addonNames?.length) line += `\n   _+ ${i.opts.addonNames.join(', ')}_`;
+      if (i.opts?.note) line += `\n   _⚠ ${i.opts.note}_`;
+      return line;
+    }).join('\n');
+    const msg = `🆕 *New Order at ${restName}*\n\n` +
+                `🏷️ Order: \`${order.num}\`\n` +
+                `🪑 Table: *${order.table}*\n` +
+                `🌐 Language: ${(order.language || 'EN').toUpperCase()}\n\n` +
+                `${itemsText}\n\n` +
+                `💰 *TOTAL: ${(order.total || 0).toLocaleString()} ฿*`;
+    sendTelegram(msg);
+  }
   document.getElementById('deviceModeSelect').onchange = (e) => {
     isAdminMode = e.target.value === 'admin';
     if (isAdminMode) {
