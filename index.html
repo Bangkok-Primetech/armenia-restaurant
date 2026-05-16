@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Armenia Restaurant Pattaya</title>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -2210,6 +2213,7 @@
       <button class="admin-tab" data-tab="history">History</button>
       <button class="admin-tab" data-tab="branding">Branding</button>
       <button class="admin-tab" data-tab="settings">Settings</button>
+      <span id="fbStatus" style="margin-left:auto;font-size:11px;opacity:0.7;align-self:center;padding-right:8px">⏳ Connecting...</span>
     </div>
     <button class="icon-btn" id="adminClose">✕</button>
   </div>
@@ -2870,89 +2874,195 @@
   let assignTargetOrder = null;
 
   // Persisted state
+  // ============ FIREBASE CONFIG ============
+  const firebaseConfig = {
+    apiKey: "AIzaSyC5NNUffioSHZMVWTNUrLFxiYik2r-10zs",
+    authDomain: "armenia-restaurant-9d62c.firebaseapp.com",
+    databaseURL: "https://armenia-restaurant-9d62c-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "armenia-restaurant-9d62c",
+    storageBucket: "armenia-restaurant-9d62c.firebasestorage.app",
+    messagingSenderId: "880830882957",
+    appId: "1:880830882957:web:ab43889bdb979d6dacaec4"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // ============ FIREBASE HELPERS ============
+  // orders: stored in Firebase (realtime across all tablets)
+  // tables: stored in Firebase (realtime)
+  // settings: stored in Firebase (shared config)
+  // counter: stored in Firebase (global order number)
+  // dishes, cats, featured: localStorage only (large data, per-device)
+
+  // Show connection status
+  db.ref('.info/connected').on('value', snap => {
+    const connected = snap.val();
+    const indicator = document.getElementById('fbStatus');
+    if (indicator) {
+      indicator.textContent = connected ? '🟢 Online' : '🔴 Offline';
+      indicator.title = connected ? 'Firebase connected' : 'No connection — orders may not sync';
+    }
+  });
+
   const STORAGE = {
-    orders: 'armenia_orders_v2',
-    counter: 'armenia_counter_v2',
-    tables: 'armenia_tables_v2',
     featured: 'armenia_featured_v2',
-    settings: 'armenia_settings_v2',
-    newOrder: 'armenia_new_order_v2'
+    counter: 'armenia_counter_v2_fb', // keep local as fallback
   };
 
-  function loadState() {
-    const stored = localStorage.getItem(STORAGE.featured);
-    featuredIds = stored ? JSON.parse(stored) : [11, 16, 22, 42]; // default featured
-    const settings = localStorage.getItem(STORAGE.settings);
-    appSettings = settings ? JSON.parse(settings) : {
-      headerText: '', footerText: '', bannerType: 'none', bannerUrl: '',
-      font: 'cormorant', restaurantName: 'ARMENIA', tagline: 'Restaurant · Pattaya'
-    };
-    const tablesStored = localStorage.getItem(STORAGE.tables);
-    tables = tablesStored ? JSON.parse(tablesStored) : generateDefaultTables();
-    // Load saved dishes (if any)
-    const savedDishes = localStorage.getItem('armenia_dishes_v2');
-    if (savedDishes) {
-      try { const d = JSON.parse(savedDishes); if (Array.isArray(d) && d.length) dishes.length = 0, dishes.push(...d); } catch {}
-    }
+  // ---- ORDERS ----
+  let _orders = []; // local cache, kept in sync by listener
+
+  function getOrders() { return _orders; }
+
+  function saveOrder(order) {
+    // Write to Firebase — key = order.num (safe for Firebase paths)
+    const safeKey = order.num.replace(/[.#$[\]]/g, '_');
+    db.ref('orders/' + safeKey).set(order);
   }
 
-  function generateDefaultTables() {
-    const arr = [];
-    for (let i = 1; i <= 12; i++) {
-      arr.push({
-        num: String(i).padStart(2, '0'),
-        maxSeats: i <= 4 ? 2 : (i <= 8 ? 4 : 6),
-        status: 'free' // free | occupied | reserved
+  function deleteOrder(num) {
+    const safeKey = num.replace(/[.#$[\]]/g, '_');
+    db.ref('orders/' + safeKey).remove();
+  }
+
+  function updateOrder(num, patch) {
+    const safeKey = num.replace(/[.#$[\]]/g, '_');
+    db.ref('orders/' + safeKey).transaction(current => {
+      if (current === null) return current;
+      return { ...current, ...patch };
+    });
+  }
+
+  // Listen for ANY order change → update local cache → re-render
+  db.ref('orders').on('value', snap => {
+    const data = snap.val() || {};
+    const newOrders = Object.values(data).sort((a, b) => b.time - a.time);
+
+    // Detect truly new orders (not seen in local cache before)
+    if (_orders.length > 0 && isAdminMode) {
+      const cachedNums = new Set(_orders.map(o => o.num));
+      const brandNew = newOrders.filter(o => !cachedNums.has(o.num) && (Date.now() - o.time) < 10000);
+      brandNew.forEach(o => {
+        showAdminBanner(o);
+        playNotificationSound();
       });
     }
-    return arr;
+
+    _orders = newOrders;
+
+    // Re-render wherever relevant
+    if (isAdminMode && document.getElementById('admin').classList.contains('show')) {
+      const activeTab = document.querySelector('.admin-tab.active')?.dataset.tab;
+      if (activeTab === 'orders') renderAdminOrders();
+    }
+  });
+
+  // ---- TABLES ----
+  function saveTables() {
+    const obj = {};
+    tables.forEach(t => { obj['t' + t.num] = t; });
+    db.ref('tables').set(obj);
   }
 
+  function loadTablesFromFirebase() {
+    return new Promise(resolve => {
+      db.ref('tables').once('value', snap => {
+        const data = snap.val();
+        if (data && Object.keys(data).length > 0) {
+          tables = Object.values(data).sort((a, b) => a.num.localeCompare(b.num));
+        } else {
+          tables = generateDefaultTables();
+          saveTables(); // write defaults to Firebase
+        }
+        resolve();
+      });
+    });
+  }
+
+  // Live table updates
+  db.ref('tables').on('value', snap => {
+    const data = snap.val();
+    if (!data) return;
+    const incoming = Object.values(data).sort((a, b) => a.num.localeCompare(b.num));
+    tables = incoming;
+    if (document.getElementById('tableSelect').classList.contains('show')) renderTableSelect();
+    if (isAdminMode && document.getElementById('admin').classList.contains('show')) {
+      const activeTab = document.querySelector('.admin-tab.active')?.dataset.tab;
+      if (activeTab === 'tables') renderAdminTables();
+    }
+  });
+
+  // ---- SETTINGS ----
+  function saveSettings() {
+    // Strip large binary data before saving to Firebase
+    const slim = { ...appSettings };
+    delete slim.logoData; // logo stays in localStorage only
+    db.ref('settings').set(slim);
+    // Also save logo locally
+    if (appSettings.logoData) localStorage.setItem('armenia_logo', appSettings.logoData);
+    else localStorage.removeItem('armenia_logo');
+  }
+
+  function loadSettingsFromFirebase() {
+    return new Promise(resolve => {
+      db.ref('settings').once('value', snap => {
+        const data = snap.val();
+        if (data) {
+          appSettings = data;
+          // Restore logo from localStorage (not in Firebase)
+          const logo = localStorage.getItem('armenia_logo');
+          if (logo) appSettings.logoData = logo;
+        } else {
+          appSettings = {
+            headerText: '', footerText: '', bannerType: 'none', bannerUrl: '',
+            font: 'cormorant', restaurantName: 'ARMENIA', tagline: 'Restaurant · Pattaya'
+          };
+        }
+        resolve();
+      });
+    });
+  }
+
+  // Live settings updates (font, branding changes propagate to all tablets)
+  db.ref('settings').on('value', snap => {
+    const data = snap.val();
+    if (!data) return;
+    const logo = appSettings.logoData; // preserve local logo
+    appSettings = { ...data };
+    if (logo) appSettings.logoData = logo;
+    applyBranding();
+  });
+
+  // ---- ORDER COUNTER ----
+  let orderCounter = parseInt(localStorage.getItem(STORAGE.counter) || '41');
+
+  function getNextOrderNum() {
+    return new Promise(resolve => {
+      db.ref('counter').transaction(current => {
+        return (current || 41) + 1;
+      }, (err, committed, snap) => {
+        if (committed && snap) {
+          const num = snap.val();
+          localStorage.setItem(STORAGE.counter, num);
+          resolve('A-' + String(num).padStart(4, '0'));
+        } else {
+          // Fallback to local counter
+          orderCounter++;
+          localStorage.setItem(STORAGE.counter, orderCounter);
+          resolve('A-' + String(orderCounter).padStart(4, '0'));
+        }
+      });
+    });
+  }
+
+  // ---- FEATURED (localStorage, per-device) ----
+  function saveFeatured() { localStorage.setItem(STORAGE.featured, JSON.stringify(featuredIds)); }
+
+  // ============ STATE ============
   let featuredIds = [];
   let appSettings = {};
   let tables = [];
   let selectedTable = null;
-  let orderCounter = parseInt(localStorage.getItem(STORAGE.counter) || '41');
-
-  function saveSettings() { localStorage.setItem(STORAGE.settings, JSON.stringify(appSettings)); }
-  function saveFeatured() { localStorage.setItem(STORAGE.featured, JSON.stringify(featuredIds)); }
-  function saveTables() { localStorage.setItem(STORAGE.tables, JSON.stringify(tables)); }
-
-  // ============ ORDER SYNC ============
-  function getOrders() {
-    try { return JSON.parse(localStorage.getItem(STORAGE.orders) || '[]'); }
-    catch { return []; }
-  }
-  function saveOrder(order) {
-    const orders = getOrders();
-    orders.unshift(order);
-    localStorage.setItem(STORAGE.orders, JSON.stringify(orders.slice(0, 50)));
-    localStorage.setItem(STORAGE.newOrder, JSON.stringify({ time: Date.now(), order }));
-  }
-  function deleteOrder(num) {
-    const orders = getOrders().filter(o => o.num !== num);
-    localStorage.setItem(STORAGE.orders, JSON.stringify(orders));
-  }
-  function updateOrder(num, patch) {
-    const orders = getOrders().map(o => o.num === num ? { ...o, ...patch } : o);
-    localStorage.setItem(STORAGE.orders, JSON.stringify(orders));
-  }
-
-  window.addEventListener('storage', (e) => {
-    if (e.key === STORAGE.newOrder && isAdminMode) {
-      try {
-        const data = JSON.parse(e.newValue);
-        showAdminBanner(data.order);
-        renderAdminOrders();
-        playNotificationSound();
-      } catch {}
-    }
-    if (e.key === STORAGE.tables) {
-      tables = JSON.parse(e.newValue || '[]');
-      if (document.getElementById('tableSelect').classList.contains('show')) renderTableSelect();
-      if (document.getElementById('admin').classList.contains('show')) renderAdminTables();
-    }
-  });
 
   function playNotificationSound() {
     try {
@@ -3341,12 +3451,11 @@
   document.getElementById('sheetBackdrop').onclick = closeCart;
 
   // ============ CHECKOUT ============
-  document.getElementById('checkoutBtn').onclick = () => {
+  document.getElementById('checkoutBtn').onclick = async () => {
     // One order number per table - reuse if exists
     const existingOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed');
     let orderNum;
     if (existingOrders.length > 0) {
-      // Merge into existing order
       orderNum = existingOrders[0].num;
       const existItems = existingOrders[0].items || [];
       const newItems = Object.values(cart).map(item => {
@@ -3357,9 +3466,7 @@
       const newTotal = merged.reduce((s, i) => s + i.price * i.qty, 0);
       updateOrder(orderNum, { items: merged, total: newTotal, itemCount: merged.reduce((s,i)=>s+i.qty,0) });
     } else {
-      orderCounter++;
-      localStorage.setItem(STORAGE.counter, orderCounter);
-      orderNum = 'A-' + String(orderCounter).padStart(4, '0');
+      orderNum = await getNextOrderNum();
       let total = 0, itemCount = 0;
       const itemList = Object.values(cart).map(item => {
         const d = dishes.find(x => x.id == item.dishId);
@@ -4266,17 +4373,35 @@
   };
 
   // ============ INIT ============
-  loadState();
-  appCats = loadCats();
-  appCats.forEach(c => {
-    if (i18n.en.cats[c.id] !== undefined) { i18n.en.cats[c.id] = c.en; i18n.th.cats[c.id] = c.th; i18n.ru.cats[c.id] = c.ru; }
-  });
-  applyBranding();
-  renderCategories();
-  renderMenu();
-  renderCart();
-  renderFeatured();
-  // idle is already .show from HTML
+  async function initApp() {
+    // 1. Load local-only state (dishes, cats, featured)
+    const storedFeatured = localStorage.getItem(STORAGE.featured);
+    featuredIds = storedFeatured ? JSON.parse(storedFeatured) : [11, 16, 22, 42];
+    const savedDishes = localStorage.getItem('armenia_dishes_v2');
+    if (savedDishes) {
+      try { const d = JSON.parse(savedDishes); if (Array.isArray(d) && d.length) dishes.length = 0, dishes.push(...d); } catch {}
+    }
+    appCats = loadCats();
+    appCats.forEach(c => {
+      if (i18n.en.cats[c.id] !== undefined) { i18n.en.cats[c.id] = c.en; i18n.th.cats[c.id] = c.th; i18n.ru.cats[c.id] = c.ru; }
+    });
+
+    // 2. Load Firebase state (settings, tables) — wait for first fetch
+    await Promise.all([
+      loadSettingsFromFirebase(),
+      loadTablesFromFirebase()
+    ]);
+
+    // 3. Render everything
+    applyBranding();
+    renderCategories();
+    renderMenu();
+    renderCart();
+    renderFeatured();
+    // idle screen is already .show from HTML
+  }
+
+  initApp();
 </script>
 
 </body>
