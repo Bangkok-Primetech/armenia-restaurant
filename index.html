@@ -1,0 +1,4283 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Armenia Restaurant Pattaya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="light"] {
+    --bg: #f8f3e9;
+    --bg-deep: #ede4d0;
+    --surface: #fffbf3;
+    --ink: #1a1209;
+    --ink-soft: #6b5538;
+    --burgundy: #722f37;
+    --burgundy-deep: #4a1d23;
+    --gold: #b8860b;
+    --gold-soft: #d4a44a;
+    --accent: #722f37;
+    --line: rgba(26, 18, 9, 0.12);
+    --line-gold: rgba(184, 134, 11, 0.3);
+    --shadow: 0 20px 60px -20px rgba(74, 29, 35, 0.25);
+    --overlay: rgba(26, 18, 9, 0.55);
+    --green: #4a7c3a;
+    --orange: #c97b2a;
+  }
+  :root[data-theme="dark"] {
+    --bg: #14100b;
+    --bg-deep: #0b0805;
+    --surface: #1f1810;
+    --ink: #f8f3e9;
+    --ink-soft: #a89072;
+    --burgundy: #a04550;
+    --burgundy-deep: #d4a44a;
+    --gold: #d4a44a;
+    --gold-soft: #f0c976;
+    --accent: #d4a44a;
+    --line: rgba(248, 243, 233, 0.1);
+    --line-gold: rgba(212, 164, 74, 0.3);
+    --shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+    --overlay: rgba(0, 0, 0, 0.7);
+    --green: #6a9c4a;
+    --orange: #e09b3a;
+  }
+
+  /* Font variants - controlled by data-font on html */
+  html[data-font="cormorant"] { --font-display: 'Cormorant Garamond', serif; --font-body: 'Inter', sans-serif; }
+  html[data-font="cinzel"] { --font-display: 'Cinzel', serif; --font-body: 'Montserrat', sans-serif; }
+  html[data-font="montserrat"] { --font-display: 'Montserrat', sans-serif; --font-body: 'Montserrat', sans-serif; }
+  html[data-font="helvetica"] { --font-display: 'Helvetica Neue', Helvetica, Arial, sans-serif; --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  html[data-font="sans"] { --font-display: 'Inter', system-ui, sans-serif; --font-body: 'Inter', system-ui, sans-serif; }
+
+  /* Numbers always use Helvetica Neue for clarity */
+  .num { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body, 'Inter', sans-serif);
+    user-select: none;
+    transition: background 0.3s, color 0.3s;
+  }
+  html { font-family: 'Inter', sans-serif; }
+  html[data-font="cormorant"] { font-family: 'Inter', sans-serif; }
+  html[data-font="cinzel"] { font-family: 'Montserrat', sans-serif; }
+  html[data-font="montserrat"] { font-family: 'Montserrat', sans-serif; }
+  html[data-font="helvetica"] { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  html[data-font="sans"] { font-family: 'Inter', system-ui, sans-serif; }
+
+  body {
+    background:
+      radial-gradient(circle at 10% 0%, rgba(114, 47, 55, 0.06), transparent 40%),
+      radial-gradient(circle at 90% 100%, rgba(184, 134, 11, 0.08), transparent 50%),
+      var(--bg);
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1; opacity: 0.4;
+  }
+
+  /* ============ FONT HELPERS ============ */
+  .font-display {
+    font-family: var(--font-display, 'Cormorant Garamond', serif);
+  }
+  html[data-font="cormorant"] .font-display { font-family: 'Cormorant Garamond', serif; }
+  html[data-font="cinzel"] .font-display { font-family: 'Cinzel', serif; letter-spacing: 0.04em; }
+  html[data-font="montserrat"] .font-display { font-family: 'Montserrat', sans-serif; letter-spacing: -0.01em; }
+  html[data-font="helvetica"] .font-display { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: -0.02em; }
+  html[data-font="sans"] .font-display { font-family: 'Inter', system-ui, sans-serif; letter-spacing: -0.02em; }
+
+  /* ============ TABLE SELECT SCREEN ============ */
+  .table-select {
+    position: fixed; inset: 0;
+    z-index: 1100;
+    background: radial-gradient(circle at center, rgba(114, 47, 55, 0.08), transparent 70%), var(--bg);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px 40px;
+    overflow-y: auto;
+    transition: opacity 0.5s, transform 0.5s;
+  }
+  .table-select.show { display: flex; }
+  .table-select.hide { opacity: 0; transform: scale(1.05); pointer-events: none; }
+
+  .ts-header { text-align: center; margin-bottom: 20px; width: 100%; max-width: 980px; }
+  .ts-logo-wrap { margin-bottom: 12px; }
+  .ts-mark {
+    width: 60px; height: 60px;
+    margin: 0 auto;
+    border: 1px solid var(--gold);
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    display: grid; place-items: center;
+    font-family: 'Cinzel', serif;
+    font-size: 26px; font-weight: 600;
+    position: relative;
+  }
+  .ts-mark img { width: 100%; height: 100%; object-fit: contain; }
+  .ts-mark::before { content: ''; position: absolute; inset: 3px; border: 1px solid var(--gold); opacity: 0.5; }
+  .ts-title {
+    font-family: 'Cinzel', serif;
+    font-size: 22px; font-weight: 500;
+    letter-spacing: 0.06em; margin-bottom: 4px;
+  }
+  .ts-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 15px;
+    color: var(--ink-soft); margin-bottom: 16px;
+  }
+  .ts-lang-row {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .ts-lang-btn {
+    padding: 9px 18px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer; transition: all 0.2s;
+    border-radius: 100px;
+  }
+  .ts-lang-btn:hover { border-color: var(--gold-soft); color: var(--ink); }
+  .ts-lang-btn.active { background: var(--burgundy); color: var(--surface); border-color: var(--burgundy); }
+  .ts-divider {
+    display: flex; align-items: center;
+    gap: 14px; margin: 10px auto 14px;
+    color: var(--gold); max-width: 400px;
+  }
+  .ts-div-line { flex: 1; height: 1px; background: var(--line-gold); }
+  .ts-div-diamond { font-size: 9px; }
+  .ts-pick-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 18px;
+    color: var(--ink); margin-bottom: 12px;
+  }
+  .ts-legend {
+    display: flex; gap: 18px; justify-content: center;
+    margin-bottom: 14px; font-size: 11px; color: var(--ink-soft);
+  }
+  .ts-legend-item { display: flex; align-items: center; gap: 5px; }
+  .ts-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .ts-legend-dot.free { background: var(--green); }
+  .ts-legend-dot.occupied { background: var(--burgundy); }
+  .ts-legend-dot.reserved { background: var(--orange); }
+  .ts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px; max-width: 980px; width: 100%; padding: 0 10px;
+  }
+  .ts-card {
+    background: var(--surface); border: 1px solid var(--line);
+    padding: 16px 12px; cursor: pointer;
+    transition: all 0.2s; text-align: center; position: relative;
+  }
+  .ts-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--gold-soft); }
+  .ts-card:active { transform: scale(0.97); }
+  .ts-card.occupied { background: color-mix(in srgb, var(--burgundy) 8%, var(--surface)); border-color: var(--burgundy); cursor: not-allowed; opacity: 0.75; }
+  .ts-card.reserved { background: color-mix(in srgb, var(--orange) 8%, var(--surface)); border-color: var(--orange); cursor: not-allowed; opacity: 0.75; }
+  .ts-card.occupied:hover, .ts-card.reserved:hover { transform: none; box-shadow: none; }
+  .ts-card-status { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+  .ts-card.occupied .ts-card-status { background: var(--burgundy); }
+  .ts-card.reserved .ts-card-status { background: var(--orange); }
+  .ts-card-num {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 32px; font-weight: 600; color: var(--burgundy); line-height: 1; margin-bottom: 4px;
+  }
+  .ts-card.occupied .ts-card-num { color: var(--ink-soft); }
+  .ts-card-label { font-family: 'Inter', sans-serif; font-size: 9px; letter-spacing: 0.2em; color: var(--ink-soft); text-transform: uppercase; margin-bottom: 6px; }
+  .ts-card-info { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--ink-soft); }
+  .ts-card-info .seats { color: var(--ink); font-style: normal; }
+
+  /* ============ BILL MODAL (customer view) ============ */
+  .bill-modal {
+    position: fixed; inset: 0;
+    background: var(--overlay);
+    z-index: 750;
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .bill-modal.show { display: flex; }
+  .bill-card {
+    background: var(--surface); border: 1px solid var(--gold-soft);
+    max-width: 480px; width: 100%; max-height: 88vh; overflow-y: auto;
+    padding: 32px 28px;
+  }
+  .bill-head { text-align: center; margin-bottom: 20px; }
+  .bill-restaurant { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 600; letter-spacing: 0.06em; }
+  .bill-address { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
+  .bill-divider { border: none; border-top: 1px dashed var(--line); margin: 14px 0; }
+  .bill-meta { font-size: 12px; color: var(--ink-soft); margin-bottom: 4px; }
+  .bill-meta strong { color: var(--ink); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+  .bill-items { margin: 12px 0; }
+  .bill-item { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .bill-item-name { font-family: 'Cormorant Garamond', serif; font-size: 16px; }
+  .bill-item-price { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 600; color: var(--burgundy); white-space: nowrap; }
+  .bill-item-note { font-size: 11px; color: var(--ink-soft); font-style: italic; margin-top: 2px; }
+  .bill-total-row { display: flex; justify-content: space-between; align-items: baseline; margin-top: 12px; padding-top: 10px; border-top: 2px solid var(--gold); }
+  .bill-total-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); }
+  .bill-total-val { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 28px; font-weight: 700; color: var(--burgundy); }
+  .bill-thanks { text-align: center; margin-top: 20px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--ink-soft); }
+  .bill-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .bill-close-btn { flex: 1; padding: 13px; border: 1px solid var(--line); background: transparent; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; color: var(--ink); }
+  .bill-print-btn { flex: 1; padding: 13px; border: 1px solid var(--gold); background: var(--burgundy); color: var(--gold-soft); font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; }
+
+  /* ============ APP ============ */
+  .app {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* CUSTOM HEADER */
+  .custom-header {
+    display: none;
+    padding: 8px 32px;
+    text-align: center;
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    border-bottom: 1px solid var(--gold);
+  }
+  .custom-header.show { display: block; }
+
+  /* HEADER */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 80px;
+    border-bottom: 1px solid var(--line-gold);
+    background: color-mix(in srgb, var(--bg) 75%, transparent);
+    backdrop-filter: blur(20px);
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 32px; right: 32px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+    opacity: 0.3;
+  }
+
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand-mark {
+    width: 48px; height: 48px;
+    border: 1px solid var(--gold);
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    display: grid; place-items: center;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 22px;
+    position: relative;
+  }
+  .brand-mark::before { content: ''; position: absolute; inset: 2px; border: 1px solid var(--gold); opacity: 0.5; }
+  .brand-text h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+  .brand-text p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--burgundy);
+    margin-top: 1px;
+  }
+
+  .header-right { display: flex; align-items: center; gap: 10px; }
+  .table-badge {
+    font-size: 10px;
+    color: var(--ink-soft);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border: 1px solid var(--line-gold);
+    border-radius: 100px;
+    cursor: pointer;
+  }
+  .table-badge strong {
+    color: var(--burgundy);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+  .lang-switcher {
+    display: flex; gap: 2px;
+    background: var(--surface);
+    padding: 3px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+  }
+  .lang-btn {
+    border: none; background: transparent;
+    padding: 7px 11px;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    color: var(--ink-soft);
+    transition: all 0.2s;
+  }
+  .lang-btn.active { background: var(--burgundy); color: var(--surface); }
+  .icon-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 14px; color: var(--ink);
+    transition: all 0.2s;
+  }
+  .icon-btn:active { transform: scale(0.9); }
+
+  /* ============ MAIN ============ */
+  main {
+    overflow-y: auto;
+    padding: 24px 32px 24px;
+    scrollbar-width: thin;
+  }
+  main::-webkit-scrollbar { width: 4px; }
+  main::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+  /* BANNER / VIDEO */
+  .banner-area {
+    margin-bottom: 26px;
+    border: 1px solid var(--gold-soft);
+    background: var(--surface);
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 21/6;
+    display: none;
+  }
+  .banner-area.show { display: block; }
+  .banner-area img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .banner-area iframe {
+    width: 100%; height: 100%;
+    border: none;
+    display: block;
+  }
+  .banner-area .placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep));
+    color: var(--gold-soft);
+    display: grid; place-items: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* FEATURED SECTION */
+  .featured-section {
+    margin-bottom: 30px;
+    display: none;
+  }
+  .featured-section.show { display: block; }
+  .featured-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .featured-head h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+  }
+  .featured-head h3 em {
+    font-style: italic;
+    color: var(--burgundy);
+  }
+  .featured-head .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--line-gold), transparent);
+  }
+  .featured-head .star {
+    color: var(--gold);
+    font-size: 16px;
+  }
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .featured-card {
+    background: var(--surface);
+    border: 1px solid var(--gold-soft);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .featured-card::before {
+    content: '★';
+    position: absolute;
+    top: 8px; right: 12px;
+    color: var(--gold);
+    font-size: 14px;
+    z-index: 5;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .featured-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .featured-card:active { transform: scale(0.97); }
+  .featured-img {
+    aspect-ratio: 16/9;
+    display: grid; place-items: center;
+    font-size: 44px;
+    overflow: hidden;
+    position: relative;
+  }
+  .featured-img img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .featured-body {
+    padding: 12px 14px 14px;
+  }
+  .featured-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .featured-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--burgundy);
+    margin-top: 4px;
+  }
+
+  /* HERO */
+  .hero {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .hero-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .hero-text h2 em { font-style: italic; font-weight: 500; color: var(--burgundy); }
+  .hero-text p {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    max-width: 520px;
+    line-height: 1.55;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+  }
+  .hero-divider {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-gold), transparent);
+    margin-bottom: 12px;
+  }
+  .hero-num {
+    font-size: 10px;
+    color: var(--ink-soft);
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .categories {
+    display: flex; gap: 6px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .categories::-webkit-scrollbar { display: none; }
+  .cat-btn {
+    flex-shrink: 0;
+    padding: 10px 18px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .cat-btn:hover { color: var(--burgundy); border-color: var(--line-gold); }
+  .cat-btn.active { background: var(--burgundy); color: var(--surface); border-color: var(--burgundy); }
+
+  /* MENU GRID */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 16px;
+  }
+  .dish {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .dish::before {
+    content: '';
+    position: absolute; inset: 0;
+    border: 1px solid transparent;
+    pointer-events: none;
+    transition: border-color 0.3s;
+    z-index: 2;
+  }
+  .dish:hover::before { border-color: var(--gold-soft); }
+  .dish:active { transform: scale(0.97); }
+  .dish:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+  .dish-img {
+    aspect-ratio: 4/3;
+    position: relative;
+    display: grid; place-items: center;
+    font-size: 56px;
+    overflow: hidden;
+  }
+  .dish-img img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  .dish-img .dish-emoji {
+    position: relative; z-index: 0;
+  }
+  .dish-img.bg-grill { background: linear-gradient(135deg, #c97b2a, #7c3a13); }
+  .dish-img.bg-soup { background: linear-gradient(135deg, #dc7a5a, #8b3a2e); }
+  .dish-img.bg-salad { background: linear-gradient(135deg, #a8c66c, #4a6b1f); }
+  .dish-img.bg-bread { background: linear-gradient(135deg, #e8c878, #a8772a); }
+  .dish-img.bg-dolma { background: linear-gradient(135deg, #8fa550, #4a5a1d); }
+  .dish-img.bg-kebab { background: linear-gradient(135deg, #b8472f, #5d1f15); }
+  .dish-img.bg-dessert { background: linear-gradient(135deg, #d6a978, #8b5a2b); }
+  .dish-img.bg-drink { background: linear-gradient(135deg, #c5a679, #6b4423); }
+  .dish-img.bg-side { background: linear-gradient(135deg, #d4b88a, #8b6a2e); }
+  .dish-img.bg-pastry { background: linear-gradient(135deg, #e0bb7a, #9a6a2a); }
+  .dish-img.bg-app { background: linear-gradient(135deg, #c8a070, #7d5320); }
+
+  .dish-tag {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--surface);
+    color: var(--burgundy);
+    padding: 4px 10px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid var(--gold-soft);
+  }
+  .dish-tag.hot { background: var(--burgundy); color: var(--gold-soft); border-color: var(--gold); }
+  .dish-tag.new { background: var(--gold); color: var(--surface); border-color: var(--gold); }
+  .dish-tag.signature { background: #1a1209; color: var(--gold-soft); border-color: var(--gold); }
+
+  .dish-body {
+    padding: 16px 18px 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: var(--surface);
+  }
+  .dish-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+  .dish-name em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--burgundy);
+    font-size: 15px;
+    display: block;
+    margin-top: 1px;
+  }
+  .dish-desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    flex: 1;
+    margin-top: 3px;
+  }
+  .dish-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+  .dish-price {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--burgundy);
+  }
+  .dish-price .currency { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; margin-left: 2px; opacity: 0.7; }
+  .dish-add {
+    width: 34px; height: 34px;
+    border: 1px solid var(--burgundy);
+    background: transparent;
+    color: var(--burgundy);
+    font-size: 18px;
+    font-weight: 300;
+    cursor: pointer;
+    display: grid; place-items: center;
+    transition: all 0.2s;
+  }
+  .dish-add:active { transform: scale(0.9); background: var(--burgundy); color: var(--surface); }
+
+  /* BOTTOM BAR */
+  .bottom-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--line-gold);
+    position: relative;
+  }
+  .bb-btn {
+    padding: 11px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .bb-btn:active { transform: scale(0.96); }
+  .bb-voice {
+    background: var(--burgundy);
+    color: var(--surface);
+    border-color: var(--burgundy);
+    padding-left: 10px;
+  }
+  .bb-voice.listening { background: var(--burgundy-deep); animation: pulse 1.5s infinite; }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(114, 47, 55, 0.5); }
+    50% { box-shadow: 0 0 0 12px rgba(114, 47, 55, 0); }
+  }
+  .bb-voice .mic-icon {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--burgundy-deep);
+    display: grid; place-items: center;
+    font-size: 12px;
+  }
+  .bb-spacer { flex: 1; }
+  .bb-cart {
+    background: var(--ink);
+    color: var(--gold-soft);
+    border-color: var(--ink);
+    padding-right: 16px;
+    font-weight: 600;
+  }
+  .bb-cart .cart-count {
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    padding: 2px 9px;
+    border-radius: 100px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  /* CUSTOM FOOTER */
+  .custom-footer {
+    display: none;
+    padding: 8px 32px;
+    text-align: center;
+    background: var(--ink);
+    color: var(--gold-soft);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    border-top: 1px solid var(--gold);
+  }
+  .custom-footer.show { display: block; }
+
+  /* ============ SHEET / MODAL ============ */
+  .sheet-backdrop {
+    position: fixed; inset: 0;
+    background: var(--overlay);
+    z-index: 500;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .sheet-backdrop.show { opacity: 1; pointer-events: auto; }
+
+  .sheet {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    max-height: 85vh;
+    background: var(--surface);
+    border-top: 2px solid var(--gold-soft);
+    z-index: 501;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -20px 60px -10px rgba(0, 0, 0, 0.3);
+  }
+  .sheet.show { transform: translateY(0); }
+  .sheet-handle {
+    width: 40px; height: 3px;
+    background: var(--line);
+    border-radius: 100px;
+    margin: 12px auto 0;
+  }
+  .sheet-head {
+    padding: 16px 32px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .sheet-head h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 500;
+  }
+  .sheet-head h3 em { font-style: italic; color: var(--burgundy); }
+  .sheet-close {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .cart-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 32px;
+    min-height: 200px;
+  }
+  .cart-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-soft);
+  }
+  .cart-empty .icon { font-size: 44px; margin-bottom: 14px; opacity: 0.4; }
+  .cart-empty p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; }
+
+  .cart-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .cart-item-img {
+    width: 48px; height: 48px;
+    background: var(--bg-deep);
+    display: grid; place-items: center;
+    font-size: 24px;
+    flex-shrink: 0;
+    border: 1px solid var(--line-gold);
+  }
+  .cart-item-info { flex: 1; min-width: 0; }
+  .cart-item-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .cart-item-meta {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .cart-item-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--burgundy);
+    margin-top: 4px;
+    padding: 4px 10px;
+    background: color-mix(in srgb, var(--gold) 8%, transparent);
+    border-left: 2px solid var(--gold-soft);
+  }
+  .cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .qty-controls {
+    display: flex; align-items: center;
+    gap: 6px;
+    background: var(--bg);
+    border-radius: 100px;
+    padding: 3px;
+    border: 1px solid var(--line);
+  }
+  .qty-btn {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 14px;
+  }
+  .qty-btn:active { background: var(--burgundy); color: var(--surface); }
+  .qty-val {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 18px;
+    text-align: center;
+  }
+  .note-btn {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .note-btn.has-note {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+
+  .sheet-foot {
+    padding: 18px 32px 24px;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .total-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px;
+  }
+  .total-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+  .total-val {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--burgundy);
+  }
+  .total-val .currency { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px; opacity: 0.7; }
+  .checkout-btn {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--gold);
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+  }
+  .checkout-btn::before {
+    content: ''; position: absolute; inset: 3px;
+    border: 1px solid var(--gold); opacity: 0.4; pointer-events: none;
+  }
+  .checkout-btn:active { transform: scale(0.98); }
+  .checkout-btn:disabled { opacity: 0.4; }
+
+  /* ============ MODAL ============ */
+  .modal {
+    position: fixed; inset: 0;
+    background: var(--overlay);
+    z-index: 600;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .modal.show { display: flex; opacity: 1; }
+  .modal-card {
+    background: var(--surface);
+    border: 1px solid var(--gold-soft);
+    max-width: 560px;
+    width: 100%;
+    max-height: 92vh;
+    overflow-y: auto;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .modal.show .modal-card { transform: scale(1); }
+  .modal-img {
+    aspect-ratio: 16/9;
+    display: grid; place-items: center;
+    font-size: 88px;
+    position: relative;
+    overflow: hidden;
+  }
+  .modal-img img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .modal-img .modal-close { z-index: 2; }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .modal-body { padding: 24px 28px 28px; }
+  .modal-body h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+  }
+  .modal-body h2 em {
+    display: block;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--burgundy);
+    font-size: 20px;
+    margin-top: 2px;
+  }
+  .modal-price {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--burgundy);
+    margin-top: 6px;
+  }
+  .modal-desc {
+    color: var(--ink-soft);
+    line-height: 1.6;
+    margin: 14px 0 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+  }
+  .opt-group { margin-bottom: 18px; }
+  .opt-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .opt-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt-pill {
+    padding: 9px 16px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .opt-pill.active { background: var(--burgundy); color: var(--surface); border-color: var(--burgundy); }
+  .opt-pill .extra {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  .note-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-style: italic;
+    resize: none;
+    min-height: 70px;
+  }
+  .note-input:focus { outline: none; border-color: var(--gold); }
+
+  .modal-foot {
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .modal-foot .qty-controls { padding: 5px; }
+  .modal-foot .qty-btn { width: 34px; height: 34px; font-size: 16px; }
+  .modal-foot .qty-val { font-size: 16px; min-width: 24px; }
+  .modal-add {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid var(--gold);
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    position: relative;
+  }
+  .modal-add::before {
+    content: ''; position: absolute; inset: 3px;
+    border: 1px solid var(--gold); opacity: 0.4;
+  }
+
+  /* ============ CONFIRM ============ */
+  .confirm {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    z-index: 800;
+    display: none;
+    place-items: center;
+    text-align: center;
+    padding: 40px;
+  }
+  .confirm.show { display: grid; animation: fadeIn 0.5s; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .confirm-ornament {
+    width: 88px; height: 88px;
+    border: 1px solid var(--gold);
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    display: grid; place-items: center;
+    font-size: 40px;
+    margin: 0 auto 24px;
+    position: relative;
+    animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .confirm-ornament::before { content: ''; position: absolute; inset: 4px; border: 1px solid var(--gold); opacity: 0.5; }
+  .confirm-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 500;
+  }
+  .confirm-title em { font-style: italic; color: var(--burgundy); }
+  .confirm-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 17px;
+    margin: 6px 0 28px;
+  }
+  .confirm-num {
+    display: inline-block;
+    padding: 14px 30px;
+    border: 1px solid var(--line-gold);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .confirm-num strong {
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    color: var(--burgundy);
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+  .confirm-back {
+    margin-top: 30px;
+    padding: 12px 28px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* ============ AI BUBBLE ============ */
+  .ai-bubble {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--surface);
+    padding: 18px 22px;
+    border: 1px solid var(--gold);
+    max-width: 440px;
+    z-index: 400;
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .ai-bubble.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+  .ai-bubble .ai-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ai-bubble .ai-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .ai-suggest-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ai-suggest {
+    background: transparent;
+    border: 1px solid var(--gold-soft);
+    padding: 7px 13px;
+    color: var(--gold-soft);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--gold-soft);
+    padding: 12px 22px;
+    border: 1px solid var(--gold-soft);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    z-index: 900;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-8px); }
+
+  /* ============ ADMIN ============ */
+  .admin {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    z-index: 700;
+    display: none;
+    flex-direction: column;
+  }
+  .admin.show { display: flex; animation: fadeIn 0.3s; }
+  .admin-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--line-gold);
+    background: var(--surface);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .admin-head h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .admin-head h2 em { font-style: italic; color: var(--burgundy); }
+  .admin-tabs {
+    display: flex;
+    gap: 3px;
+    padding: 3px;
+    background: var(--bg);
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .admin-tab {
+    padding: 7px 14px;
+    border: none;
+    background: transparent;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .admin-tab.active { background: var(--burgundy); color: var(--surface); }
+  .admin-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 18px 20px;
+    position: relative;
+  }
+  .stat-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0;
+    width: 28px; height: 1px;
+    background: var(--gold);
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .stat-val {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--burgundy);
+  }
+  .stat-val .unit { font-size: 12px; color: var(--ink-soft); margin-left: 3px; font-weight: 400; }
+
+  .orders-list { display: grid; gap: 12px; }
+  .order-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 20px;
+    align-items: center;
+  }
+  .order-card.new {
+    border-color: var(--gold);
+    animation: newOrder 0.6s ease;
+  }
+  @keyframes newOrder {
+    0% { transform: scale(0.96); opacity: 0; }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .order-num {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--burgundy);
+  }
+  .order-info { min-width: 0; }
+  .order-table {
+    font-size: 10px;
+    color: var(--ink-soft);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .order-table strong { color: var(--burgundy); }
+  .order-items {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .order-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--burgundy);
+    margin-top: 4px;
+    padding: 3px 8px;
+    background: color-mix(in srgb, var(--gold) 10%, transparent);
+    border-left: 2px solid var(--gold-soft);
+    display: inline-block;
+  }
+  .order-total {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .order-time {
+    font-size: 10px;
+    color: var(--ink-soft);
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+  .order-actions { display: flex; gap: 6px; flex-direction: column; }
+  .order-btn {
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--ink);
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  .order-btn.primary { background: var(--burgundy); color: var(--surface); border-color: var(--burgundy); }
+  .order-btn.gold { background: var(--gold); color: #1a1209; border-color: var(--gold); }
+  .order-btn.assign-table { background: var(--ink); color: var(--gold-soft); border-color: var(--gold); }
+
+  /* TABLES ADMIN */
+  .tables-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .tables-toolbar .stat-pill {
+    padding: 7px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+  }
+  .tables-toolbar .stat-pill strong { color: var(--burgundy); font-weight: 600; }
+  .add-table-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--burgundy);
+    background: var(--burgundy);
+    color: var(--surface);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .tables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .table-admin-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 16px;
+    position: relative;
+  }
+  .table-admin-card .status-dot {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .table-admin-card .status-dot.free { background: var(--green); }
+  .table-admin-card .status-dot.occupied { background: var(--burgundy); }
+  .table-admin-card .status-dot.reserved { background: var(--orange); }
+  .table-admin-num {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--burgundy);
+    line-height: 1;
+  }
+  .table-admin-info {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin: 6px 0 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .table-admin-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .table-admin-row label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    min-width: 50px;
+  }
+  .table-admin-row select, .table-admin-row input {
+    flex: 1;
+    padding: 5px 8px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+  }
+  .table-delete {
+    width: 100%;
+    margin-top: 6px;
+    padding: 6px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .table-delete:hover { background: var(--burgundy); color: var(--surface); border-color: var(--burgundy); }
+
+  /* ADMIN MENU */
+  .admin-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .admin-menu-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    position: relative;
+  }
+  .admin-menu-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, var(--surface), color-mix(in srgb, var(--gold) 5%, var(--surface)));
+  }
+  .admin-menu-card.featured::after {
+    content: '★';
+    position: absolute;
+    top: 8px; right: 10px;
+    color: var(--gold);
+    font-size: 14px;
+  }
+  .admin-menu-card.add-card {
+    border: 1px dashed var(--gold-soft);
+    background: transparent;
+    justify-content: center;
+    cursor: pointer;
+    min-height: 90px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--burgundy);
+    font-size: 16px;
+  }
+  .admin-menu-emoji {
+    width: 52px; height: 52px;
+    background: var(--bg-deep);
+    display: grid; place-items: center;
+    font-size: 26px;
+    border: 1px solid var(--line-gold);
+  }
+  .admin-menu-info { flex: 1; min-width: 0; }
+  .admin-menu-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .admin-menu-price {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: var(--burgundy);
+    margin-top: 2px;
+    font-weight: 600;
+  }
+  .admin-menu-actions { display: flex; gap: 5px; }
+  .admin-icon-btn {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: transparent;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .admin-icon-btn.featured { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+
+  /* SETTINGS */
+  .settings-section {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    max-width: 720px;
+    position: relative;
+  }
+  .settings-section::before {
+    content: ''; position: absolute;
+    top: 0; left: 0;
+    width: 28px; height: 1px;
+    background: var(--gold);
+  }
+  .settings-section h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .settings-section h3 em { font-style: italic; color: var(--burgundy); }
+  .field { margin-bottom: 12px; }
+  .field label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+  .field .help {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .font-preview {
+    margin-top: 10px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .font-preview .preview-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .font-preview .preview-body {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .save-btn {
+    padding: 10px 22px;
+    border: 1px solid var(--gold);
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* BANNER NOTIFICATION (ADMIN) */
+  .admin-banner {
+    position: fixed;
+    top: 20px; right: 20px;
+    z-index: 950;
+    display: none;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px 14px 16px;
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    border: 1px solid var(--gold);
+    cursor: pointer;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
+    animation: bannerSlide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .admin-banner.show { display: flex; }
+  @keyframes bannerSlide {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .admin-banner .bell {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--burgundy-deep);
+    display: grid; place-items: center;
+    font-size: 16px;
+    animation: ring 0.5s ease-in-out infinite alternate;
+  }
+  @keyframes ring {
+    0% { transform: rotate(-10deg); }
+    100% { transform: rotate(10deg); }
+  }
+  .admin-banner-text { font-family: 'Cormorant Garamond', serif; }
+  .admin-banner-text .label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    font-family: 'Inter', sans-serif;
+  }
+  .admin-banner-text .msg {
+    font-style: italic;
+    font-size: 15px;
+    margin-top: 2px;
+  }
+
+  /* ASSIGN MODAL */
+  .assign-modal {
+    position: fixed; inset: 0;
+    background: var(--overlay);
+    z-index: 850;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+  }
+  .assign-modal.show { display: flex; }
+  .assign-card {
+    background: var(--surface);
+    border: 1px solid var(--gold-soft);
+    padding: 28px 32px;
+    max-width: 480px;
+    width: 100%;
+  }
+  .assign-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .assign-card .sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .assign-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .assign-btn {
+    padding: 12px 8px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--burgundy);
+    transition: all 0.15s;
+  }
+  .assign-btn:hover { background: var(--burgundy); color: var(--surface); border-color: var(--burgundy); }
+  .assign-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .hidden { display: none !important; }
+
+  /* ============ IDLE SCREEN ============ */
+  .idle-screen {
+    position: fixed; inset: 0;
+    z-index: 1200;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-deep);
+    overflow: hidden;
+  }
+  .idle-screen.show { display: flex; }
+  .idle-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .idle-video iframe {
+    width: 100%; height: 100%;
+    border: none;
+    pointer-events: none;
+  }
+  .idle-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(26,18,9,0.3) 0%, rgba(26,18,9,0.65) 100%);
+    z-index: 1;
+  }
+  .idle-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--gold-soft);
+    padding: 40px;
+  }
+  .idle-logo {
+    width: 90px; height: 90px;
+    margin: 0 auto 24px;
+    border: 1px solid var(--gold);
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    display: grid; place-items: center;
+    font-family: 'Cinzel', serif;
+    font-size: 40px;
+    font-weight: 600;
+    position: relative;
+  }
+  .idle-logo::before { content: ''; position: absolute; inset: 4px; border: 1px solid var(--gold); opacity: 0.5; }
+  .idle-title {
+    font-family: 'Cinzel', serif;
+    font-size: 52px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  }
+  .idle-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--gold-soft);
+    opacity: 0.85;
+    margin-bottom: 48px;
+  }
+  .idle-cta {
+    padding: 18px 48px;
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    border: 1px solid var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+    animation: idlePulse 3s infinite;
+  }
+  .idle-cta::before { content: ''; position: absolute; inset: 4px; border: 1px solid var(--gold); opacity: 0.4; pointer-events: none; }
+  .idle-cta:active { transform: scale(0.97); }
+  @keyframes idlePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(184,134,11,0.3); }
+    50% { box-shadow: 0 0 0 16px rgba(184,134,11,0); }
+  }
+  .idle-static-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--burgundy-deep) 0%, #1a1209 50%, var(--burgundy-deep) 100%);
+    z-index: 0;
+  }
+
+  /* Back to idle button */
+  .back-idle-btn {
+    position: absolute;
+    top: 14px; left: 14px;
+    padding: 8px 14px;
+    border: 1px solid var(--line-gold);
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .back-idle-btn:hover { opacity: 1; }
+
+  /* Categories admin tab */
+  .cat-admin-list { display: grid; gap: 10px; max-width: 600px; }
+  .cat-admin-item {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: grab;
+  }
+  .cat-admin-item:active { cursor: grabbing; }
+  .cat-drag-handle { color: var(--ink-soft); font-size: 16px; cursor: grab; user-select: none; }
+  .cat-admin-name-input {
+    flex: 1;
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+  }
+  .cat-admin-name-input:focus { outline: none; border-color: var(--gold); }
+  .cat-toggle-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .cat-toggle-btn.active { background: var(--burgundy); color: var(--surface); border-color: var(--burgundy); }
+  .cat-save-btn {
+    margin-top: 14px;
+    padding: 10px 22px;
+    border: 1px solid var(--gold);
+    background: var(--burgundy);
+    color: var(--gold-soft);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .hist-filter-btn {
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    cursor: pointer; border-radius: 100px;
+    transition: all 0.15s;
+  }
+  .hist-filter-btn.active { background: var(--burgundy); color: var(--surface); border-color: var(--burgundy); }
+
+  /* Dish edit modal */
+  .dish-edit-modal {
+    position: fixed; inset: 0;
+    background: var(--overlay);
+    z-index: 800;
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .dish-edit-modal.show { display: flex; }
+  .dish-edit-card {
+    background: var(--surface); border: 1px solid var(--gold-soft);
+    max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 28px;
+  }
+  .dish-edit-card h3 { font-family: 'Cormorant Garamond',serif; font-size: 22px; font-weight: 600; margin-bottom: 16px; }
+  .dish-edit-card h3 em { font-style: italic; color: var(--burgundy); }
+  .de-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .de-row.full { grid-template-columns: 1fr; }
+  .de-field label { display: block; font-size: 9px; letter-spacing: 0.2em; color: var(--ink-soft); text-transform: uppercase; margin-bottom: 4px; font-weight: 500; }
+  .de-field input, .de-field select, .de-field textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font-family: inherit; font-size: 14px; }
+  .de-field textarea { resize: vertical; min-height: 58px; }
+  .de-field input:focus, .de-field select:focus, .de-field textarea:focus { outline: none; border-color: var(--gold); }
+  .de-actions { display: flex; gap: 10px; margin-top: 16px; }
+  .de-btn { flex: 1; padding: 12px; border: 1px solid var(--line); background: transparent; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; color: var(--ink); }
+  .de-btn.primary { background: var(--burgundy); color: var(--gold-soft); border-color: var(--gold); font-family: 'Cinzel',serif; }
+</style>
+</head>
+<body>
+
+<!-- ============ IDLE SCREEN ============ -->
+<div class="idle-screen show" id="idleScreen">
+  <div class="idle-static-bg"></div>
+  <div class="idle-video" id="idleVideoArea"></div>
+  <div class="idle-overlay"></div>
+  <div class="idle-content">
+    <div class="idle-logo">A</div>
+    <div class="idle-title">ARMENIA</div>
+    <div class="idle-sub">Restaurant · Pattaya · Est. 2024</div>
+    <button class="idle-cta" id="idleCtaBtn">TAP TO BEGIN · เลือกโต๊ะ · Начать</button>
+  </div>
+</div>
+
+<!-- ============ TABLE SELECT + LANGUAGE (combined) ============ -->
+<div class="table-select" id="tableSelect">
+  <div class="ts-header">
+    <div class="ts-logo-wrap" id="tsLogoWrap">
+      <div class="ts-mark" id="tsLogoMark">A</div>
+    </div>
+    <div class="ts-title" id="tsTitleText">ARMENIA · PATTAYA</div>
+    <div class="ts-sub" id="tsSubText">Choose your language · เลือกภาษา · Выберите язык</div>
+    <div class="ts-lang-row">
+      <button class="ts-lang-btn active" data-lang="en">🇬🇧 English</button>
+      <button class="ts-lang-btn" data-lang="th">🇹🇭 ภาษาไทย</button>
+      <button class="ts-lang-btn" data-lang="ru">🇷🇺 Русский</button>
+    </div>
+    <div class="ts-divider"><div class="ts-div-line"></div><span class="ts-div-diamond">◆</span><div class="ts-div-line"></div></div>
+    <div class="ts-pick-label" id="tsPickLabel">Select your table</div>
+    <div class="ts-legend">
+      <div class="ts-legend-item"><span class="ts-legend-dot free"></span> <span data-i18n="free">Available</span></div>
+      <div class="ts-legend-item"><span class="ts-legend-dot occupied"></span> <span data-i18n="occupied">Occupied</span></div>
+      <div class="ts-legend-item"><span class="ts-legend-dot reserved"></span> <span data-i18n="reserved">Reserved</span></div>
+    </div>
+  </div>
+  <div class="ts-grid" id="tsGrid"></div>
+</div>
+
+<!-- ============ APP ============ -->
+<div class="app">
+  <button class="back-idle-btn" id="backIdleBtn">⟵ Idle Screen</button>
+  <div class="custom-header" id="customHeader"></div>
+
+  <header>
+    <div class="brand">
+      <div class="brand-mark">A</div>
+      <div class="brand-text">
+        <h1 id="brandName">ARMENIA</h1>
+        <p id="brandTagline">Restaurant · Pattaya</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="table-badge" id="tableBadge">
+        <span data-i18n="table">Table</span><strong id="tableBadgeNum">№ 07</strong>
+      </div>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="th">TH</button>
+        <button class="lang-btn" data-lang="ru">RU</button>
+      </div>
+      <button class="icon-btn" id="themeBtn">🌙</button>
+      <button class="icon-btn" id="adminBtn" title="Admin">⚙</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- BANNER / VIDEO -->
+    <div class="banner-area" id="bannerArea"></div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-text">
+        <h2 data-i18n="hero1">Welcome.<br><em data-i18n="hero2">Բարի գալուստ</em></h2>
+        <p data-i18n="heroSub">Authentic Armenian cuisine since 2024 — tap to explore, or speak to our assistant in any language.</p>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-num">№ <span id="dishCount">50</span> · <span data-i18n="dishes">DISHES</span></div>
+    </div>
+
+    <!-- FEATURED -->
+    <div class="featured-section" id="featuredSection">
+      <div class="featured-head">
+        <span class="star">★</span>
+        <h3 data-i18n="featured">Today's <em>Featured</em></h3>
+        <div class="line"></div>
+      </div>
+      <div class="featured-grid" id="featuredGrid"></div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="categories" id="categories"></div>
+
+    <!-- MENU GRID -->
+    <div class="menu-grid" id="menuGrid"></div>
+  </main>
+
+  <div class="bottom-bar">
+    <button class="bb-btn bb-voice" id="voiceBtn">
+      <div class="mic-icon">🎤</div>
+      <span id="voiceLabel" data-i18n="askMe">Ask Assistant</span>
+    </button>
+    <button class="bb-btn" id="callWaiterBtn">
+      <span>🛎</span>
+      <span data-i18n="callWaiter">Call Waiter</span>
+    </button>
+    <button class="bb-btn" id="askBillBtn">
+      <span>🧾</span>
+      <span data-i18n="askBill">Bill</span>
+    </button>
+    <div class="bb-spacer"></div>
+    <button class="bb-btn bb-cart" id="cartBtn">
+      <span>🛒</span>
+      <span data-i18n="cart">Order</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+
+  <div class="custom-footer" id="customFooter"></div>
+</div>
+
+<!-- ============ CART SHEET ============ -->
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="sheet" id="cartSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <h3 data-i18n="yourOrder">Your <em>Order</em></h3>
+    <button class="sheet-close" id="sheetClose">✕</button>
+  </div>
+  <div class="cart-list" id="cartList">
+    <div class="cart-empty">
+      <div class="icon">🍷</div>
+      <p data-i18n="emptyCart">Your table awaits</p>
+    </div>
+  </div>
+  <div class="sheet-foot">
+    <div class="total-row">
+      <span class="total-label" data-i18n="total">Total</span>
+      <span class="total-val"><span id="cartTotal">0</span> <span class="currency">฿</span></span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn" disabled>
+      <span data-i18n="sendOrder">Send to Kitchen</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-img" id="modalImg">
+      🥩
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <h2 id="modalName">Dish<em id="modalNameNative">Native name</em></h2>
+      <div class="modal-price"><span id="modalPriceVal">285</span> <span style="font-size:14px;opacity:0.7">฿</span></div>
+      <p class="modal-desc" id="modalDesc">Description</p>
+
+      <div class="opt-group" id="modalAddonsGroup" style="display:none">
+        <div class="opt-label" data-i18n="addons">Add-ons</div>
+        <div class="opt-pills" id="modalAddonPills"></div>
+      </div>
+
+      <div class="opt-group">
+        <div class="opt-label" data-i18n="noteLabel">Special Note (optional)</div>
+        <textarea class="note-input" id="modalNote" placeholder="No onions, less salt, allergic to nuts..." maxlength="200"></textarea>
+      </div>
+
+      <div class="modal-foot">
+        <div class="qty-controls">
+          <button class="qty-btn" id="mQtyMinus">−</button>
+          <span class="qty-val" id="mQty">1</span>
+          <button class="qty-btn" id="mQtyPlus">+</button>
+        </div>
+        <button class="modal-add" id="modalAdd">
+          <span data-i18n="addCart">Add</span>
+          <span>·</span>
+          <span id="modalTotal">285 ฿</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NOTE EDIT MODAL ============ -->
+<div class="modal" id="noteModal">
+  <div class="modal-card" style="max-width:420px">
+    <div class="modal-body" style="padding-top:24px">
+      <h2 style="margin-bottom:16px"><em data-i18n="editNote">Edit Note</em></h2>
+      <textarea class="note-input" id="noteEditInput" placeholder="Special instructions..." maxlength="200"></textarea>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="order-btn" id="noteCancel" style="flex:1" data-i18n="cancel">Cancel</button>
+        <button class="order-btn primary" id="noteSave" style="flex:1" data-i18n="save">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BILL MODAL (Customer view) ============ -->
+<div class="bill-modal" id="billModal">
+  <div class="bill-card">
+    <div class="bill-head">
+      <div class="bill-restaurant" id="billRestName">ARMENIA RESTAURANT</div>
+      <div class="bill-address">Jomtien Beach, Pattaya · +66 62 664 0700</div>
+    </div>
+    <hr class="bill-divider">
+    <div class="bill-meta"><strong data-i18n="table">Table</strong>: <strong id="billTableNum">07</strong></div>
+    <div class="bill-meta">Order: <strong id="billOrderNum">A-0001</strong></div>
+    <div class="bill-meta" id="billTimeRow"></div>
+    <hr class="bill-divider">
+    <div class="bill-items" id="billItemsList"></div>
+    <hr class="bill-divider">
+    <div class="bill-total-row">
+      <span class="bill-total-label">TOTAL</span>
+      <span class="bill-total-val"><span id="billTotalVal">0</span> ฿</span>
+    </div>
+    <div class="bill-thanks">Շնորհակալություն · Thank you · ขอบคุณ</div>
+    <div class="bill-actions">
+      <button class="bill-close-btn" id="billCloseBtn">Close</button>
+      <button class="bill-print-btn" id="billPrintBtn">🖨 Print Bill</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONFIRM ============ -->
+<div class="confirm" id="confirm">
+  <div>
+    <div class="confirm-ornament">✓</div>
+    <h1 class="confirm-title"><em data-i18n="orderSent">Շնորհակալություն</em></h1>
+    <p class="confirm-sub" data-i18n="confirmSub">Your order has been received</p>
+    <div class="confirm-num">
+      <span data-i18n="orderNum">Order Number</span>
+      <strong id="orderNum">A-0042</strong>
+    </div>
+    <br>
+    <button class="confirm-back" id="confirmBack" data-i18n="backMenu">Back to menu</button>
+  </div>
+</div>
+
+<!-- ============ AI BUBBLE ============ -->
+<div class="ai-bubble" id="aiBubble">
+  <div class="ai-label">ASSISTANT</div>
+  <div class="ai-text" id="aiText">Suggestion text</div>
+  <div class="ai-suggest-row" id="aiSuggestions"></div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ ADMIN BANNER ============ -->
+<div class="admin-banner" id="adminBanner">
+  <div class="bell">🔔</div>
+  <div class="admin-banner-text">
+    <div class="label">NEW ORDER</div>
+    <div class="msg" id="adminBannerMsg">Table 7 · 3 items</div>
+  </div>
+</div>
+
+<!-- ============ ASSIGN TABLE MODAL ============ -->
+<div class="assign-modal" id="assignModal">
+  <div class="assign-card">
+    <h3>Assign Table</h3>
+    <p class="sub">Select a free table to assign this order to</p>
+    <div class="assign-grid" id="assignGrid"></div>
+    <button class="order-btn" id="assignCancel" style="width:100%">Cancel</button>
+  </div>
+</div>
+
+<!-- ============ ADMIN DASHBOARD ============ -->
+<div class="admin" id="admin">
+  <div class="admin-head">
+    <h2>Admin <em>Dashboard</em></h2>
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="orders">Live Orders</button>
+      <button class="admin-tab" data-tab="tables">Tables</button>
+      <button class="admin-tab" data-tab="menu">Menu</button>
+      <button class="admin-tab" data-tab="categories">Categories</button>
+      <button class="admin-tab" data-tab="history">History</button>
+      <button class="admin-tab" data-tab="branding">Branding</button>
+      <button class="admin-tab" data-tab="settings">Settings</button>
+    </div>
+    <button class="icon-btn" id="adminClose">✕</button>
+  </div>
+
+  <div class="admin-body">
+    <!-- ORDERS -->
+    <div id="tab-orders">
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-label">Today's Orders</div><div class="stat-val" id="statOrders">0</div></div>
+        <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-val"><span id="statRevenue">0</span> <span class="unit">฿</span></div></div>
+        <div class="stat-card"><div class="stat-label">Free Tables</div><div class="stat-val"><span id="statFreeTables">0</span><span class="unit">/<span id="statTotalTables">0</span></span></div></div>
+        <div class="stat-card"><div class="stat-label">Avg Order</div><div class="stat-val"><span id="statAvg">0</span> <span class="unit">฿</span></div></div>
+      </div>
+      <div class="orders-list" id="ordersList"></div>
+    </div>
+
+    <!-- TABLES -->
+    <div id="tab-tables" class="hidden">
+      <div class="tables-toolbar">
+        <div class="stat-pill"><span data-i18n="free">Available</span>: <strong id="poolFree">0</strong></div>
+        <div class="stat-pill"><span data-i18n="occupied">Occupied</span>: <strong id="poolOccupied">0</strong></div>
+        <div class="stat-pill"><span data-i18n="reserved">Reserved</span>: <strong id="poolReserved">0</strong></div>
+        <div style="flex:1"></div>
+        <button class="add-table-btn" id="addTableBtn">+ Add Table</button>
+      </div>
+      <div class="tables-grid" id="tablesGrid"></div>
+    </div>
+
+    <!-- MENU -->
+    <div id="tab-menu" class="hidden">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap">
+        <p style="color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;flex:1">Click <span style="color:var(--gold)">★</span> to feature (max 4) · ✏️ to edit · 🗑 to delete. Add-ons are managed per dish in the edit form.</p>
+        <button class="save-btn" id="addDishBtn">+ Add Dish</button>
+      </div>
+      <div class="admin-menu-grid" id="adminMenuGrid"></div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div id="tab-categories" class="hidden">
+      <p style="margin-bottom:14px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px">Drag to reorder. Toggle visibility. Edit display names for each language.</p>
+      <div class="cat-admin-list" id="catAdminList"></div>
+      <button class="cat-save-btn" id="saveCatsBtn">Save Categories</button>
+    </div>
+
+    <!-- HISTORY -->
+    <div id="tab-history" class="hidden">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
+        <div style="display:flex;gap:6px">
+          <button class="hist-filter-btn active" data-period="day">Today</button>
+          <button class="hist-filter-btn" data-period="week">This Week</button>
+          <button class="hist-filter-btn" data-period="month">This Month</button>
+          <button class="hist-filter-btn" data-period="all">All</button>
+        </div>
+        <div style="flex:1"></div>
+        <button class="save-btn" id="exportExcelBtn">⬇ Export Excel</button>
+      </div>
+      <div class="stats-row" id="histStats" style="margin-bottom:16px">
+        <div class="stat-card"><div class="stat-label">Orders</div><div class="stat-val" id="histStatOrders">0</div></div>
+        <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-val"><span id="histStatRev">0</span><span class="unit"> ฿</span></div></div>
+        <div class="stat-card"><div class="stat-label">Avg Order</div><div class="stat-val"><span id="histStatAvg">0</span><span class="unit"> ฿</span></div></div>
+        <div class="stat-card"><div class="stat-label">Tables Served</div><div class="stat-val" id="histStatTables">0</div></div>
+      </div>
+      <div class="orders-list" id="histOrdersList"></div>
+    </div>
+
+    <!-- BRANDING -->
+    <div id="tab-branding" class="hidden">
+
+      <div class="settings-section">
+        <h3>Logo <em>Upload</em></h3>
+        <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+          <div id="logoPreview" style="width:72px;height:72px;border:1px solid var(--gold);background:var(--burgundy);display:grid;place-items:center;font-family:'Cinzel',serif;font-size:30px;color:var(--gold-soft);position:relative;flex-shrink:0;overflow:hidden">A</div>
+          <div style="flex:1">
+            <label style="display:block;font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:5px;font-weight:500">Upload Logo Image</label>
+            <input type="file" id="logoUpload" accept="image/*" style="display:none">
+            <button class="save-btn" onclick="document.getElementById('logoUpload').click()" style="margin-right:8px">Choose File</button>
+            <button class="save-btn" id="clearLogoBtn" style="background:transparent;color:var(--ink-soft);border-color:var(--line)">Clear Logo</button>
+            <div class="help" style="margin-top:6px">PNG/JPG/SVG. Displays in header and table selection screen.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3><em>Header</em> & Footer</h3>
+        <div class="field">
+          <label>Top Header Text (above main menu)</label>
+          <input type="text" id="headerText" placeholder='e.g. "Welcome — Special Friday Discount 10% on All BBQ"'>
+          <div class="help">Leave empty to hide. Shown in burgundy banner above the menu.</div>
+        </div>
+        <div class="field">
+          <label>Bottom Footer Text</label>
+          <input type="text" id="footerText" placeholder='e.g. "Thank you for dining with us · Free Wi-Fi: armenia_guest"'>
+          <div class="help">Leave empty to hide. Shown in dark banner at the bottom.</div>
+        </div>
+        <button class="save-btn" id="saveHeaderFooter">Save Header/Footer</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>Banner / <em>Video</em></h3>
+        <div class="field">
+          <label>Banner Type</label>
+          <select id="bannerType">
+            <option value="none">None</option>
+            <option value="image">Image URL</option>
+            <option value="youtube">YouTube Video</option>
+          </select>
+        </div>
+        <div class="field" id="bannerUrlField">
+          <label>Banner Image URL or YouTube URL</label>
+          <input type="text" id="bannerUrl" placeholder="https://example.com/banner.jpg or https://youtube.com/watch?v=...">
+          <div class="help">For YouTube, paste any standard URL — auto-converts to embed format.</div>
+        </div>
+        <button class="save-btn" id="saveBanner">Save Banner</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>Display <em>Font</em></h3>
+        <div class="field">
+          <label>Font Family</label>
+          <select id="fontSelect">
+            <option value="cormorant">Cormorant Garamond (Classic Elegant)</option>
+            <option value="cinzel">Cinzel (Roman Carved Stone)</option>
+            <option value="montserrat">Montserrat (Modern Geometric)</option>
+            <option value="helvetica">Helvetica Neue (Classic Sans)</option>
+            <option value="sans">Inter Sans-Serif (Modern Clean)</option>
+          </select>
+          <div class="help">Changes the display font across the entire app instantly.</div>
+        </div>
+        <div class="font-preview">
+          <div class="preview-title font-display">Phở Bò Khorovats</div>
+          <div class="preview-body">Traditional Armenian shashlik grilled over open flame with herbs.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="tab-settings" class="hidden">
+      <div class="settings-section">
+        <h3>Restaurant <em>Information</em></h3>
+        <div class="field"><label>Restaurant Name</label><input type="text" id="settingName" value="ARMENIA"></div>
+        <div class="field"><label>Tagline</label><input type="text" id="settingTagline" value="Restaurant · Pattaya"></div>
+        <div class="field"><label>Phone</label><input type="text" value="+66 62 664 0700"></div>
+        <div class="field"><label>Address</label><input type="text" value="334/113-115 M12, Jomtien Beach, Pattaya"></div>
+        <button class="save-btn" id="saveInfo">Save</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>Device <em>Mode</em></h3>
+        <div class="field">
+          <label>This device is</label>
+          <select id="deviceModeSelect">
+            <option value="customer">Customer Tablet</option>
+            <option value="admin">Admin / Kitchen Display</option>
+          </select>
+          <div class="help">Customer = ordering interface. Admin = receives orders and manages everything.</div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>Kitchen <em>Printer</em></h3>
+        <div class="field">
+          <label>Printer Type</label>
+          <select>
+            <option>ESC/POS Network Printer</option>
+            <option>Bluetooth Thermal Printer</option>
+            <option>PrintNode Cloud</option>
+          </select>
+        </div>
+        <div class="field"><label>Printer IP Address</label><input type="text" value="192.168.1.100"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DISH EDIT MODAL ============ -->
+<div class="dish-edit-modal" id="dishEditModal">
+  <div class="dish-edit-card">
+    <h3 id="dishEditTitle">Add <em>New Dish</em></h3>
+    <input type="hidden" id="deId">
+
+    <!-- Image upload -->
+    <div class="de-row full" style="margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div id="deImgPreview" style="width:80px;height:80px;background:var(--bg-deep);border:1px solid var(--line-gold);display:grid;place-items:center;font-size:36px;flex-shrink:0;overflow:hidden">🍽</div>
+        <div style="flex:1">
+          <label style="display:block;font-size:9px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:5px;font-weight:500">Dish Photo</label>
+          <input type="file" id="deImgUpload" accept="image/*" style="display:none">
+          <button type="button" class="de-btn" style="padding:7px 14px;font-size:11px" onclick="document.getElementById('deImgUpload').click()">📷 Upload Photo</button>
+          <button type="button" class="de-btn" id="deImgClear" style="padding:7px 14px;font-size:11px;margin-left:6px">Clear</button>
+          <div style="font-size:10px;color:var(--ink-soft);margin-top:4px">JPG/PNG max 2MB. If no photo, emoji is shown.</div>
+        </div>
+        <div style="flex:1;min-width:100px">
+          <label style="display:block;font-size:9px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:5px;font-weight:500">Or use Emoji</label>
+          <input type="text" id="deEmoji" placeholder="🥩" maxlength="4" style="width:100%;padding:8px 10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:22px;">
+        </div>
+      </div>
+    </div>
+
+    <div class="de-row">
+      <div class="de-field"><label>Category</label>
+        <select id="deCat">
+          <option value="appetizers">Appetizers</option>
+          <option value="salads">Salads</option>
+          <option value="soups">Soups</option>
+          <option value="barbecue">Barbecue</option>
+          <option value="mains">Main Courses</option>
+          <option value="sides">Side Dishes</option>
+          <option value="pastry">Pastry</option>
+          <option value="bread">Hand Molding</option>
+          <option value="desserts">Desserts</option>
+          <option value="drinks">Soft Drinks</option>
+          <option value="extra">Extra</option>
+        </select>
+      </div>
+      <div class="de-field"><label>Badge</label>
+        <select id="deTag">
+          <option value="">None</option>
+          <option value="signature">Signature / Classic</option>
+          <option value="hot">Popular</option>
+          <option value="new">New</option>
+        </select>
+      </div>
+    </div>
+    <div class="de-row">
+      <div class="de-field"><label>Name (EN) *</label><input type="text" id="deNameEn" placeholder="Khorovats"></div>
+      <div class="de-field"><label>Native Name</label><input type="text" id="deNative" placeholder="Khorovats"></div>
+    </div>
+    <div class="de-row">
+      <div class="de-field"><label>Name (TH)</label><input type="text" id="deNameTh" placeholder="โคโรวัทส์"></div>
+      <div class="de-field"><label>Name (RU)</label><input type="text" id="deNameRu" placeholder="Хоровац"></div>
+    </div>
+    <div class="de-row full">
+      <div class="de-field"><label>Description (EN)</label><textarea id="deDescEn" placeholder="Describe the dish..."></textarea></div>
+    </div>
+    <div class="de-row">
+      <div class="de-field"><label>Description (TH)</label><textarea id="deDescTh" placeholder="ภาษาไทย..."></textarea></div>
+      <div class="de-field"><label>Description (RU)</label><textarea id="deDescRu" placeholder="Описание..."></textarea></div>
+    </div>
+    <div class="de-row">
+      <div class="de-field"><label>Price (฿) *</label><input type="number" id="dePrice" placeholder="285"></div>
+    </div>
+
+    <!-- Per-dish add-ons -->
+    <div style="margin-top:10px;padding:12px 14px;background:var(--bg);border:1px solid var(--line)">
+      <div style="font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;font-weight:500;margin-bottom:8px">Add-ons for this dish</div>
+      <div id="deAddonsList" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;min-height:28px"></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <input type="text" id="deAddonName" placeholder="Add-on name" style="flex:1;min-width:120px;padding:6px 9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:inherit;font-size:13px;">
+        <input type="number" id="deAddonPrice" placeholder="฿" style="width:70px;padding:6px 9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:'Helvetica Neue',sans-serif;font-size:13px;">
+        <button type="button" class="de-btn" id="deAddonAdd" style="padding:6px 12px;font-size:11px">+ Add</button>
+      </div>
+    </div>
+
+    <div class="de-actions">
+      <button class="de-btn" id="dishEditCancel">Cancel</button>
+      <button class="de-btn primary" id="dishEditSave">Save Dish</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============ I18N ============
+  const i18n = {
+    en: {
+      table: 'Table', dishes: 'DISHES',
+      hero1: 'Welcome.', hero2: 'Բարի գալուստ',
+      heroSub: 'Authentic Armenian cuisine since 2024 — tap to explore, or speak to our assistant in any language.',
+      featured: "Today's <em>Featured</em>",
+      yourOrder: 'Your <em>Order</em>', cart: 'Order',
+      emptyCart: 'Your table awaits',
+      total: 'Total', sendOrder: 'Send to Kitchen',
+      callWaiter: 'Call Waiter', askBill: 'Bill',
+      askMe: 'Ask Assistant', listening: 'Listening...',
+      added: 'Added to your order',
+      orderSent: 'Շնորհակալություն',
+      confirmSub: 'Your order has been received',
+      orderNum: 'Order Number', backMenu: 'Back to menu',
+      portion: 'Portion', full: 'Full',
+      spice: 'Spice Level', mild: 'Mild', medium: 'Medium', hot: 'Hot 🌶',
+      addons: 'Add-ons', noteLabel: 'Special Note (optional)',
+      addCart: 'Add', welcomePrompt: 'Please choose your language',
+      welcomeTable: 'You are seated at',
+      waiterCalled: 'A waiter is on the way',
+      billRequested: 'Your bill will be brought shortly',
+      free: 'Available', occupied: 'Occupied', reserved: 'Reserved',
+      editNote: 'Edit Note', cancel: 'Cancel', save: 'Save',
+      cats: { all: 'All', appetizers: 'Appetizers', salads: 'Salads', soups: 'Soups', barbecue: 'Barbecue', mains: 'Main Courses', sides: 'Side Dishes', pastry: 'Pastry', bread: 'Hand Molding', desserts: 'Desserts', extra: 'Extra', drinks: 'Soft Drinks' },
+      aiSays: {
+        meat: 'Our khorovats is grilled over open flame in the traditional way.',
+        soup: 'I recommend our hearty Solyanka — a true Armenian classic.',
+        spicy: 'Try our Kharcho soup — fragrant and warming.',
+        vegetarian: 'Our Pasus Dolma is a beloved vegetarian choice.',
+        sweet: 'Our Pakhlava is layered with honey and walnuts.',
+        default: 'May I suggest our signature Khorovats platter?'
+      }
+    },
+    th: {
+      table: 'โต๊ะ', dishes: 'เมนู',
+      hero1: 'ยินดีต้อนรับ', hero2: 'Բարի գալուստ',
+      heroSub: 'อาหารอาร์เมเนียแท้ตั้งแต่ปี 2024 — แตะเพื่อดูเมนู หรือพูดคุยกับผู้ช่วยของเราได้ทุกภาษา',
+      featured: 'จาน<em>แนะนำ</em>วันนี้',
+      yourOrder: 'รายการ <em>ของคุณ</em>', cart: 'ออเดอร์',
+      emptyCart: 'โต๊ะของคุณกำลังรออยู่',
+      total: 'รวม', sendOrder: 'ส่งไปที่ครัว',
+      callWaiter: 'เรียกพนักงาน', askBill: 'ขอบิล',
+      askMe: 'ถามผู้ช่วย', listening: 'กำลังฟัง...',
+      added: 'เพิ่มลงรายการแล้ว',
+      orderSent: 'ขอบคุณค่ะ',
+      confirmSub: 'ได้รับออเดอร์ของคุณแล้ว',
+      orderNum: 'เลขที่ออเดอร์', backMenu: 'กลับไปที่เมนู',
+      portion: 'ขนาด', full: 'ปกติ',
+      spice: 'ระดับความเผ็ด', mild: 'อ่อน', medium: 'กลาง', hot: 'เผ็ด 🌶',
+      addons: 'เพิ่มเติม', noteLabel: 'หมายเหตุพิเศษ (ไม่บังคับ)',
+      addCart: 'เพิ่ม', welcomePrompt: 'กรุณาเลือกภาษา',
+      welcomeTable: 'คุณนั่งที่',
+      waiterCalled: 'พนักงานกำลังมาค่ะ', billRequested: 'จะนำบิลมาให้ค่ะ',
+      free: 'ว่าง', occupied: 'มีลูกค้า', reserved: 'จองแล้ว',
+      editNote: 'แก้ไขหมายเหตุ', cancel: 'ยกเลิก', save: 'บันทึก',
+      cats: { all: 'ทั้งหมด', appetizers: 'อาหารทานเล่น', salads: 'สลัด', soups: 'ซุป', barbecue: 'บาร์บีคิว', mains: 'จานหลัก', sides: 'เครื่องเคียง', pastry: 'แป้ง', bread: 'ขนมปังทำมือ', desserts: 'ของหวาน', extra: 'พิเศษ', drinks: 'เครื่องดื่ม' },
+      aiSays: {
+        meat: 'โคโรวัทของเราย่างไฟตามแบบดั้งเดิม',
+        soup: 'ขอแนะนำซุปโซลยานก้าค่ะ คลาสสิกอาร์เมเนีย',
+        spicy: 'ลองซุปคาร์โชดูสิคะ หอมและอุ่น',
+        vegetarian: 'พาซุสโดลม่าของเราเป็นที่นิยมสำหรับมังสวิรัติ',
+        sweet: 'บัคลาวาของเราชั้นๆ น้ำผึ้งและวอลนัท',
+        default: 'แนะนำจานรวมโคโรวัทค่ะ'
+      }
+    },
+    ru: {
+      table: 'Стол', dishes: 'БЛЮД',
+      hero1: 'Добро пожаловать.', hero2: 'Բարի գալուստ',
+      heroSub: 'Подлинная армянская кухня с 2024 года — выбирайте сами или поговорите с ассистентом на любом языке.',
+      featured: 'Блюда <em>дня</em>',
+      yourOrder: 'Ваш <em>Заказ</em>', cart: 'Заказ',
+      emptyCart: 'Ваш стол ожидает',
+      total: 'Итого', sendOrder: 'Отправить на кухню',
+      callWaiter: 'Позвать официанта', askBill: 'Счёт',
+      askMe: 'Спросить', listening: 'Слушаю...',
+      added: 'Добавлено в заказ',
+      orderSent: 'Շնորհակալություն',
+      confirmSub: 'Ваш заказ принят',
+      orderNum: 'Номер заказа', backMenu: 'Назад к меню',
+      portion: 'Порция', full: 'Полная',
+      spice: 'Острота', mild: 'Слабая', medium: 'Средняя', hot: 'Острая 🌶',
+      addons: 'Добавки', noteLabel: 'Пожелания (необязательно)',
+      addCart: 'Добавить', welcomePrompt: 'Пожалуйста, выберите язык',
+      welcomeTable: 'Вы за столом',
+      waiterCalled: 'Официант идёт', billRequested: 'Сейчас принесём счёт',
+      free: 'Свободен', occupied: 'Занят', reserved: 'Бронь',
+      editNote: 'Изменить заметку', cancel: 'Отмена', save: 'Сохранить',
+      cats: { all: 'Всё', appetizers: 'Закуски', salads: 'Салаты', soups: 'Супы', barbecue: 'Шашлык', mains: 'Горячее', sides: 'Гарниры', pastry: 'Выпечка', bread: 'Хлеб ручной работы', desserts: 'Десерты', extra: 'Дополнительно', drinks: 'Напитки' },
+      aiSays: {
+        meat: 'Наш хоровац готовится на открытом огне по традиции.',
+        soup: 'Рекомендую солянку — настоящая армянская классика.',
+        spicy: 'Попробуйте суп харчо — ароматный и согревающий.',
+        vegetarian: 'Пасуц долма — любимое вегетарианское блюдо.',
+        sweet: 'Наша пахлава с мёдом и грецкими орехами.',
+        default: 'Могу предложить наше фирменное блюдо хоровац?'
+      }
+    }
+  };
+
+  // ============ FULL MENU (50 items based on foodmenu.online structure) ============
+  const dishes = [
+    // APPETIZERS
+    { id: 1, cat: 'appetizers', emoji: '🧀', bg: 'bg-app', price: 180, tag: null,
+      name: { en: 'Cheese Plate', th: 'ชีสรวม', ru: 'Сырная тарелка' },
+      native: { en: 'Pannir', th: 'Pannir', ru: 'Сырное ассорти' },
+      desc: { en: 'Selection of Armenian cheeses with walnuts and herbs', th: 'ชีสอาร์เมเนียคัดสรร พร้อมวอลนัท', ru: 'Армянские сыры с грецкими орехами' },
+      keywords: ['cheese', 'ชีส', 'сыр'] },
+    { id: 2, cat: 'appetizers', emoji: '🫒', bg: 'bg-app', price: 220, tag: 'signature', tagText: { en: 'CLASSIC', th: 'คลาสสิก', ru: 'КЛАССИКА' },
+      name: { en: 'Eggplant Caviar', th: 'คาเวียร์มะเขือยาว', ru: 'Икра баклажанная' },
+      native: { en: 'Khavyar', th: 'Khavyar', ru: 'Хавьяр' },
+      desc: { en: 'Roasted eggplant with peppers, garlic and olive oil', th: 'มะเขือยาวย่างกับพริก กระเทียม', ru: 'Жареные баклажаны с перцем и чесноком' },
+      keywords: ['eggplant', 'มะเขือ', 'баклажан', 'веган'] },
+    { id: 3, cat: 'appetizers', emoji: '🐟', bg: 'bg-app', price: 285, tag: null,
+      name: { en: 'Smoked Salmon', th: 'แซลมอนรมควัน', ru: 'Сёмга копчёная' },
+      native: { en: 'Sevani Salor', th: 'Smoked Salmon', ru: 'Копчёная сёмга' },
+      desc: { en: 'Sliced smoked salmon with lemon, capers and butter', th: 'แซลมอนรมควันสไลซ์ เลมอน และเนย', ru: 'Нарезка сёмги с лимоном и каперсами' },
+      keywords: ['salmon', 'fish', 'ปลา', 'рыба', 'сёмга'] },
+    { id: 4, cat: 'appetizers', emoji: '🥒', bg: 'bg-app', price: 145, tag: null,
+      name: { en: 'Pickle Plate', th: 'ผักดองรวม', ru: 'Соленья' },
+      native: { en: 'Tursi', th: 'Tursi', ru: 'Соленья' },
+      desc: { en: 'Pickled cucumbers, cabbage, peppers and tomatoes', th: 'แตงกวา กะหล่ำ พริก มะเขือเทศดอง', ru: 'Маринованные огурцы, капуста, перцы' },
+      keywords: ['pickle', 'ดอง', 'соленье'] },
+    { id: 5, cat: 'appetizers', emoji: '🍢', bg: 'bg-app', price: 195, tag: null,
+      name: { en: 'Basturma', th: 'บาสตูร์มา', ru: 'Бастурма' },
+      native: { en: 'Basturma', th: 'Basturma', ru: 'Бастурма' },
+      desc: { en: 'Air-dried cured beef with Armenian spices', th: 'เนื้อตากแห้งกับเครื่องเทศอาร์เมเนีย', ru: 'Вяленая говядина с армянскими специями' },
+      keywords: ['basturma', 'beef', 'cured', 'เนื้อ', 'говядина'] },
+
+    // SALADS
+    { id: 6, cat: 'salads', emoji: '🥗', bg: 'bg-salad', price: 195, tag: null,
+      name: { en: 'Olivier Salad', th: 'สลัดโอลิวิเย่', ru: 'Оливье' },
+      native: { en: 'Olivye', th: 'Olivier', ru: 'Оливье' },
+      desc: { en: 'Classic with chicken, potato, peas, pickles', th: 'สลัดดั้งเดิม ไก่ มันฝรั่ง', ru: 'Классический с курицей и картофелем' },
+      keywords: ['salad', 'olivier', 'оливье', 'สลัด'] },
+    { id: 7, cat: 'salads', emoji: '🍅', bg: 'bg-salad', price: 175, tag: null,
+      name: { en: 'Armenian Salad', th: 'สลัดอาร์เมเนีย', ru: 'Армянский салат' },
+      native: { en: 'Hayasdani', th: 'Hayasdani', ru: 'Айастани' },
+      desc: { en: 'Tomatoes, cucumbers, herbs, walnuts and pomegranate', th: 'มะเขือเทศ แตงกวา สมุนไพร ทับทิม', ru: 'Томаты, огурцы, зелень и гранат' },
+      keywords: ['salad', 'vegan', 'สลัด', 'салат', 'веган'] },
+    { id: 8, cat: 'salads', emoji: '🦀', bg: 'bg-salad', price: 225, tag: null,
+      name: { en: 'Crab Stick Salad', th: 'สลัดปูอัด', ru: 'Салат с крабом' },
+      native: { en: 'Crab Aghtsan', th: 'Crab Salad', ru: 'Краб салат' },
+      desc: { en: 'Crab sticks, corn, egg and cucumber with mayo', th: 'ปูอัด ข้าวโพด ไข่ แตงกวา มายอ', ru: 'Крабовые палочки, кукуруза, яйцо' },
+      keywords: ['crab', 'salad', 'ปู', 'краб'] },
+    { id: 9, cat: 'salads', emoji: '🥬', bg: 'bg-salad', price: 185, tag: null,
+      name: { en: 'Caesar Salad', th: 'สลัดซีซาร์', ru: 'Цезарь' },
+      native: { en: 'Caesar', th: 'Caesar', ru: 'Цезарь' },
+      desc: { en: 'Romaine, chicken, parmesan, croutons, Caesar dressing', th: 'ผักโรเมน ไก่ พาเมซาน', ru: 'Романо, курица, пармезан, сухарики' },
+      keywords: ['caesar', 'chicken', 'ไก่', 'курица'] },
+    { id: 10, cat: 'salads', emoji: '🌶', bg: 'bg-salad', price: 205, tag: null,
+      name: { en: 'Tabbouleh', th: 'แทบบูเลห์', ru: 'Табуле' },
+      native: { en: 'Eech', th: 'Eech', ru: 'Ич' },
+      desc: { en: 'Bulgur with tomato, parsley, lemon and olive oil', th: 'บัลเกอร์กับมะเขือเทศ ผักชี เลมอน', ru: 'Булгур с томатами, петрушкой и лимоном' },
+      keywords: ['bulgur', 'vegan', 'веган', 'веган'] },
+
+    // SOUPS
+    { id: 11, cat: 'soups', emoji: '🍲', bg: 'bg-soup', price: 245, tag: 'signature', tagText: { en: "CHEF'S CHOICE", th: 'แนะนำ', ru: 'ВЫБОР ШЕФА' },
+      name: { en: 'Solyanka', th: 'ซุปโซลยานก้า', ru: 'Солянка' },
+      native: { en: 'Solyanka', th: 'Solyanka', ru: 'Солянка' },
+      desc: { en: 'Meat soup with smoked sausages, olives, capers, lemon', th: 'ซุปเนื้อ ไส้กรอกรมควัน มะกอก', ru: 'Мясной суп с копчёностями и оливками' },
+      keywords: ['soup', 'meat', 'ซุป', 'суп', 'мясо'] },
+    { id: 12, cat: 'soups', emoji: '🥣', bg: 'bg-soup', price: 195, tag: null,
+      name: { en: 'Borscht', th: 'ซุปบอร์ช', ru: 'Борщ' },
+      native: { en: 'Borscht', th: 'Borscht', ru: 'Борщ' },
+      desc: { en: 'Beet soup with beef, sour cream and fresh dill', th: 'ซุปบีทรูทเนื้อ ครีมเปรี้ยว', ru: 'Свекольный суп со сметаной' },
+      keywords: ['soup', 'borscht', 'ซุป', 'борщ'] },
+    { id: 13, cat: 'soups', emoji: '🌶', bg: 'bg-soup', price: 215, tag: 'hot', tagText: { en: 'SPICY', th: 'เผ็ด', ru: 'ОСТРОЕ' },
+      name: { en: 'Kharcho Soup', th: 'ซุปคาร์โช', ru: 'Харчо' },
+      native: { en: 'Kharcho', th: 'Kharcho', ru: 'Харчо' },
+      desc: { en: 'Spicy beef soup with rice and walnuts', th: 'ซุปเนื้อเผ็ด ข้าว วอลนัท', ru: 'Острый суп с рисом и орехами' },
+      keywords: ['spicy', 'soup', 'เผ็ด', 'острое', 'харчо'] },
+    { id: 14, cat: 'soups', emoji: '🍜', bg: 'bg-soup', price: 175, tag: null,
+      name: { en: 'Chicken Noodle Soup', th: 'ซุปก๋วยเตี๋ยวไก่', ru: 'Куриный суп с лапшой' },
+      native: { en: 'Lapshov', th: 'Chicken Soup', ru: 'Лапша' },
+      desc: { en: 'Clear chicken broth with homemade noodles and herbs', th: 'ซุปไก่ใส กับเส้นทำมือ', ru: 'Куриный бульон с домашней лапшой' },
+      keywords: ['chicken', 'soup', 'ไก่', 'курица'] },
+    { id: 15, cat: 'soups', emoji: '🥛', bg: 'bg-soup', price: 165, tag: null,
+      name: { en: 'Spas Yogurt Soup', th: 'ซุปโยเกิร์ตสปาส', ru: 'Спас' },
+      native: { en: 'Spas', th: 'Spas', ru: 'Спас' },
+      desc: { en: 'Traditional yogurt soup with grain and herbs', th: 'ซุปโยเกิร์ตดั้งเดิม', ru: 'Йогуртовый суп с зеленью' },
+      keywords: ['yogurt', 'spas', 'soup', 'йогурт'] },
+
+    // BARBECUE
+    { id: 16, cat: 'barbecue', emoji: '🍢', bg: 'bg-kebab', price: 385, tag: 'signature', tagText: { en: 'SIGNATURE', th: 'ซิกเนเจอร์', ru: 'ФИРМЕННОЕ' },
+      name: { en: 'Pork Khorovats', th: 'หมูย่างโคโรวัท', ru: 'Свиной хоровац' },
+      native: { en: 'Khorovats Khoz', th: 'Khorovats', ru: 'Хоровац' },
+      desc: { en: 'Marinated pork skewers grilled over open flame', th: 'หมูหมักย่างไฟแรง', ru: 'Маринованная свинина на углях' },
+      keywords: ['pork', 'bbq', 'shashlik', 'หมู', 'свинина', 'шашлык'] },
+    { id: 17, cat: 'barbecue', emoji: '🥩', bg: 'bg-kebab', price: 425, tag: null,
+      name: { en: 'Lamb Shashlik', th: 'แกะย่างชาชลิค', ru: 'Шашлык из баранины' },
+      native: { en: 'Khorovats Garn', th: 'Shashlik', ru: 'Шашлык' },
+      desc: { en: 'Tender lamb pieces marinated with onions, grilled', th: 'แกะหมัก ย่างพอดี', ru: 'Нежная баранина на гриле' },
+      keywords: ['lamb', 'bbq', 'แกะ', 'баранина'] },
+    { id: 18, cat: 'barbecue', emoji: '🍗', bg: 'bg-kebab', price: 315, tag: null,
+      name: { en: 'Chicken Shashlik', th: 'ไก่ย่างชาชลิค', ru: 'Куриный шашлык' },
+      native: { en: 'Khorovats Hav', th: 'Chicken', ru: 'Куриный шашлык' },
+      desc: { en: 'Marinated chicken with bell peppers and onions', th: 'ไก่หมักกับพริกหวาน', ru: 'Курица с перцем и луком' },
+      keywords: ['chicken', 'bbq', 'ไก่', 'курица'] },
+    { id: 19, cat: 'barbecue', emoji: '🌭', bg: 'bg-kebab', price: 295, tag: null,
+      name: { en: 'Lula Kebab', th: 'ลูล่าเคบับ', ru: 'Люля-кебаб' },
+      native: { en: 'Lyulya', th: 'Lula', ru: 'Люля' },
+      desc: { en: 'Minced lamb skewers with onions and spices', th: 'แกะบดเสียบไม้ หอม', ru: 'Молотая баранина с луком' },
+      keywords: ['lamb', 'kebab', 'кебаб', 'люля'] },
+    { id: 20, cat: 'barbecue', emoji: '🦐', bg: 'bg-kebab', price: 485, tag: 'new', tagText: { en: 'NEW', th: 'ใหม่', ru: 'НОВОЕ' },
+      name: { en: 'Grilled Shrimp', th: 'กุ้งย่าง', ru: 'Шашлык из креветок' },
+      native: { en: 'Tsovayin', th: 'Shrimp', ru: 'Креветки' },
+      desc: { en: 'Large tiger shrimps grilled with garlic butter', th: 'กุ้งใหญ่ย่างเนยกระเทียม', ru: 'Крупные креветки с чесночным маслом' },
+      keywords: ['shrimp', 'seafood', 'กุ้ง', 'креветки'] },
+    { id: 21, cat: 'barbecue', emoji: '🍖', bg: 'bg-kebab', price: 365, tag: null,
+      name: { en: 'Mixed Khorovats', th: 'จานรวมโคโรวัท', ru: 'Микс хоровац' },
+      native: { en: 'Khorovats Khaght', th: 'Mixed BBQ', ru: 'Микс шашлык' },
+      desc: { en: 'Pork, chicken and lamb assorted on one platter', th: 'หมู ไก่ แกะ รวมจานเดียว', ru: 'Свинина, курица и баранина' },
+      keywords: ['mixed', 'bbq', 'рассорти', 'รวม', 'микс'] },
+
+    // MAIN COURSES
+    { id: 22, cat: 'mains', emoji: '🫔', bg: 'bg-dolma', price: 285, tag: 'signature', tagText: { en: 'TRADITIONAL', th: 'ดั้งเดิม', ru: 'ТРАДИЦИЯ' },
+      name: { en: 'Dolma', th: 'โดลม่า', ru: 'Долма' },
+      native: { en: 'Tolma', th: 'Tolma', ru: 'Толма' },
+      desc: { en: 'Grape leaves stuffed with beef, rice, herbs and yogurt sauce', th: 'ใบองุ่นห่อเนื้อ ข้าว สมุนไพร', ru: 'Виноградные листья с фаршем' },
+      keywords: ['dolma', 'долма', 'โดลม่า'] },
+    { id: 23, cat: 'mains', emoji: '🥬', bg: 'bg-dolma', price: 255, tag: null,
+      name: { en: 'Pasus Dolma', th: 'พาซุสโดลม่า', ru: 'Пасуц долма' },
+      native: { en: 'Pasus Tolma', th: 'Pasus Tolma', ru: 'Пасуц толма' },
+      desc: { en: 'Vegetarian dolma in cabbage leaves with rice and herbs', th: 'โดลม่ามังสวิรัติใบกะหล่ำ', ru: 'Постная долма в капустных листьях' },
+      keywords: ['vegetarian', 'dolma', 'vegan', 'มังสวิรัติ', 'веган'] },
+    { id: 24, cat: 'mains', emoji: '🥟', bg: 'bg-dolma', price: 245, tag: null,
+      name: { en: 'Pelmeni', th: 'เพลเมนี่', ru: 'Пельмени' },
+      native: { en: 'Pelmeni', th: 'Pelmeni', ru: 'Пельмени' },
+      desc: { en: 'Homemade meat dumplings with sour cream and butter', th: 'เกี๊ยวเนื้อกับครีมเปรี้ยว', ru: 'Пельмени со сметаной' },
+      keywords: ['dumplings', 'pelmeni', 'пельмени', 'เกี๊ยว'] },
+    { id: 25, cat: 'mains', emoji: '🥠', bg: 'bg-dolma', price: 265, tag: null,
+      name: { en: 'Manti', th: 'มันตี้', ru: 'Манты' },
+      native: { en: 'Manti', th: 'Manti', ru: 'Манты' },
+      desc: { en: 'Baked dumplings with lamb, served with garlic yogurt', th: 'เกี๊ยวอบไส้แกะ', ru: 'Запечённые манты с бараниной' },
+      keywords: ['manti', 'dumplings', 'lamb', 'манты', 'แกะ'] },
+    { id: 26, cat: 'mains', emoji: '🍝', bg: 'bg-dolma', price: 265, tag: null,
+      name: { en: 'Meat Cutlet', th: 'เนื้อทอด', ru: 'Котлеты' },
+      native: { en: 'Kotleti', th: 'Kotleti', ru: 'Котлеты' },
+      desc: { en: 'Pan-fried beef cutlets with mashed potatoes', th: 'เนื้อทอดกับมันบด', ru: 'Жареные котлеты с пюре' },
+      keywords: ['cutlet', 'котлеты', 'เนื้อ'] },
+    { id: 27, cat: 'mains', emoji: '🐟', bg: 'bg-dolma', price: 345, tag: null,
+      name: { en: 'Fish Cutlet', th: 'ปลาทอด', ru: 'Рыбные котлеты' },
+      native: { en: 'Dziknayin Kotleti', th: 'Fish Cutlet', ru: 'Котлеты рыбные' },
+      desc: { en: 'Salmon cutlets with mashed potatoes and lemon', th: 'ปลาแซลมอนทอด มันบด', ru: 'Котлеты из лосося с пюре' },
+      keywords: ['fish', 'salmon', 'ปลา', 'рыба'] },
+    { id: 28, cat: 'mains', emoji: '🍝', bg: 'bg-dolma', price: 225, tag: null,
+      name: { en: 'Pasta Bolognese', th: 'พาสต้าโบโลเนส', ru: 'Спагетти болоньезе' },
+      native: { en: 'Spagetti', th: 'Pasta', ru: 'Спагетти' },
+      desc: { en: 'Spaghetti with rich beef and tomato sauce', th: 'สปาเก็ตตี้ซอสเนื้อมะเขือเทศ', ru: 'Спагетти с мясным соусом' },
+      keywords: ['pasta', 'spaghetti', 'пасm', 'паста'] },
+    { id: 29, cat: 'mains', emoji: '🐟', bg: 'bg-dolma', price: 385, tag: null,
+      name: { en: 'Pan-Fried Salmon', th: 'แซลมอนทอด', ru: 'Жареный лосось' },
+      native: { en: 'Pukharman Salor', th: 'Fried Salmon', ru: 'Лосось' },
+      desc: { en: 'Salmon fillet pan-fried with butter and lemon', th: 'แซลมอนทอดเนยเลมอน', ru: 'Лосось с маслом и лимоном' },
+      keywords: ['salmon', 'fish', 'ปลา', 'лосось'] },
+    { id: 30, cat: 'mains', emoji: '🥩', bg: 'bg-dolma', price: 425, tag: null,
+      name: { en: 'Pork Steak', th: 'สเต็กหมู', ru: 'Свиной стейк' },
+      native: { en: 'Khozi Stek', th: 'Pork Steak', ru: 'Стейк свиной' },
+      desc: { en: 'Grilled pork steak with cheese sauce', th: 'หมูสเต็กกับซอสชีส', ru: 'Свиной стейк с сырным соусом' },
+      keywords: ['pork', 'steak', 'หมู', 'свинина'] },
+
+    // SIDE DISHES
+    { id: 31, cat: 'sides', emoji: '🥔', bg: 'bg-side', price: 95, tag: null,
+      name: { en: 'Mashed Potatoes', th: 'มันบด', ru: 'Картофельное пюре' },
+      native: { en: 'Pyure', th: 'Pyure', ru: 'Пюре' },
+      desc: { en: 'Creamy mashed potatoes with butter', th: 'มันบดเนย', ru: 'Пюре с маслом' },
+      keywords: ['potato', 'มัน', 'картофель'] },
+    { id: 32, cat: 'sides', emoji: '🍟', bg: 'bg-side', price: 105, tag: null,
+      name: { en: 'French Fries', th: 'เฟรนช์ฟราย', ru: 'Картофель фри' },
+      native: { en: 'Fri', th: 'Fries', ru: 'Фри' },
+      desc: { en: 'Crispy golden fries with sea salt', th: 'มันฝรั่งทอดกรอบเค็ม', ru: 'Хрустящий картофель с морской солью' },
+      keywords: ['fries', 'potato', 'มัน', 'фри'] },
+    { id: 33, cat: 'sides', emoji: '🍚', bg: 'bg-side', price: 85, tag: null,
+      name: { en: 'Rice Pilaf', th: 'ข้าวพิลาฟ', ru: 'Плов' },
+      native: { en: 'Plov', th: 'Plov', ru: 'Плов' },
+      desc: { en: 'Saffron-infused rice with herbs', th: 'ข้าวเซฟฟรอน', ru: 'Рис с шафраном' },
+      keywords: ['rice', 'plov', 'ข้าว', 'плов'] },
+    { id: 34, cat: 'sides', emoji: '🥬', bg: 'bg-side', price: 125, tag: null,
+      name: { en: 'Grilled Vegetables', th: 'ผักย่าง', ru: 'Овощи на гриле' },
+      native: { en: 'Banjarexen', th: 'Vegetables', ru: 'Овощи гриль' },
+      desc: { en: 'Eggplant, pepper, tomato grilled over flame', th: 'มะเขือยาว พริก มะเขือเทศย่าง', ru: 'Баклажаны, перец, томаты гриль' },
+      keywords: ['vegetable', 'vegan', 'ผัก', 'овощи'] },
+    { id: 35, cat: 'sides', emoji: '🥗', bg: 'bg-side', price: 95, tag: null,
+      name: { en: 'Fresh Vegetables', th: 'ผักสด', ru: 'Свежие овощи' },
+      native: { en: 'Tarmer Banjarexen', th: 'Fresh Veg', ru: 'Овощи свежие' },
+      desc: { en: 'Tomatoes, cucumbers, herbs and radishes', th: 'มะเขือเทศ แตงกวา สมุนไพร', ru: 'Томаты, огурцы, зелень, редис' },
+      keywords: ['vegetable', 'fresh', 'vegan', 'ผัก', 'овощи'] },
+
+    // PASTRY
+    { id: 36, cat: 'pastry', emoji: '🥟', bg: 'bg-pastry', price: 165, tag: null,
+      name: { en: 'Cheese Boerag', th: 'แป้งอบชีส', ru: 'Бёрек с сыром' },
+      native: { en: 'Pannir Boerag', th: 'Boerag', ru: 'Бёрек' },
+      desc: { en: 'Flaky phyllo pastry filled with cheese', th: 'แป้งฟิลโลกรอบไส้ชีส', ru: 'Слоёное тесто с сыром' },
+      keywords: ['cheese', 'pastry', 'выпечка', 'ชีส'] },
+    { id: 37, cat: 'pastry', emoji: '🍕', bg: 'bg-pastry', price: 285, tag: null,
+      name: { en: 'Lahmacun', th: 'ลามาคุน', ru: 'Лахмаджо' },
+      native: { en: 'Lahmajun', th: 'Lahmacun', ru: 'Лахмаджо' },
+      desc: { en: 'Armenian flatbread with minced lamb topping', th: 'ขนมปังแบนหน้าแกะ', ru: 'Тонкая лепёшка с фаршем' },
+      keywords: ['lamb', 'flatbread', 'pizza', 'แกะ', 'баранина'] },
+    { id: 38, cat: 'pastry', emoji: '🧆', bg: 'bg-pastry', price: 195, tag: null,
+      name: { en: 'Gata', th: 'กาต้า', ru: 'Гата' },
+      native: { en: 'Gata', th: 'Gata', ru: 'Гата' },
+      desc: { en: 'Sweet Armenian pastry with butter filling', th: 'ขนมปังหวานอาร์เมเนีย', ru: 'Сладкая выпечка с маслом' },
+      keywords: ['gata', 'sweet', 'выпечка', 'ของหวาน'] },
+
+    // HAND MOLDING / BREAD
+    { id: 39, cat: 'bread', emoji: '🫓', bg: 'bg-bread', price: 65, tag: 'signature', tagText: { en: 'TRADITIONAL', th: 'ดั้งเดิม', ru: 'ТРАДИЦИЯ' },
+      name: { en: 'Lavash', th: 'ลาวาช', ru: 'Лаваш' },
+      native: { en: 'Lavash', th: 'Lavash', ru: 'Лаваш' },
+      desc: { en: 'Traditional thin Armenian flatbread, baked fresh', th: 'ขนมปังแผ่นบางอาร์เมเนีย', ru: 'Тонкий армянский лаваш' },
+      keywords: ['bread', 'lavash', 'ขนมปัง', 'хлеб'] },
+    { id: 40, cat: 'bread', emoji: '🥖', bg: 'bg-bread', price: 145, tag: null,
+      name: { en: 'Cheese Lavash Roll', th: 'ลาวาชชีส', ru: 'Лаваш с сыром' },
+      native: { en: 'Pannir Lavash', th: 'Cheese Lavash', ru: 'Лаваш сыр' },
+      desc: { en: 'Lavash rolled with cheese and herbs, oven-baked', th: 'ลาวาชม้วนชีส อบเตา', ru: 'Лаваш с сыром, запечённый' },
+      keywords: ['bread', 'cheese', 'ชีส', 'сыр'] },
+    { id: 41, cat: 'bread', emoji: '🥯', bg: 'bg-bread', price: 95, tag: null,
+      name: { en: 'Matnakash', th: 'มัทนากาช', ru: 'Матнакаш' },
+      native: { en: 'Matnakash', th: 'Matnakash', ru: 'Матнакаш' },
+      desc: { en: 'Soft Armenian bread baked in tonir oven', th: 'ขนมปังนุ่มอบในเตา', ru: 'Мягкий армянский хлеб' },
+      keywords: ['bread', 'matnakash', 'ขนมปัง', 'хлеб'] },
+
+    // DESSERTS
+    { id: 42, cat: 'desserts', emoji: '🍯', bg: 'bg-dessert', price: 185, tag: 'signature', tagText: { en: 'HOMEMADE', th: 'ทำสด', ru: 'ДОМАШНЕЕ' },
+      name: { en: 'Pakhlava', th: 'พัคลาวา', ru: 'Пахлава' },
+      native: { en: 'Pakhlava', th: 'Pakhlava', ru: 'Пахлава' },
+      desc: { en: 'Phyllo layers with honey, walnuts and cinnamon', th: 'พายชั้นน้ำผึ้ง วอลนัท', ru: 'Слоёное тесто с мёдом' },
+      keywords: ['dessert', 'baklava', 'ของหวาน', 'пахлава'] },
+    { id: 43, cat: 'desserts', emoji: '🍰', bg: 'bg-dessert', price: 155, tag: null,
+      name: { en: 'Honey Cake', th: 'เค้กน้ำผึ้ง', ru: 'Медовик' },
+      native: { en: 'Medovik', th: 'Honey Cake', ru: 'Медовик' },
+      desc: { en: 'Eight layers of honey sponge with sour cream', th: 'เค้กน้ำผึ้งแปดชั้น', ru: 'Восемь медовых коржей' },
+      keywords: ['cake', 'honey', 'เค้ก', 'медовик'] },
+    { id: 44, cat: 'desserts', emoji: '🍨', bg: 'bg-dessert', price: 95, tag: null,
+      name: { en: 'Vanilla Ice Cream', th: 'ไอติมวานิลลา', ru: 'Мороженое' },
+      native: { en: 'Patokh', th: 'Ice Cream', ru: 'Мороженое' },
+      desc: { en: 'Three scoops of vanilla ice cream with berry sauce', th: 'ไอติมวานิลลาสามลูก ซอสเบอร์รี่', ru: 'Три шарика с ягодным соусом' },
+      keywords: ['ice cream', 'dessert', 'ไอติม', 'мороженое'] },
+    { id: 45, cat: 'desserts', emoji: '🍫', bg: 'bg-dessert', price: 165, tag: null,
+      name: { en: 'Chocolate Cake', th: 'เค้กช็อกโกแลต', ru: 'Шоколадный торт' },
+      native: { en: 'Shokolat', th: 'Chocolate', ru: 'Шоколад' },
+      desc: { en: 'Dark chocolate cake with chocolate ganache', th: 'เค้กช็อกโกแลตเข้ม', ru: 'Тёмный шоколадный торт' },
+      keywords: ['chocolate', 'cake', 'เค้ก', 'шоколад'] },
+
+    // SOFT DRINKS
+    { id: 46, cat: 'drinks', emoji: '🫖', bg: 'bg-drink', price: 75, tag: null,
+      name: { en: 'Armenian Tea', th: 'ชาอาร์เมเนีย', ru: 'Чай по-армянски' },
+      native: { en: 'Tey', th: 'Tey', ru: 'Чай' },
+      desc: { en: 'Black tea with mountain herbs and honey', th: 'ชาดำสมุนไพรน้ำผึ้ง', ru: 'Чёрный чай с травами' },
+      keywords: ['tea', 'ชา', 'чай'] },
+    { id: 47, cat: 'drinks', emoji: '☕', bg: 'bg-drink', price: 85, tag: null,
+      name: { en: 'Armenian Coffee', th: 'กาแฟอาร์เมเนีย', ru: 'Армянский кофе' },
+      native: { en: 'Soorch', th: 'Coffee', ru: 'Кофе' },
+      desc: { en: 'Strong Armenian coffee brewed in copper jezve', th: 'กาแฟอาร์เมเนียเข้มในหม้อทองแดง', ru: 'Крепкий кофе в медной джезве' },
+      keywords: ['coffee', 'กาแฟ', 'кофе'] },
+    { id: 48, cat: 'drinks', emoji: '🥛', bg: 'bg-drink', price: 65, tag: null,
+      name: { en: 'Tan Yogurt Drink', th: 'แทนโยเกิร์ต', ru: 'Тан' },
+      native: { en: 'Tan', th: 'Tan', ru: 'Тан' },
+      desc: { en: 'Refreshing salty yogurt drink with herbs', th: 'เครื่องดื่มโยเกิร์ตเค็ม', ru: 'Освежающий йогуртовый напиток' },
+      keywords: ['yogurt', 'drink', 'йогурт', 'тан'] },
+    { id: 49, cat: 'drinks', emoji: '🧃', bg: 'bg-drink', price: 95, tag: null,
+      name: { en: 'Fresh Pomegranate Juice', th: 'น้ำทับทิมสด', ru: 'Гранатовый сок' },
+      native: { en: 'Nrnay Hyut', th: 'Pomegranate', ru: 'Сок граната' },
+      desc: { en: 'Fresh-squeezed pomegranate juice', th: 'น้ำทับทิมคั้นสด', ru: 'Свежевыжатый гранатовый сок' },
+      keywords: ['pomegranate', 'juice', 'น้ำผลไม้', 'сок'] },
+
+    // EXTRA / WINE
+    { id: 50, cat: 'extra', emoji: '🍷', bg: 'bg-drink', price: 295, tag: null,
+      name: { en: 'Armenian Red Wine', th: 'ไวน์แดงอาร์เมเนีย', ru: 'Армянское красное вино' },
+      native: { en: 'Garmir Gini', th: 'Wine', ru: 'Вино' },
+      desc: { en: 'Glass of red wine from Ararat valley', th: 'ไวน์แดงจากหุบเขาอารารัต', ru: 'Бокал красного вина из Арарата' },
+      keywords: ['wine', 'ไวน์', 'вино'] },
+    { id: 51, cat: 'extra', emoji: '🥂', bg: 'bg-drink', price: 295, tag: null,
+      name: { en: 'Armenian White Wine', th: 'ไวน์ขาวอาร์เมเนีย', ru: 'Армянское белое вино' },
+      native: { en: 'Spitak Gini', th: 'White Wine', ru: 'Белое вино' },
+      desc: { en: 'Glass of white wine from local vineyards', th: 'ไวน์ขาวจากไร่องุ่น', ru: 'Бокал белого вина' },
+      keywords: ['wine', 'white', 'ไวน์', 'вино'] },
+    { id: 52, cat: 'extra', emoji: '🍺', bg: 'bg-drink', price: 185, tag: null,
+      name: { en: 'Local Beer', th: 'เบียร์ท้องถิ่น', ru: 'Местное пиво' },
+      native: { en: 'Garejur', th: 'Beer', ru: 'Пиво' },
+      desc: { en: 'Cold draft beer, 500ml', th: 'เบียร์สดเย็น 500มล.', ru: 'Холодное разливное, 500мл' },
+      keywords: ['beer', 'เบียร์', 'пиво'] }
+  ];
+
+  // ============ STATE ============
+  let currentLang = 'en';
+  let currentCat = 'all';
+  let cart = {};
+  let currentDish = null;
+  let modalQty = 1;
+  let modalOpts = { size: 'full', spice: 0, toppings: [], note: '' };
+  let isAdminMode = false;
+  let editingNoteKey = null;
+  let assignTargetOrder = null;
+
+  // Persisted state
+  const STORAGE = {
+    orders: 'armenia_orders_v2',
+    counter: 'armenia_counter_v2',
+    tables: 'armenia_tables_v2',
+    featured: 'armenia_featured_v2',
+    settings: 'armenia_settings_v2',
+    newOrder: 'armenia_new_order_v2'
+  };
+
+  function loadState() {
+    const stored = localStorage.getItem(STORAGE.featured);
+    featuredIds = stored ? JSON.parse(stored) : [11, 16, 22, 42]; // default featured
+    const settings = localStorage.getItem(STORAGE.settings);
+    appSettings = settings ? JSON.parse(settings) : {
+      headerText: '', footerText: '', bannerType: 'none', bannerUrl: '',
+      font: 'cormorant', restaurantName: 'ARMENIA', tagline: 'Restaurant · Pattaya'
+    };
+    const tablesStored = localStorage.getItem(STORAGE.tables);
+    tables = tablesStored ? JSON.parse(tablesStored) : generateDefaultTables();
+    // Load saved dishes (if any)
+    const savedDishes = localStorage.getItem('armenia_dishes_v2');
+    if (savedDishes) {
+      try { const d = JSON.parse(savedDishes); if (Array.isArray(d) && d.length) dishes.length = 0, dishes.push(...d); } catch {}
+    }
+  }
+
+  function generateDefaultTables() {
+    const arr = [];
+    for (let i = 1; i <= 12; i++) {
+      arr.push({
+        num: String(i).padStart(2, '0'),
+        maxSeats: i <= 4 ? 2 : (i <= 8 ? 4 : 6),
+        status: 'free' // free | occupied | reserved
+      });
+    }
+    return arr;
+  }
+
+  let featuredIds = [];
+  let appSettings = {};
+  let tables = [];
+  let selectedTable = null;
+  let orderCounter = parseInt(localStorage.getItem(STORAGE.counter) || '41');
+
+  function saveSettings() { localStorage.setItem(STORAGE.settings, JSON.stringify(appSettings)); }
+  function saveFeatured() { localStorage.setItem(STORAGE.featured, JSON.stringify(featuredIds)); }
+  function saveTables() { localStorage.setItem(STORAGE.tables, JSON.stringify(tables)); }
+
+  // ============ ORDER SYNC ============
+  function getOrders() {
+    try { return JSON.parse(localStorage.getItem(STORAGE.orders) || '[]'); }
+    catch { return []; }
+  }
+  function saveOrder(order) {
+    const orders = getOrders();
+    orders.unshift(order);
+    localStorage.setItem(STORAGE.orders, JSON.stringify(orders.slice(0, 50)));
+    localStorage.setItem(STORAGE.newOrder, JSON.stringify({ time: Date.now(), order }));
+  }
+  function deleteOrder(num) {
+    const orders = getOrders().filter(o => o.num !== num);
+    localStorage.setItem(STORAGE.orders, JSON.stringify(orders));
+  }
+  function updateOrder(num, patch) {
+    const orders = getOrders().map(o => o.num === num ? { ...o, ...patch } : o);
+    localStorage.setItem(STORAGE.orders, JSON.stringify(orders));
+  }
+
+  window.addEventListener('storage', (e) => {
+    if (e.key === STORAGE.newOrder && isAdminMode) {
+      try {
+        const data = JSON.parse(e.newValue);
+        showAdminBanner(data.order);
+        renderAdminOrders();
+        playNotificationSound();
+      } catch {}
+    }
+    if (e.key === STORAGE.tables) {
+      tables = JSON.parse(e.newValue || '[]');
+      if (document.getElementById('tableSelect').classList.contains('show')) renderTableSelect();
+      if (document.getElementById('admin').classList.contains('show')) renderAdminTables();
+    }
+  });
+
+  function playNotificationSound() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = 880;
+      g.gain.setValueAtTime(0.15, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      o.start(); o.stop(ctx.currentTime + 0.5);
+      setTimeout(() => {
+        const ctx2 = new (window.AudioContext || window.webkitAudioContext)();
+        const o2 = ctx2.createOscillator();
+        const g2 = ctx2.createGain();
+        o2.connect(g2); g2.connect(ctx2.destination);
+        o2.frequency.value = 1320;
+        g2.gain.setValueAtTime(0.15, ctx2.currentTime);
+        g2.gain.exponentialRampToValueAtTime(0.001, ctx2.currentTime + 0.5);
+        o2.start(); o2.stop(ctx2.currentTime + 0.5);
+      }, 200);
+    } catch {}
+  }
+
+  function showAdminBanner(order) {
+    const banner = document.getElementById('adminBanner');
+    const isAlert = order.type === 'waiter' || order.type === 'bill';
+    const msg = isAlert
+      ? `Table ${order.table} · ${order.type === 'waiter' ? 'Calling waiter' : 'Asking for bill'}`
+      : `Table ${order.table} · ${order.itemCount} item${order.itemCount > 1 ? 's' : ''} · ${order.total} ฿`;
+    document.getElementById('adminBannerMsg').textContent = msg;
+    banner.classList.add('show');
+    banner.onclick = () => {
+      banner.classList.remove('show');
+      document.getElementById('admin').classList.add('show');
+      renderAdminOrders();
+    };
+    setTimeout(() => banner.classList.remove('show'), 8000);
+  }
+
+  let tsCurrentLang = 'en';
+
+  function renderTableSelect() {
+    // Update labels based on tsCurrentLang
+    const pickLabels = { en: 'Select your table', th: 'เลือกโต๊ะของคุณ', ru: 'Выберите ваш столик' };
+    const el = document.getElementById('tsPickLabel');
+    if (el) el.textContent = pickLabels[tsCurrentLang] || pickLabels.en;
+
+    // Apply logo
+    const mark = document.getElementById('tsLogoMark');
+    if (mark) {
+      if (appSettings.logoData) {
+        mark.innerHTML = `<img src="${appSettings.logoData}" style="width:100%;height:100%;object-fit:contain">`;
+      } else {
+        mark.textContent = (appSettings.restaurantName || 'ARMENIA').charAt(0);
+      }
+    }
+    const title = document.getElementById('tsTitleText');
+    if (title) title.textContent = (appSettings.restaurantName || 'ARMENIA') + ' · PATTAYA';
+
+    document.getElementById('tsGrid').innerHTML = tables.map(t => `
+      <div class="ts-card ${t.status}" data-num="${t.num}">
+        <div class="ts-card-status"></div>
+        <div class="ts-card-num">${t.num}</div>
+        <div class="ts-card-label">${i18n[tsCurrentLang][t.status] || t.status}</div>
+        <div class="ts-card-info"><span class="seats">${t.maxSeats}</span> ${tsCurrentLang === 'en' ? 'seats' : tsCurrentLang === 'th' ? 'ที่นั่ง' : 'мест'}</div>
+      </div>
+    `).join('');
+    document.querySelectorAll('.ts-card').forEach(c => {
+      c.onclick = () => {
+        const t = tables.find(x => x.num === c.dataset.num);
+        if (!t || t.status !== 'free') return;
+        selectTable(t.num);
+      };
+    });
+    // Lang buttons
+    document.querySelectorAll('.ts-lang-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.lang === tsCurrentLang);
+      b.onclick = () => {
+        tsCurrentLang = b.dataset.lang;
+        renderTableSelect();
+      };
+    });
+  }
+
+  function selectTable(num) {
+    selectedTable = num;
+    currentLang = tsCurrentLang;
+    // Mark as occupied
+    const t = tables.find(x => x.num === num);
+    if (t) { t.status = 'occupied'; saveTables(); }
+    document.getElementById('tableBadgeNum').textContent = '№ ' + num;
+    // Apply chosen language
+    setLang(currentLang);
+    // Hide table select, show app directly
+    document.getElementById('tableSelect').classList.add('hide');
+    setTimeout(() => {
+      document.getElementById('tableSelect').classList.remove('show', 'hide');
+      resetIdleTimer();
+    }, 500);
+  }
+
+  // ============ APP RENDER ============
+  function applyBranding() {
+    const name = appSettings.restaurantName || 'ARMENIA';
+    document.getElementById('brandName').textContent = name;
+    document.getElementById('brandTagline').textContent = appSettings.tagline || 'Restaurant · Pattaya';
+    // Header brand mark logo
+    const bm = document.querySelector('.brand-mark');
+    if (bm) {
+      if (appSettings.logoData) bm.innerHTML = `<img src="${appSettings.logoData}" style="width:100%;height:100%;object-fit:contain">`;
+      else bm.textContent = name.charAt(0);
+    }
+    // Idle screen logo
+    const idleLogo = document.querySelector('.idle-logo');
+    if (idleLogo) {
+      if (appSettings.logoData) idleLogo.innerHTML = `<img src="${appSettings.logoData}" style="width:100%;height:100%;object-fit:contain">`;
+      else idleLogo.textContent = name.charAt(0);
+    }
+    const idleTitle = document.querySelector('.idle-title');
+    if (idleTitle) idleTitle.textContent = name;
+    // Header / Footer text banners
+    const ch = document.getElementById('customHeader');
+    if (appSettings.headerText) { ch.textContent = appSettings.headerText; ch.classList.add('show'); } else { ch.classList.remove('show'); }
+    const cf = document.getElementById('customFooter');
+    if (appSettings.footerText) { cf.textContent = appSettings.footerText; cf.classList.add('show'); } else { cf.classList.remove('show'); }
+    renderBanner();
+    document.documentElement.setAttribute('data-font', appSettings.font || 'cormorant');
+  }
+
+  function renderBanner() {
+    const ba = document.getElementById('bannerArea');
+    if (!appSettings.bannerType || appSettings.bannerType === 'none') {
+      ba.classList.remove('show');
+      ba.innerHTML = '';
+      return;
+    }
+    if (appSettings.bannerType === 'image' && appSettings.bannerUrl) {
+      ba.innerHTML = `<img src="${appSettings.bannerUrl}" alt="banner" onerror="this.parentElement.innerHTML='<div class=placeholder>Banner image failed to load</div>'">`;
+      ba.classList.add('show');
+    } else if (appSettings.bannerType === 'youtube' && appSettings.bannerUrl) {
+      const videoId = extractYouTubeId(appSettings.bannerUrl);
+      if (videoId) {
+        ba.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        ba.classList.add('show');
+      } else {
+        ba.innerHTML = '<div class="placeholder">Invalid YouTube URL</div>';
+        ba.classList.add('show');
+      }
+    } else {
+      ba.classList.remove('show');
+    }
+  }
+
+  function extractYouTubeId(url) {
+    const re = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const m = url.match(re);
+    return m ? m[1] : null;
+  }
+
+  function renderFeatured() {
+    if (!featuredIds.length) { document.getElementById('featuredSection').classList.remove('show'); return; }
+    const featured = featuredIds.map(id => dishes.find(d => d.id === id)).filter(Boolean).slice(0, 4);
+    if (!featured.length) { document.getElementById('featuredSection').classList.remove('show'); return; }
+    document.getElementById('featuredSection').classList.add('show');
+    document.getElementById('featuredGrid').innerHTML = featured.map(d => `
+      <div class="featured-card" data-id="${d.id}">
+        <div class="featured-img ${d.bg}">
+          ${d.imgData ? `<img src="${d.imgData}" alt="${d.name.en}">` : `<span>${d.emoji}</span>`}
+        </div>
+        <div class="featured-body">
+          <div class="featured-name">${d.name[currentLang]}</div>
+          <div class="featured-price" style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">${d.price} ฿</div>
+        </div>
+      </div>
+    `).join('');
+    document.querySelectorAll('.featured-card').forEach(c => { c.onclick = () => openModal(parseInt(c.dataset.id)); });
+  }
+
+  function renderCategories() {
+    const visibleCats = appCats.filter(c => c.visible);
+    document.getElementById('categories').innerHTML = visibleCats.map(c => `
+      <button class="cat-btn ${c.id === currentCat ? 'active' : ''}" data-cat="${c.id}">${c[currentLang] || c.en}</button>
+    `).join('');
+    document.querySelectorAll('.cat-btn').forEach(b => {
+      b.onclick = () => { currentCat = b.dataset.cat; renderCategories(); renderMenu(); };
+    });
+  }
+
+  function renderMenu() {
+    const list = currentCat === 'all' ? dishes : dishes.filter(d => d.cat === currentCat);
+    document.getElementById('dishCount').textContent = String(dishes.length).padStart(2, '0');
+    document.getElementById('menuGrid').innerHTML = list.map(d => `
+      <div class="dish" data-id="${d.id}">
+        <div class="dish-img ${d.bg}">
+          ${d.imgData ? `<img src="${d.imgData}" alt="${d.name.en}">` : `<span class="dish-emoji">${d.emoji}</span>`}
+          ${d.tag ? `<span class="dish-tag ${d.tag}">${d.tagText ? d.tagText[currentLang] : d.tag}</span>` : ''}
+        </div>
+        <div class="dish-body">
+          <div class="dish-name">${d.name[currentLang]}<em>${d.native[currentLang]}</em></div>
+          <div class="dish-desc">${d.desc[currentLang]}</div>
+          <div class="dish-foot">
+            <span class="dish-price">${d.price}<span class="currency">฿</span></span>
+            <button class="dish-add" data-id="${d.id}">+</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    document.querySelectorAll('.dish').forEach(card => {
+      card.onclick = (e) => { if (e.target.classList.contains('dish-add')) return; openModal(parseInt(card.dataset.id)); };
+    });
+    document.querySelectorAll('.dish-add').forEach(b => { b.onclick = (e) => { e.stopPropagation(); quickAdd(parseInt(b.dataset.id)); }; });
+  }
+
+  function renderCart() {
+    const list = document.getElementById('cartList');
+    const ids = Object.keys(cart);
+    let count = 0, total = 0;
+    Object.values(cart).forEach(item => { count += item.qty; total += item.price * item.qty; });
+    document.getElementById('cartCount').textContent = count;
+    if (ids.length === 0) {
+      list.innerHTML = `<div class="cart-empty"><div class="icon">🍷</div><p>${i18n[currentLang].emptyCart}</p></div>`;
+      document.getElementById('cartTotal').textContent = '0';
+      document.getElementById('checkoutBtn').disabled = true;
+      return;
+    }
+    list.innerHTML = ids.map(key => {
+      const item = cart[key];
+      const d = dishes.find(x => x.id == item.dishId);
+      const meta = [];
+      if (item.opts.size && item.opts.size !== 'full') meta.push(item.opts.size === 'half' ? '½' : '×2');
+      if (item.opts.spice > 0) meta.push('🌶'.repeat(item.opts.spice + 1));
+      if (item.opts.toppings && item.opts.toppings.length) meta.push('+ ' + item.opts.toppings.join(', '));
+      return `
+        <div class="cart-item">
+          <div class="cart-item-img">${d.emoji}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${d.name[currentLang]}</div>
+            <div class="cart-item-meta">${item.price} ฿ × ${item.qty}${meta.length ? ' · ' + meta.join(' · ') : ''}</div>
+            ${item.opts.note ? `<div class="cart-item-note">"${item.opts.note}"</div>` : ''}
+          </div>
+          <div class="cart-item-actions">
+            <button class="note-btn ${item.opts.note ? 'has-note' : ''}" data-key="${key}" data-act="note">📝</button>
+            <div class="qty-controls">
+              <button class="qty-btn" data-key="${key}" data-act="-">−</button>
+              <span class="qty-val">${item.qty}</span>
+              <button class="qty-btn" data-key="${key}" data-act="+">+</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('cartTotal').textContent = total.toLocaleString();
+    document.getElementById('checkoutBtn').disabled = false;
+    document.querySelectorAll('.cart-item .qty-btn').forEach(b => {
+      b.onclick = () => {
+        const k = b.dataset.key;
+        if (b.dataset.act === '+') cart[k].qty++;
+        else { cart[k].qty--; if (cart[k].qty <= 0) delete cart[k]; }
+        renderCart();
+      };
+    });
+    document.querySelectorAll('.note-btn').forEach(b => {
+      b.onclick = () => openNoteEdit(b.dataset.key);
+    });
+  }
+
+  function openNoteEdit(key) {
+    editingNoteKey = key;
+    document.getElementById('noteEditInput').value = cart[key].opts.note || '';
+    document.getElementById('noteModal').classList.add('show');
+  }
+  document.getElementById('noteCancel').onclick = () => document.getElementById('noteModal').classList.remove('show');
+  document.getElementById('noteSave').onclick = () => {
+    if (editingNoteKey && cart[editingNoteKey]) {
+      cart[editingNoteKey].opts.note = document.getElementById('noteEditInput').value.trim();
+      renderCart();
+    }
+    document.getElementById('noteModal').classList.remove('show');
+  };
+
+  function quickAdd(id) {
+    const d = dishes.find(x => x.id === id);
+    const key = `${id}-default`;
+    if (cart[key]) cart[key].qty++;
+    else cart[key] = { dishId: id, qty: 1, price: d.price, opts: { size: 'full', spice: 0, toppings: [], note: '' } };
+    renderCart();
+    showToast(i18n[currentLang].added);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(window._toast);
+    window._toast = setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // ============ MODAL ============
+  function openModal(id) {
+    const d = dishes.find(x => x.id === id);
+    currentDish = d;
+    modalQty = 1;
+    modalOpts = { toppings: [], note: '' };
+    const m = document.getElementById('modal');
+    const imgEl = m.querySelector('.modal-img');
+    imgEl.className = 'modal-img ' + d.bg;
+    // Show photo or emoji
+    const imgContent = d.imgData
+      ? `<img src="${d.imgData}" alt="${d.name.en}"><button class="modal-close" id="modalClose">✕</button>`
+      : `<span style="font-size:88px">${d.emoji}</span><button class="modal-close" id="modalClose">✕</button>`;
+    imgEl.innerHTML = imgContent;
+    document.getElementById('modalClose').onclick = closeModal;
+    document.getElementById('modalName').firstChild.textContent = d.name[currentLang];
+    document.getElementById('modalNameNative').textContent = d.native[currentLang];
+    document.getElementById('modalPriceVal').textContent = d.price;
+    document.getElementById('modalDesc').textContent = d.desc[currentLang];
+    document.getElementById('mQty').textContent = 1;
+    document.getElementById('modalNote').value = '';
+    // Render per-dish add-ons
+    const addons = d.addons || [];
+    const pillsEl = document.getElementById('modalAddonPills');
+    const groupEl = document.getElementById('modalAddonsGroup');
+    if (addons.length > 0) {
+      groupEl.style.display = '';
+      pillsEl.innerHTML = addons.map(a => `
+        <button class="opt-pill" data-addon-id="${a.id}">+ ${a.name} <span class="extra">+${a.price}฿</span></button>
+      `).join('');
+      pillsEl.querySelectorAll('.opt-pill').forEach(p => {
+        p.onclick = () => {
+          const aid = p.dataset.addonId;
+          const idx = modalOpts.toppings.indexOf(aid);
+          if (idx >= 0) { modalOpts.toppings.splice(idx, 1); p.classList.remove('active'); }
+          else { modalOpts.toppings.push(aid); p.classList.add('active'); }
+          updateModalTotal();
+        };
+      });
+    } else {
+      groupEl.style.display = 'none';
+    }
+    updateModalTotal();
+    m.classList.add('show');
+  }
+  function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+  function calcModalPrice() {
+    if (!currentDish) return 0;
+    let p = currentDish.price;
+    const addons = currentDish.addons || [];
+    modalOpts.toppings.forEach(aid => {
+      const a = addons.find(x => x.id === aid);
+      if (a) p += a.price;
+    });
+    return p;
+  }
+  function updateModalTotal() {
+    document.getElementById('modalTotal').textContent = (calcModalPrice() * modalQty).toLocaleString() + ' ฿';
+  }
+
+  document.getElementById('mQtyMinus').onclick = () => { if (modalQty > 1) { modalQty--; document.getElementById('mQty').textContent = modalQty; updateModalTotal(); } };
+  document.getElementById('mQtyPlus').onclick = () => { modalQty++; document.getElementById('mQty').textContent = modalQty; updateModalTotal(); };
+  document.getElementById('modalAdd').onclick = () => {
+    modalOpts.note = document.getElementById('modalNote').value.trim();
+    const addons = currentDish.addons || [];
+    const addonNames = modalOpts.toppings.map(aid => addons.find(a => a.id === aid)?.name).filter(Boolean);
+    const key = `${currentDish.id}-${modalOpts.toppings.sort().join(',')}-${modalOpts.note.substr(0,10)}`;
+    const finalPrice = calcModalPrice();
+    if (cart[key]) cart[key].qty += modalQty;
+    else cart[key] = { dishId: currentDish.id, qty: modalQty, price: finalPrice, opts: { toppings: [...modalOpts.toppings], addonNames, note: modalOpts.note } };
+    renderCart();
+    showToast(i18n[currentLang].added);
+    closeModal();
+  };
+
+  // ============ CART ============
+  function openCart() {
+    document.getElementById('cartSheet').classList.add('show');
+    document.getElementById('sheetBackdrop').classList.add('show');
+  }
+  function closeCart() {
+    document.getElementById('cartSheet').classList.remove('show');
+    document.getElementById('sheetBackdrop').classList.remove('show');
+  }
+  document.getElementById('cartBtn').onclick = openCart;
+  document.getElementById('sheetClose').onclick = closeCart;
+  document.getElementById('sheetBackdrop').onclick = closeCart;
+
+  // ============ CHECKOUT ============
+  document.getElementById('checkoutBtn').onclick = () => {
+    // One order number per table - reuse if exists
+    const existingOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed');
+    let orderNum;
+    if (existingOrders.length > 0) {
+      // Merge into existing order
+      orderNum = existingOrders[0].num;
+      const existItems = existingOrders[0].items || [];
+      const newItems = Object.values(cart).map(item => {
+        const d = dishes.find(x => x.id == item.dishId);
+        return { name: d.name.en, nameLocal: d.name[currentLang], native: d.native.en, qty: item.qty, price: item.price, opts: item.opts };
+      });
+      const merged = [...existItems, ...newItems];
+      const newTotal = merged.reduce((s, i) => s + i.price * i.qty, 0);
+      updateOrder(orderNum, { items: merged, total: newTotal, itemCount: merged.reduce((s,i)=>s+i.qty,0) });
+    } else {
+      orderCounter++;
+      localStorage.setItem(STORAGE.counter, orderCounter);
+      orderNum = 'A-' + String(orderCounter).padStart(4, '0');
+      let total = 0, itemCount = 0;
+      const itemList = Object.values(cart).map(item => {
+        const d = dishes.find(x => x.id == item.dishId);
+        total += item.price * item.qty;
+        itemCount += item.qty;
+        return { name: d.name.en, nameLocal: d.name[currentLang], native: d.native.en, qty: item.qty, price: item.price, opts: item.opts };
+      });
+      const order = { num: orderNum, table: selectedTable || '?', items: itemList, itemCount, total, time: Date.now(), status: 'open', language: currentLang };
+      saveOrder(order);
+    }
+    document.getElementById('orderNum').textContent = orderNum;
+    closeCart();
+    document.getElementById('confirm').classList.add('show');
+    cart = {};
+    setTimeout(renderCart, 600);
+    resetIdleTimer();
+  };
+  document.getElementById('confirmBack').onclick = () => {
+    document.getElementById('confirm').classList.remove('show');
+    resetIdleTimer();
+  };
+
+  // ============ CALL WAITER / BILL ============
+  document.getElementById('callWaiterBtn').onclick = () => {
+    const notify = { num: 'CALL-' + Date.now(), table: selectedTable || '?', type: 'waiter', time: Date.now(), itemCount: 1, total: 0, status: 'alert' };
+    saveOrder(notify);
+    showToast(i18n[currentLang].waiterCalled);
+  };
+
+  document.getElementById('askBillBtn').onclick = () => {
+    // Show bill to customer
+    const tableOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed');
+    if (!tableOrders.length && Object.keys(cart).length === 0) {
+      showToast('No items ordered yet'); return;
+    }
+    // Merge all open orders for this table
+    let allItems = [];
+    let grandTotal = 0;
+    let orderNum = tableOrders.length ? tableOrders[0].num : '—';
+    tableOrders.forEach(o => { allItems = allItems.concat(o.items || []); grandTotal += o.total || 0; });
+    // Show bill modal to customer
+    showBillModal(orderNum, allItems, grandTotal);
+    // Notify admin
+    const notify = { num: 'BILL-' + Date.now(), table: selectedTable || '?', type: 'bill', time: Date.now(), itemCount: 1, total: grandTotal, orderRef: orderNum, status: 'alert' };
+    saveOrder(notify);
+    // Mark orders as billed
+    tableOrders.forEach(o => updateOrder(o.num, { status: 'billed' }));
+  };
+
+  function showBillModal(orderNum, items, total) {
+    document.getElementById('billRestName').textContent = appSettings.restaurantName || 'ARMENIA RESTAURANT';
+    document.getElementById('billTableNum').textContent = selectedTable || '?';
+    document.getElementById('billOrderNum').textContent = orderNum;
+    document.getElementById('billTimeRow').innerHTML = `Time: <strong>${new Date().toLocaleTimeString()}</strong>`;
+    document.getElementById('billItemsList').innerHTML = items.map(i => `
+      <div class="bill-item">
+        <div>
+          <div class="bill-item-name">${i.qty > 1 ? i.qty + '× ' : ''}${i.nameLocal || i.name}</div>
+          ${i.opts?.note ? `<div class="bill-item-note">⚠ ${i.opts.note}</div>` : ''}
+          ${i.opts?.addonNames?.length ? `<div class="bill-item-note">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
+        </div>
+        <div class="bill-item-price">${(i.price * i.qty).toLocaleString()} ฿</div>
+      </div>
+    `).join('');
+    document.getElementById('billTotalVal').textContent = total.toLocaleString();
+    // Store for print
+    window._billData = { orderNum, items, total };
+    document.getElementById('billModal').classList.add('show');
+  }
+
+  document.getElementById('billCloseBtn').onclick = () => document.getElementById('billModal').classList.remove('show');
+  document.getElementById('billPrintBtn').onclick = () => {
+    document.getElementById('billModal').classList.remove('show');
+    if (window._billData) printBill(window._billData.orderNum, window._billData.items, window._billData.total, selectedTable);
+  };
+
+  // ============ LANG / THEME ============
+  function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+    });
+    renderCategories(); renderMenu(); renderCart(); renderFeatured();
+    if (document.getElementById('tableSelect').classList.contains('show')) renderTableSelect();
+  }
+  document.querySelectorAll('.lang-btn').forEach(b => b.onclick = () => setLang(b.dataset.lang));
+
+  document.getElementById('themeBtn').onclick = () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    document.getElementById('themeBtn').textContent = next === 'light' ? '🌙' : '☀️';
+  };
+
+  document.getElementById('tableBadge').onclick = () => {
+    if (confirm('Return to table selection screen?')) {
+      const t = tables.find(x => x.num === selectedTable);
+      if (t && t.status === 'occupied') { t.status = 'free'; saveTables(); }
+      selectedTable = null;
+      cart = {};
+      renderCart();
+      renderTableSelect();
+      document.getElementById('tableSelect').classList.add('show');
+    }
+  };
+
+  // ============ VOICE AI ============
+  let recognition = null;
+  let isListening = false;
+  const langMap = { en: 'en-US', th: 'th-TH', ru: 'ru-RU' };
+
+  function speak(text, lang) {
+    if (!window.speechSynthesis) return;
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = langMap[lang] || 'en-US';
+    u.rate = 0.95;
+    window.speechSynthesis.speak(u);
+  }
+
+  function findDishesByQuery(query) {
+    const q = query.toLowerCase();
+    const matched = dishes.filter(d => {
+      return d.keywords.some(k => q.includes(k.toLowerCase())) ||
+        Object.values(d.name).some(n => q.toLowerCase().includes(n.toLowerCase()));
+    });
+    return matched.length ? matched.slice(0, 3) : dishes.filter(d => d.tag === 'signature').slice(0, 3);
+  }
+
+  function aiRespond(transcript) {
+    const matches = findDishesByQuery(transcript);
+    let response = i18n[currentLang].aiSays.default;
+    const q = transcript.toLowerCase();
+    if (/meat|beef|pork|lamb|shashlik|kebab|grilled|шашлык|кебаб|мясо|говядина|баранина|свинина|เนื้อ|หมู|แกะ|ย่าง/.test(q)) response = i18n[currentLang].aiSays.meat;
+    else if (/soup|borscht|solyanka|суп|солянка|борщ|ซุป|โซลยานก้า|บอร์ช/.test(q)) response = i18n[currentLang].aiSays.soup;
+    else if (/spicy|hot|kharcho|острое|харчо|เผ็ด|คาร์โช/.test(q)) response = i18n[currentLang].aiSays.spicy;
+    else if (/veg|vegetable|dolma|вегет|долма|овощ|มังสวิรัติ|ผัก|โดลม่า/.test(q)) response = i18n[currentLang].aiSays.vegetarian;
+    else if (/sweet|dessert|cake|baklava|pakhlava|сладкое|пахлава|медовик|десерт|ของหวาน|พัคลาวา/.test(q)) response = i18n[currentLang].aiSays.sweet;
+
+    document.getElementById('aiText').textContent = response;
+    document.getElementById('aiSuggestions').innerHTML = matches.map(d => `
+      <button class="ai-suggest" data-id="${d.id}">${d.emoji} ${d.name[currentLang]} · ${d.price}฿</button>
+    `).join('');
+    document.querySelectorAll('.ai-suggest').forEach(b => {
+      b.onclick = () => {
+        quickAdd(parseInt(b.dataset.id));
+        document.getElementById('aiBubble').classList.remove('show');
+      };
+    });
+    document.getElementById('aiBubble').classList.add('show');
+    speak(response, currentLang);
+    setTimeout(() => document.getElementById('aiBubble').classList.remove('show'), 8000);
+  }
+
+  document.getElementById('voiceBtn').onclick = () => {
+    const btn = document.getElementById('voiceBtn');
+    const label = document.getElementById('voiceLabel');
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      btn.classList.add('listening');
+      label.textContent = i18n[currentLang].listening;
+      setTimeout(() => {
+        btn.classList.remove('listening');
+        label.textContent = i18n[currentLang].askMe;
+        const samples = { en: 'something with lamb', th: 'อยากกินแกะ', ru: 'хочу баранину' };
+        aiRespond(samples[currentLang]);
+      }, 2200);
+      return;
+    }
+    if (!recognition) {
+      recognition = new SR();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+    }
+    if (isListening) { recognition.stop(); return; }
+    recognition.lang = langMap[currentLang];
+    try { recognition.start(); } catch {}
+    isListening = true;
+    btn.classList.add('listening');
+    label.textContent = i18n[currentLang].listening;
+    recognition.onresult = (e) => aiRespond(e.results[0][0].transcript);
+    recognition.onend = () => {
+      isListening = false;
+      btn.classList.remove('listening');
+      label.textContent = i18n[currentLang].askMe;
+    };
+    recognition.onerror = () => {
+      isListening = false;
+      btn.classList.remove('listening');
+      label.textContent = i18n[currentLang].askMe;
+    };
+  };
+
+  // ============ ADMIN ============
+  document.getElementById('adminBtn').onclick = () => {
+    document.getElementById('admin').classList.add('show');
+    isAdminMode = true;
+    clearIdleTimer();
+    renderAdminOrders();
+    renderAdminTables();
+    renderAdminMenu();
+    populateSettingsFields();
+  };
+  document.getElementById('adminClose').onclick = () => {
+    document.getElementById('admin').classList.remove('show');
+    isAdminMode = false;
+    resetIdleTimer();
+  };
+
+  document.querySelectorAll('.admin-tab').forEach(t => {
+    t.onclick = () => {
+      document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      ['orders', 'tables', 'menu', 'categories', 'history', 'branding', 'settings'].forEach(name => {
+        document.getElementById('tab-' + name).classList.toggle('hidden', name !== t.dataset.tab);
+      });
+      if (t.dataset.tab === 'categories') renderAdminCategories();
+      if (t.dataset.tab === 'history') renderHistory('day');
+      if (t.dataset.tab === 'menu') renderAdminMenu();
+    };
+  });
+
+  function renderAdminOrders() {
+    const orders = getOrders();
+    const realOrders = orders.filter(o => !o.type);
+    let totalRev = 0;
+    realOrders.forEach(o => totalRev += (o.total || 0));
+    const freeTables = tables.filter(t => t.status === 'free').length;
+    document.getElementById('statOrders').textContent = realOrders.length;
+    document.getElementById('statRevenue').textContent = totalRev.toLocaleString();
+    document.getElementById('statFreeTables').textContent = freeTables;
+    document.getElementById('statTotalTables').textContent = tables.length;
+    document.getElementById('statAvg').textContent = realOrders.length ? Math.round(totalRev / realOrders.length).toLocaleString() : 0;
+
+    if (orders.length === 0) {
+      document.getElementById('ordersList').innerHTML = `
+        <div style="text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">
+          No orders yet. Waiting for customers...
+        </div>`;
+      return;
+    }
+    document.getElementById('ordersList').innerHTML = orders.map((o, idx) => {
+      const timeAgo = Math.floor((Date.now() - o.time) / 60000);
+      const timeStr = timeAgo < 1 ? 'just now' : timeAgo + ' min ago';
+      if (o.type === 'waiter' || o.type === 'bill') {
+        return `
+          <div class="order-card ${idx === 0 ? 'new' : ''}" style="border-left:3px solid var(--gold)">
+            <div class="order-num">${o.type === 'waiter' ? '🛎' : '🧾'}</div>
+            <div class="order-info">
+              <div class="order-table">Table <strong>${o.table}</strong></div>
+              <div class="order-items">${o.type === 'waiter' ? 'Customer is calling for a waiter' : 'Customer is requesting the bill'}</div>
+              <div class="order-time">${timeStr}</div>
+            </div>
+            <div></div>
+            <div class="order-actions">
+              <button class="order-btn primary" onclick="window._removeOrder('${o.num}')">Acknowledge</button>
+            </div>
+          </div>`;
+      }
+      const itemsStr = o.items.map(i => `${i.qty}× ${i.name}`).join(' · ');
+      const notesStr = o.items.filter(i => i.opts && i.opts.note).map(i => `<div class="order-note">${i.name}: "${i.opts.note}"</div>`).join('');
+      return `
+        <div class="order-card ${idx === 0 ? 'new' : ''}">
+          <div class="order-num">#${o.num}</div>
+          <div class="order-info">
+            <div class="order-table">Table <strong>${o.table}</strong> · ${(o.language || 'en').toUpperCase()}</div>
+            <div class="order-items">${itemsStr}</div>
+            ${notesStr}
+            <div class="order-time">${timeStr}</div>
+          </div>
+          <div class="order-total">${(o.total || 0).toLocaleString()} ฿</div>
+          <div class="order-actions">
+            <button class="order-btn assign-table" onclick="window._reassign('${o.num}')">Reassign</button>
+            <button class="order-btn gold" onclick="window._printOrder('${o.num}')">🖨 Print</button>
+            <button class="order-btn primary" onclick="window._removeOrder('${o.num}')">✓ Done</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  window._removeOrder = (num) => {
+    deleteOrder(num);
+    renderAdminOrders();
+  };
+  window._printOrder = (num) => {
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    const w = window.open('', '_blank', 'width=300,height=600');
+    w.document.write(`
+      <html><head><style>
+        body { font-family: monospace; font-size: 12px; padding: 16px; max-width: 280px; }
+        h2 { text-align: center; margin: 4px 0; }
+        .line { border-top: 1px dashed #000; margin: 8px 0; }
+        .item { display: flex; justify-content: space-between; margin: 4px 0; }
+        .note { font-style: italic; font-size: 11px; margin-left: 12px; color: #444; }
+        .total { font-size: 14px; font-weight: bold; margin-top: 8px; }
+      </style></head><body>
+        <h2>ARMENIA RESTAURANT</h2>
+        <p style="text-align:center;margin:4px 0">Pattaya · Jomtien</p>
+        <div class="line"></div>
+        <p>Order: <strong>${order.num}</strong></p>
+        <p>Table: ${order.table}</p>
+        <p>Time: ${new Date(order.time).toLocaleString()}</p>
+        <div class="line"></div>
+        ${order.items.map(i => `
+          <div class="item">
+            <span>${i.qty}× ${i.name}</span>
+            <span>${(i.price * i.qty)} ฿</span>
+          </div>
+          ${i.opts && i.opts.note ? `<div class="note">⚠ "${i.opts.note}"</div>` : ''}
+          ${i.opts && i.opts.toppings && i.opts.toppings.length ? `<div class="note">+ ${i.opts.toppings.join(', ')}</div>` : ''}
+        `).join('')}
+        <div class="line"></div>
+        <div class="item total">
+          <span>TOTAL</span>
+          <span>${order.total} ฿</span>
+        </div>
+        <p style="text-align:center;margin-top:16px">Շնորհակալություն!</p>
+        <p style="text-align:center;font-size:10px">Thank you</p>
+      </body></html>
+    `);
+    setTimeout(() => w.print(), 300);
+  };
+  window._reassign = (num) => {
+    assignTargetOrder = num;
+    const freeTables = tables.filter(t => t.status === 'free');
+    if (!freeTables.length) {
+      alert('No free tables available!');
+      return;
+    }
+    document.getElementById('assignGrid').innerHTML = freeTables.map(t => `
+      <button class="assign-btn" onclick="window._doAssign('${t.num}')">${t.num}</button>
+    `).join('');
+    document.getElementById('assignModal').classList.add('show');
+  };
+  window._doAssign = (tableNum) => {
+    if (assignTargetOrder) {
+      updateOrder(assignTargetOrder, { table: tableNum });
+      const t = tables.find(x => x.num === tableNum);
+      if (t) { t.status = 'occupied'; saveTables(); }
+      renderAdminOrders();
+      renderAdminTables();
+    }
+    document.getElementById('assignModal').classList.remove('show');
+    assignTargetOrder = null;
+  };
+  document.getElementById('assignCancel').onclick = () => {
+    document.getElementById('assignModal').classList.remove('show');
+    assignTargetOrder = null;
+  };
+
+  // ============ TABLES ADMIN ============
+  function renderAdminTables() {
+    const free = tables.filter(t => t.status === 'free').length;
+    const occ = tables.filter(t => t.status === 'occupied').length;
+    const res = tables.filter(t => t.status === 'reserved').length;
+    document.getElementById('poolFree').textContent = free;
+    document.getElementById('poolOccupied').textContent = occ;
+    document.getElementById('poolReserved').textContent = res;
+
+    document.getElementById('tablesGrid').innerHTML = tables.map((t, idx) => `
+      <div class="table-admin-card">
+        <div class="status-dot ${t.status}"></div>
+        <div class="table-admin-num">${t.num}</div>
+        <div class="table-admin-info">Table № ${t.num}</div>
+        <div class="table-admin-row">
+          <label>Max</label>
+          <select data-idx="${idx}" data-field="maxSeats">
+            ${[1,2,3,4,5,6,7,8,9,10].map(n => `<option value="${n}" ${t.maxSeats === n ? 'selected' : ''}>${n}</option>`).join('')}
+          </select>
+        </div>
+        <div class="table-admin-row">
+          <label>Status</label>
+          <select data-idx="${idx}" data-field="status">
+            <option value="free" ${t.status === 'free' ? 'selected' : ''}>Available</option>
+            <option value="occupied" ${t.status === 'occupied' ? 'selected' : ''}>Occupied</option>
+            <option value="reserved" ${t.status === 'reserved' ? 'selected' : ''}>Reserved</option>
+          </select>
+        </div>
+        <button class="table-delete" data-idx="${idx}">Delete</button>
+      </div>
+    `).join('');
+
+    document.querySelectorAll('.table-admin-row select').forEach(s => {
+      s.onchange = () => {
+        const idx = parseInt(s.dataset.idx);
+        const field = s.dataset.field;
+        tables[idx][field] = field === 'maxSeats' ? parseInt(s.value) : s.value;
+        saveTables();
+        renderAdminTables();
+      };
+    });
+    document.querySelectorAll('.table-delete').forEach(b => {
+      b.onclick = () => {
+        const idx = parseInt(b.dataset.idx);
+        if (confirm(`Delete Table ${tables[idx].num}?`)) {
+          tables.splice(idx, 1);
+          saveTables();
+          renderAdminTables();
+        }
+      };
+    });
+  }
+
+  document.getElementById('addTableBtn').onclick = () => {
+    const num = prompt('Enter new table number (e.g. 13):');
+    if (!num) return;
+    if (tables.find(t => t.num === num.padStart(2, '0'))) {
+      alert('Table already exists!');
+      return;
+    }
+    tables.push({ num: num.padStart(2, '0'), maxSeats: 4, status: 'free' });
+    saveTables();
+    renderAdminTables();
+  };
+
+  // ============ ADD-ONS (per-dish) ============
+  // getAddons is now per-dish: dish.addons = [{id, name, price}, ...]
+  // Keep getAddons as legacy fallback for quickAdd
+  function getAddons() { return []; } // No more global add-ons
+
+  // ============ MENU ADMIN ============
+  let editingDishId = null;
+  let editingDishAddons = []; // temp add-ons while editing
+
+  function renderAdminMenu() {
+    document.getElementById('adminMenuGrid').innerHTML = dishes.map(d => {
+      const isFeatured = featuredIds.includes(d.id);
+      const imgThumb = d.imgData
+        ? `<img src="${d.imgData}" style="width:52px;height:52px;object-fit:cover;border:1px solid var(--line-gold);">`
+        : `<div class="admin-menu-emoji">${d.emoji}</div>`;
+      return `
+        <div class="admin-menu-card ${isFeatured ? 'featured' : ''}">
+          ${imgThumb}
+          <div class="admin-menu-info">
+            <div class="admin-menu-name">${d.name.en}</div>
+            <div class="admin-menu-price">${d.price} ฿ · ${d.cat}${d.addons?.length ? ` · ${d.addons.length} add-on${d.addons.length>1?'s':''}` : ''}</div>
+          </div>
+          <div class="admin-menu-actions">
+            <button class="admin-icon-btn ${isFeatured ? 'featured' : ''}" data-id="${d.id}" data-act="feature" title="Toggle Featured">★</button>
+            <button class="admin-icon-btn" data-id="${d.id}" data-act="edit" title="Edit">✏️</button>
+            <button class="admin-icon-btn" data-id="${d.id}" data-act="delete" title="Delete" style="color:var(--burgundy)">🗑</button>
+          </div>
+        </div>
+      `;
+    }).join('') + `<div class="admin-menu-card add-card" id="addDishCardBtn">+ Add new dish</div>`;
+
+    document.querySelectorAll('[data-act="feature"]').forEach(b => {
+      b.onclick = () => {
+        const id = parseInt(b.dataset.id);
+        const idx = featuredIds.indexOf(id);
+        if (idx >= 0) featuredIds.splice(idx, 1);
+        else { if (featuredIds.length >= 4) { showToast('Max 4 featured'); return; } featuredIds.push(id); }
+        saveFeatured(); renderAdminMenu(); renderFeatured();
+      };
+    });
+    document.querySelectorAll('[data-act="edit"]').forEach(b => { b.onclick = () => openDishEdit(parseInt(b.dataset.id)); });
+    document.querySelectorAll('[data-act="delete"]').forEach(b => {
+      b.onclick = () => {
+        const id = parseInt(b.dataset.id);
+        const d = dishes.find(x => x.id === id);
+        if (!confirm(`Delete "${d?.name.en}"?`)) return;
+        const idx = dishes.findIndex(x => x.id === id);
+        if (idx >= 0) dishes.splice(idx, 1);
+        saveDishes(); renderAdminMenu(); renderMenu(); renderFeatured();
+        showToast('Dish deleted');
+      };
+    });
+    document.getElementById('addDishBtn').onclick = () => openDishEdit(null);
+    const addCard = document.getElementById('addDishCardBtn');
+    if (addCard) addCard.onclick = () => openDishEdit(null);
+  }
+
+  function renderDeAddons() {
+    document.getElementById('deAddonsList').innerHTML = editingDishAddons.map(a => `
+      <div style="display:flex;align-items:center;gap:5px;padding:4px 9px;background:var(--surface);border:1px solid var(--line);border-radius:4px;font-size:13px">
+        <span>${a.name}</span>
+        <span style="font-family:'Helvetica Neue',sans-serif;color:var(--burgundy);font-size:12px">+${a.price}฿</span>
+        <button data-aid="${a.id}" style="border:none;background:none;color:var(--ink-soft);cursor:pointer;font-size:13px;padding:0 2px;line-height:1">✕</button>
+      </div>
+    `).join('');
+    document.querySelectorAll('#deAddonsList button[data-aid]').forEach(btn => {
+      btn.onclick = () => { editingDishAddons = editingDishAddons.filter(a => a.id !== btn.dataset.aid); renderDeAddons(); };
+    });
+  }
+
+  document.getElementById('deAddonAdd').onclick = () => {
+    const name = document.getElementById('deAddonName').value.trim();
+    const price = parseInt(document.getElementById('deAddonPrice').value) || 0;
+    if (!name) return;
+    editingDishAddons.push({ id: 'ao' + Date.now(), name, price });
+    document.getElementById('deAddonName').value = '';
+    document.getElementById('deAddonPrice').value = '';
+    renderDeAddons();
+  };
+
+  // Image upload in dish edit
+  let editingDishImgData = null;
+  document.getElementById('deImgUpload').onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { showToast('Image too large — max 2MB'); return; }
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      editingDishImgData = ev.target.result;
+      document.getElementById('deImgPreview').innerHTML = `<img src="${editingDishImgData}" style="width:100%;height:100%;object-fit:cover;">`;
+    };
+    reader.readAsDataURL(file);
+  };
+  document.getElementById('deImgClear').onclick = () => {
+    editingDishImgData = null;
+    document.getElementById('deImgUpload').value = '';
+    document.getElementById('deImgPreview').innerHTML = document.getElementById('deEmoji').value || '🍽';
+  };
+  document.getElementById('deEmoji').oninput = () => {
+    if (!editingDishImgData) document.getElementById('deImgPreview').textContent = document.getElementById('deEmoji').value || '🍽';
+  };
+
+  function openDishEdit(id) {
+    editingDishId = id;
+    const d = id ? dishes.find(x => x.id === id) : null;
+    editingDishAddons = d?.addons ? JSON.parse(JSON.stringify(d.addons)) : [];
+    editingDishImgData = d?.imgData || null;
+    document.getElementById('dishEditTitle').innerHTML = d ? 'Edit <em>Dish</em>' : 'Add <em>New Dish</em>';
+    document.getElementById('deId').value = id || '';
+    document.getElementById('deEmoji').value = d?.emoji || '🍽';
+    document.getElementById('deCat').value = d?.cat || 'mains';
+    document.getElementById('deNameEn').value = d?.name.en || '';
+    document.getElementById('deNameTh').value = d?.name.th || '';
+    document.getElementById('deNameRu').value = d?.name.ru || '';
+    document.getElementById('deNative').value = d?.native.en || '';
+    document.getElementById('deDescEn').value = d?.desc.en || '';
+    document.getElementById('deDescTh').value = d?.desc.th || '';
+    document.getElementById('deDescRu').value = d?.desc.ru || '';
+    document.getElementById('dePrice').value = d?.price || '';
+    document.getElementById('deTag').value = d?.tag || '';
+    document.getElementById('deImgUpload').value = '';
+    // Image preview
+    const prev = document.getElementById('deImgPreview');
+    if (editingDishImgData) prev.innerHTML = `<img src="${editingDishImgData}" style="width:100%;height:100%;object-fit:cover;">`;
+    else prev.textContent = d?.emoji || '🍽';
+    renderDeAddons();
+    document.getElementById('dishEditModal').classList.add('show');
+  }
+
+  document.getElementById('dishEditCancel').onclick = () => document.getElementById('dishEditModal').classList.remove('show');
+
+  document.getElementById('dishEditSave').onclick = () => {
+    const nameEn = document.getElementById('deNameEn').value.trim();
+    if (!nameEn) { alert('English name is required'); return; }
+    const price = parseInt(document.getElementById('dePrice').value) || 0;
+    const tag = document.getElementById('deTag').value || null;
+    const tagText = tag ? {
+      en: tag === 'signature' ? 'CLASSIC' : tag === 'hot' ? 'POPULAR' : 'NEW',
+      th: tag === 'signature' ? 'คลาสสิก' : tag === 'hot' ? 'ยอดนิยม' : 'ใหม่',
+      ru: tag === 'signature' ? 'КЛАССИКА' : tag === 'hot' ? 'ПОПУЛЯРНО' : 'НОВИНКА'
+    } : null;
+    const cat = document.getElementById('deCat').value;
+    const bgMap = { appetizers:'bg-app', salads:'bg-salad', soups:'bg-soup', barbecue:'bg-kebab', mains:'bg-grill', sides:'bg-side', pastry:'bg-pastry', bread:'bg-bread', desserts:'bg-dessert', drinks:'bg-drink', extra:'bg-drink' };
+    const emojiVal = document.getElementById('deEmoji').value || '🍽';
+    const nativeName = document.getElementById('deNative').value || nameEn;
+
+    const dishData = {
+      cat, bg: bgMap[cat] || 'bg-app',
+      emoji: emojiVal,
+      imgData: editingDishImgData || null,
+      price, tag, tagText,
+      addons: editingDishAddons,
+      name: { en: nameEn, th: document.getElementById('deNameTh').value || nameEn, ru: document.getElementById('deNameRu').value || nameEn },
+      native: { en: nativeName, th: nativeName, ru: nativeName },
+      desc: { en: document.getElementById('deDescEn').value || '', th: document.getElementById('deDescTh').value || '', ru: document.getElementById('deDescRu').value || '' },
+      keywords: [nameEn.toLowerCase()]
+    };
+
+    if (editingDishId) {
+      const idx = dishes.findIndex(x => x.id === editingDishId);
+      if (idx >= 0) dishes[idx] = { ...dishes[idx], ...dishData };
+    } else {
+      const newId = Math.max(0, ...dishes.map(x => x.id)) + 1;
+      dishes.push({ id: newId, ...dishData });
+    }
+    saveDishes(); renderAdminMenu(); renderMenu(); renderFeatured();
+    document.getElementById('dishEditModal').classList.remove('show');
+    showToast(editingDishId ? 'Dish updated' : 'Dish added');
+  };
+
+  function saveDishes() { localStorage.setItem('armenia_dishes_v2', JSON.stringify(dishes)); }
+
+  // ============ PRINT BILL ============
+  function printBill(orderNum, items, total, tableNum) {
+    const w = window.open('', '_blank', 'width=340,height=700');
+    const restName = appSettings.restaurantName || 'ARMENIA RESTAURANT';
+    w.document.write(`
+      <html><head><style>
+        body { font-family: monospace; font-size: 13px; padding: 16px; max-width: 300px; }
+        h2 { text-align: center; margin: 4px 0; font-size: 16px; }
+        .sub { text-align: center; font-size: 11px; margin: 2px 0; }
+        .line { border-top: 1px dashed #000; margin: 10px 0; }
+        .item { display: flex; justify-content: space-between; margin: 5px 0; }
+        .note { font-style: italic; font-size: 11px; margin-left: 14px; color: #444; }
+        .total { font-size: 15px; font-weight: bold; }
+        .thanks { text-align: center; margin-top: 14px; font-size: 12px; }
+      </style></head><body>
+        <h2>${restName}</h2>
+        <p class="sub">Jomtien Beach, Pattaya · +66 62 664 0700</p>
+        <div class="line"></div>
+        <div class="item"><span>Order:</span><strong>${orderNum}</strong></div>
+        <div class="item"><span>Table:</span><strong>${tableNum || '?'}</strong></div>
+        <div class="item"><span>Time:</span><span>${new Date().toLocaleString()}</span></div>
+        <div class="line"></div>
+        ${items.map(i => `
+          <div class="item"><span>${i.qty > 1 ? i.qty + '× ' : ''}${i.name}</span><span>${(i.price * i.qty).toLocaleString()} ฿</span></div>
+          ${i.opts?.note ? `<div class="note">⚠ ${i.opts.note}</div>` : ''}
+          ${i.opts?.addonNames?.length ? `<div class="note">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
+        `).join('')}
+        <div class="line"></div>
+        <div class="item total"><span>TOTAL</span><span>${total.toLocaleString()} ฿</span></div>
+        <div class="thanks">Շնորհակալություն! · Thank you! · ขอบคุณ!</div>
+      </body></html>
+    `);
+    setTimeout(() => { w.print(); }, 300);
+  }
+
+  window._printOrder = (num) => {
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    printBill(order.num, order.items || [], order.total || 0, order.table);
+  };
+
+  // ============ HISTORY ============
+  function renderHistory(period) {
+    document.querySelectorAll('.hist-filter-btn').forEach(b => b.classList.toggle('active', b.dataset.period === period));
+    const now = Date.now();
+    const cutoffs = { day: 86400000, week: 604800000, month: 2592000000, all: Infinity };
+    const cutoff = cutoffs[period] || Infinity;
+    const allOrders = getOrders().filter(o => !o.type && (o.status === 'billed' || o.status === 'done' || o.status === 'open') && (now - o.time) <= cutoff);
+    const rev = allOrders.reduce((s, o) => s + (o.total || 0), 0);
+    const tables = new Set(allOrders.map(o => o.table)).size;
+    document.getElementById('histStatOrders').textContent = allOrders.length;
+    document.getElementById('histStatRev').textContent = rev.toLocaleString();
+    document.getElementById('histStatAvg').textContent = allOrders.length ? Math.round(rev / allOrders.length).toLocaleString() : 0;
+    document.getElementById('histStatTables').textContent = tables;
+
+    if (!allOrders.length) {
+      document.getElementById('histOrdersList').innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">No orders in this period</div>`;
+      return;
+    }
+    document.getElementById('histOrdersList').innerHTML = allOrders.map(o => {
+      const itemsStr = (o.items || []).map(i => `${i.qty}× ${i.name}`).join(' · ');
+      const t = new Date(o.time).toLocaleString();
+      return `
+        <div class="order-card">
+          <div class="order-num">#${o.num}</div>
+          <div class="order-info">
+            <div class="order-table">Table <strong>${o.table}</strong></div>
+            <div class="order-items">${itemsStr}</div>
+            <div class="order-time">${t}</div>
+          </div>
+          <div class="order-total">${(o.total || 0).toLocaleString()} ฿</div>
+          <div class="order-actions">
+            <button class="order-btn gold" onclick="window._printOrder('${o.num}')">🖨 Print</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('.hist-filter-btn').forEach(b => {
+    b.onclick = () => renderHistory(b.dataset.period);
+  });
+
+  // Export to Excel (CSV)
+  document.getElementById('exportExcelBtn').onclick = () => {
+    const activeBtn = document.querySelector('.hist-filter-btn.active');
+    const period = activeBtn ? activeBtn.dataset.period : 'all';
+    const now = Date.now();
+    const cutoffs = { day: 86400000, week: 604800000, month: 2592000000, all: Infinity };
+    const cutoff = cutoffs[period] || Infinity;
+    const allOrders = getOrders().filter(o => !o.type && (now - o.time) <= cutoff);
+    let csv = 'Order No,Table,Date,Time,Items,Total (THB),Status\n';
+    allOrders.forEach(o => {
+      const d = new Date(o.time);
+      const items = (o.items || []).map(i => `${i.qty}x ${i.name}`).join(' | ');
+      csv += `"${o.num}","${o.table}","${d.toLocaleDateString()}","${d.toLocaleTimeString()}","${items}",${o.total || 0},"${o.status || ''}"\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `armenia_orders_${period}_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click(); URL.revokeObjectURL(url);
+  };
+
+  // ============ BRANDING SAVE ============
+  function populateSettingsFields() {
+    document.getElementById('headerText').value = appSettings.headerText || '';
+    document.getElementById('footerText').value = appSettings.footerText || '';
+    document.getElementById('bannerType').value = appSettings.bannerType || 'none';
+    document.getElementById('bannerUrl').value = appSettings.bannerUrl || '';
+    document.getElementById('fontSelect').value = appSettings.font || 'cormorant';
+    document.getElementById('settingName').value = appSettings.restaurantName || 'ARMENIA';
+    document.getElementById('settingTagline').value = appSettings.tagline || 'Restaurant · Pattaya';
+    // Logo preview
+    const prev = document.getElementById('logoPreview');
+    if (appSettings.logoData) prev.innerHTML = `<img src="${appSettings.logoData}" style="width:100%;height:100%;object-fit:contain">`;
+    else prev.textContent = (appSettings.restaurantName || 'A').charAt(0);
+  }
+
+  document.getElementById('logoUpload').onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      appSettings.logoData = ev.target.result;
+      saveSettings();
+      applyBranding();
+      populateSettingsFields();
+      showToast('Logo uploaded');
+    };
+    reader.readAsDataURL(file);
+  };
+  document.getElementById('clearLogoBtn').onclick = () => {
+    delete appSettings.logoData;
+    saveSettings();
+    applyBranding();
+    populateSettingsFields();
+    showToast('Logo cleared');
+  };
+
+  document.getElementById('saveHeaderFooter').onclick = () => {
+    appSettings.headerText = document.getElementById('headerText').value.trim();
+    appSettings.footerText = document.getElementById('footerText').value.trim();
+    saveSettings();
+    applyBranding();
+    showToast('Header / Footer saved');
+  };
+  document.getElementById('saveBanner').onclick = () => {
+    appSettings.bannerType = document.getElementById('bannerType').value;
+    appSettings.bannerUrl = document.getElementById('bannerUrl').value.trim();
+    saveSettings();
+    applyBranding();
+    showToast('Banner saved');
+  };
+  document.getElementById('fontSelect').onchange = (e) => {
+    appSettings.font = e.target.value;
+    saveSettings();
+    document.documentElement.setAttribute('data-font', appSettings.font);
+  };
+  document.getElementById('saveInfo').onclick = () => {
+    appSettings.restaurantName = document.getElementById('settingName').value.trim();
+    appSettings.tagline = document.getElementById('settingTagline').value.trim();
+    saveSettings();
+    applyBranding();
+    showToast('Restaurant info saved');
+  };
+  document.getElementById('deviceModeSelect').onchange = (e) => {
+    isAdminMode = e.target.value === 'admin';
+    if (isAdminMode) {
+      clearIdleTimer();
+      document.getElementById('tableSelect').classList.remove('show');
+      document.getElementById('idleScreen').classList.remove('show');
+      document.getElementById('admin').classList.add('show');
+    }
+  };
+
+  // ============ CATEGORIES ADMIN ============
+  const DEFAULT_CATS = [
+    { id: 'all', en: 'All', th: 'ทั้งหมด', ru: 'Всё', visible: true },
+    { id: 'appetizers', en: 'Appetizers', th: 'อาหารทานเล่น', ru: 'Закуски', visible: true },
+    { id: 'salads', en: 'Salads', th: 'สลัด', ru: 'Салаты', visible: true },
+    { id: 'soups', en: 'Soups', th: 'ซุป', ru: 'Супы', visible: true },
+    { id: 'barbecue', en: 'Barbecue', th: 'บาร์บีคิว', ru: 'Шашлык', visible: true },
+    { id: 'mains', en: 'Main Courses', th: 'จานหลัก', ru: 'Горячее', visible: true },
+    { id: 'sides', en: 'Side Dishes', th: 'เครื่องเคียง', ru: 'Гарниры', visible: true },
+    { id: 'pastry', en: 'Pastry', th: 'แป้ง', ru: 'Выпечка', visible: true },
+    { id: 'bread', en: 'Hand Molding', th: 'ขนมปังทำมือ', ru: 'Хлеб ручной работы', visible: true },
+    { id: 'desserts', en: 'Desserts', th: 'ของหวาน', ru: 'Десерты', visible: true },
+    { id: 'drinks', en: 'Soft Drinks', th: 'เครื่องดื่ม', ru: 'Напитки', visible: true },
+    { id: 'extra', en: 'Extra', th: 'พิเศษ', ru: 'Дополнительно', visible: true },
+  ];
+
+  function loadCats() {
+    const stored = localStorage.getItem('armenia_cats_v2');
+    return stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_CATS));
+  }
+  function saveCats(cats) { localStorage.setItem('armenia_cats_v2', JSON.stringify(cats)); }
+
+  let appCats = loadCats();
+
+  function renderAdminCategories() {
+    const list = document.getElementById('catAdminList');
+    list.innerHTML = appCats.map((c, idx) => `
+      <div class="cat-admin-item" draggable="true" data-idx="${idx}">
+        <span class="cat-drag-handle">⠿</span>
+        <input class="cat-admin-name-input" type="text" value="${c.en}" data-idx="${idx}" data-lang="en" placeholder="English name">
+        <input class="cat-admin-name-input" type="text" value="${c.th}" data-idx="${idx}" data-lang="th" placeholder="ชื่อไทย" style="width:120px">
+        <input class="cat-admin-name-input" type="text" value="${c.ru}" data-idx="${idx}" data-lang="ru" placeholder="Название" style="width:120px">
+        <button class="cat-toggle-btn ${c.visible ? 'active' : ''}" data-idx="${idx}">${c.visible ? 'Visible' : 'Hidden'}</button>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.cat-admin-name-input').forEach(inp => {
+      inp.oninput = () => {
+        appCats[inp.dataset.idx][inp.dataset.lang] = inp.value;
+      };
+    });
+    list.querySelectorAll('.cat-toggle-btn').forEach(btn => {
+      btn.onclick = () => {
+        appCats[btn.dataset.idx].visible = !appCats[btn.dataset.idx].visible;
+        renderAdminCategories();
+      };
+    });
+
+    // Drag to reorder
+    let dragIdx = null;
+    list.querySelectorAll('.cat-admin-item').forEach(item => {
+      item.ondragstart = () => { dragIdx = parseInt(item.dataset.idx); item.style.opacity = '0.4'; };
+      item.ondragend = () => { item.style.opacity = '1'; };
+      item.ondragover = (e) => { e.preventDefault(); };
+      item.ondrop = () => {
+        const targetIdx = parseInt(item.dataset.idx);
+        if (dragIdx === null || dragIdx === targetIdx) return;
+        const moved = appCats.splice(dragIdx, 1)[0];
+        appCats.splice(targetIdx, 0, moved);
+        renderAdminCategories();
+      };
+    });
+  }
+
+  document.getElementById('saveCatsBtn').onclick = () => {
+    saveCats(appCats);
+    // Update i18n cats from appCats
+    appCats.forEach(c => {
+      i18n.en.cats[c.id] = c.en;
+      i18n.th.cats[c.id] = c.th;
+      i18n.ru.cats[c.id] = c.ru;
+    });
+    renderCategories();
+    showToast('Categories saved');
+  };
+
+  // ============ IDLE SCREEN ============
+  let idleTimer = null;
+  const IDLE_TIMEOUT = 3 * 60 * 1000; // 3 minutes
+
+  function showIdle() {
+    clearIdleTimer();
+    const area = document.getElementById('idleVideoArea');
+    if (appSettings.bannerType === 'youtube' && appSettings.bannerUrl) {
+      const vid = extractYouTubeId(appSettings.bannerUrl);
+      if (vid) area.innerHTML = `<iframe src="https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&playlist=${vid}&controls=0&rel=0&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    } else if (appSettings.bannerType === 'image' && appSettings.bannerUrl) {
+      area.innerHTML = `<img src="${appSettings.bannerUrl}" style="width:100%;height:100%;object-fit:cover;">`;
+    } else { area.innerHTML = ''; }
+    if (selectedTable) {
+      const t = tables.find(x => x.num === selectedTable);
+      if (t && t.status === 'occupied' && Object.keys(cart).length === 0) { t.status = 'free'; saveTables(); }
+    }
+    selectedTable = null;
+    cart = {};
+    document.getElementById('tableSelect').classList.remove('show', 'hide');
+    document.getElementById('confirm').classList.remove('show');
+    document.getElementById('billModal').classList.remove('show');
+    document.getElementById('idleScreen').classList.add('show');
+  }
+
+  function hideIdle() {
+    document.getElementById('idleScreen').classList.remove('show');
+    renderTableSelect();
+    document.getElementById('tableSelect').classList.add('show');
+    resetIdleTimer();
+  }
+
+  function resetIdleTimer() {
+    if (isAdminMode) return;
+    clearIdleTimer();
+    idleTimer = setTimeout(() => {
+      // Only go idle if no cart items
+      if (Object.keys(cart).length === 0) showIdle();
+    }, IDLE_TIMEOUT);
+  }
+
+  function clearIdleTimer() {
+    if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+  }
+
+  // Activity events to reset idle timer
+  ['touchstart', 'mousedown', 'keydown', 'scroll'].forEach(evt => {
+    document.addEventListener(evt, () => {
+      if (!document.getElementById('idleScreen').classList.contains('show') && !isAdminMode) {
+        resetIdleTimer();
+      }
+    }, { passive: true });
+  });
+
+  document.getElementById('idleCtaBtn').onclick = hideIdle;
+  document.getElementById('idleScreen').onclick = (e) => {
+    if (e.target === document.getElementById('idleCtaBtn') || document.getElementById('idleCtaBtn').contains(e.target)) return;
+    hideIdle();
+  };
+
+  document.getElementById('backIdleBtn').onclick = () => {
+    if (confirm('Return to idle screen?')) showIdle();
+  };
+
+  // ============ INIT ============
+  loadState();
+  appCats = loadCats();
+  appCats.forEach(c => {
+    if (i18n.en.cats[c.id] !== undefined) { i18n.en.cats[c.id] = c.en; i18n.th.cats[c.id] = c.th; i18n.ru.cats[c.id] = c.ru; }
+  });
+  applyBranding();
+  renderCategories();
+  renderMenu();
+  renderCart();
+  renderFeatured();
+  // idle is already .show from HTML
+</script>
+
+</body>
+</html>
