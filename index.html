@@ -2150,9 +2150,10 @@
       <span class="bill-total-val"><span id="billTotalVal">0</span> ฿</span>
     </div>
     <div class="bill-thanks">Շնորհակալություն · Thank you · ขอบคุณ</div>
+    <div style="font-size:11px;text-align:center;color:var(--ink-soft);font-style:italic;margin-top:6px;margin-bottom:-4px">Tap Confirm to request the bill from staff</div>
     <div class="bill-actions">
-      <button class="bill-close-btn" id="billCloseBtn">Close</button>
-      <button class="bill-print-btn" id="billPrintBtn">🖨 Print Bill</button>
+      <button class="bill-close-btn" id="billCloseBtn">Cancel</button>
+      <button class="bill-print-btn" id="billConfirmBtn">✓ Confirm Bill Request</button>
     </div>
   </div>
 </div>
@@ -2946,6 +2947,21 @@
   let assignTargetOrder = null;
 
   // Persisted state
+  // ============ STATE (must be declared before Firebase listeners) ============
+  let featuredIds = [];
+  let appSettings = {};
+  let tables = [];
+  let selectedTable = null;
+  let _orders = []; // local cache, kept in sync by listener
+
+  function generateDefaultTables() {
+    const arr = [];
+    for (let i = 1; i <= 12; i++) {
+      arr.push({ num: String(i).padStart(2, '0'), maxSeats: i <= 4 ? 2 : (i <= 8 ? 4 : 6), status: 'free' });
+    }
+    return arr;
+  }
+
   // ============ FIREBASE CONFIG ============
   const firebaseConfig = {
     apiKey: "AIzaSyC5NNUffioSHZMVWTNUrLFxiYik2r-10zs",
@@ -2982,8 +2998,6 @@
   };
 
   // ---- ORDERS ----
-  let _orders = []; // local cache, kept in sync by listener
-
   function getOrders() { return _orders; }
 
   function saveOrder(order) {
@@ -3129,20 +3143,6 @@
 
   // ---- FEATURED (localStorage, per-device) ----
   function saveFeatured() { localStorage.setItem(STORAGE.featured, JSON.stringify(featuredIds)); }
-
-  // ============ STATE ============
-  let featuredIds = [];
-  let appSettings = {};
-  let tables = [];
-  let selectedTable = null;
-
-  function generateDefaultTables() {
-    const arr = [];
-    for (let i = 1; i <= 12; i++) {
-      arr.push({ num: String(i).padStart(2, '0'), maxSeats: i <= 4 ? 2 : (i <= 8 ? 4 : 6), status: 'free' });
-    }
-    return arr;
-  }
 
   function playNotificationSound() {
     try {
@@ -3430,7 +3430,7 @@
     if (cart[key]) cart[key].qty++;
     else cart[key] = { dishId: id, qty: 1, price: d.price, opts: { size: 'full', spice: 0, toppings: [], note: '' } };
     renderCart();
-    showToast(i18n[currentLang].added);
+    openCart(); // Auto-show cart sheet so customer sees the item
   }
 
   function showToast(msg) {
@@ -3513,8 +3513,8 @@
     if (cart[key]) cart[key].qty += modalQty;
     else cart[key] = { dishId: currentDish.id, qty: modalQty, price: finalPrice, opts: { toppings: [...modalOpts.toppings], addonNames, note: modalOpts.note } };
     renderCart();
-    showToast(i18n[currentLang].added);
     closeModal();
+    openCart(); // Auto-show cart so customer sees their order
   };
 
   // ============ CART ============
@@ -3532,29 +3532,44 @@
 
   // ============ CHECKOUT ============
   document.getElementById('checkoutBtn').onclick = async () => {
+    const batchTime = Date.now();
+    const newItems = Object.values(cart).map(item => {
+      const d = dishes.find(x => x.id == item.dishId);
+      return {
+        name: d.name.en, nameLocal: d.name[currentLang], native: d.native.en,
+        qty: item.qty, price: item.price, opts: item.opts,
+        batch: batchTime,  // tag this batch
+        printed: false     // not yet printed to kitchen
+      };
+    });
+
     // One order number per table - reuse if exists
-    const existingOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed');
+    const existingOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed' && o.status !== 'done');
     let orderNum;
     if (existingOrders.length > 0) {
       orderNum = existingOrders[0].num;
       const existItems = existingOrders[0].items || [];
-      const newItems = Object.values(cart).map(item => {
-        const d = dishes.find(x => x.id == item.dishId);
-        return { name: d.name.en, nameLocal: d.name[currentLang], native: d.native.en, qty: item.qty, price: item.price, opts: item.opts };
-      });
       const merged = [...existItems, ...newItems];
       const newTotal = merged.reduce((s, i) => s + i.price * i.qty, 0);
-      updateOrder(orderNum, { items: merged, total: newTotal, itemCount: merged.reduce((s,i)=>s+i.qty,0) });
+      updateOrder(orderNum, {
+        items: merged,
+        total: newTotal,
+        itemCount: merged.reduce((s,i)=>s+i.qty,0),
+        lastBatch: batchTime,
+        hasNewItems: true  // signal admin: new batch needs printing
+      });
     } else {
       orderNum = await getNextOrderNum();
-      let total = 0, itemCount = 0;
-      const itemList = Object.values(cart).map(item => {
-        const d = dishes.find(x => x.id == item.dishId);
-        total += item.price * item.qty;
-        itemCount += item.qty;
-        return { name: d.name.en, nameLocal: d.name[currentLang], native: d.native.en, qty: item.qty, price: item.price, opts: item.opts };
-      });
-      const order = { num: orderNum, table: selectedTable || '?', items: itemList, itemCount, total, time: Date.now(), status: 'open', language: currentLang };
+      const total = newItems.reduce((s, i) => s + i.price * i.qty, 0);
+      const itemCount = newItems.reduce((s, i) => s + i.qty, 0);
+      const order = {
+        num: orderNum, table: selectedTable || '?',
+        items: newItems, itemCount, total,
+        time: Date.now(), status: 'open',
+        language: currentLang,
+        lastBatch: batchTime,
+        hasNewItems: true
+      };
       saveOrder(order);
     }
     document.getElementById('orderNum').textContent = orderNum;
@@ -3577,23 +3592,20 @@
   };
 
   document.getElementById('askBillBtn').onclick = () => {
-    // Show bill to customer
-    const tableOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed');
+    // Just SHOW the bill preview to customer. Don't notify admin yet.
+    const tableOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed' && o.status !== 'done');
     if (!tableOrders.length && Object.keys(cart).length === 0) {
       showToast('No items ordered yet'); return;
     }
-    // Merge all open orders for this table
+    if (Object.keys(cart).length > 0) {
+      // Customer has items in cart not yet sent — remind them
+      if (!confirm('You have items in your cart not sent to kitchen yet. Show bill anyway?')) return;
+    }
     let allItems = [];
     let grandTotal = 0;
     let orderNum = tableOrders.length ? tableOrders[0].num : '—';
     tableOrders.forEach(o => { allItems = allItems.concat(o.items || []); grandTotal += o.total || 0; });
-    // Show bill modal to customer
     showBillModal(orderNum, allItems, grandTotal);
-    // Notify admin
-    const notify = { num: 'BILL-' + Date.now(), table: selectedTable || '?', type: 'bill', time: Date.now(), itemCount: 1, total: grandTotal, orderRef: orderNum, status: 'alert' };
-    saveOrder(notify);
-    // Mark orders as billed
-    tableOrders.forEach(o => updateOrder(o.num, { status: 'billed' }));
   };
 
   function showBillModal(orderNum, items, total) {
@@ -3612,15 +3624,36 @@
       </div>
     `).join('');
     document.getElementById('billTotalVal').textContent = total.toLocaleString();
-    // Store for print
     window._billData = { orderNum, items, total };
+    // Reset to customer view (Confirm button visible)
+    document.getElementById('billConfirmBtn').style.display = '';
+    document.getElementById('billCloseBtn').textContent = 'Cancel';
     document.getElementById('billModal').classList.add('show');
   }
 
   document.getElementById('billCloseBtn').onclick = () => document.getElementById('billModal').classList.remove('show');
-  document.getElementById('billPrintBtn').onclick = () => {
+
+  // CUSTOMER CONFIRM — this is the moment the admin gets notified
+  document.getElementById('billConfirmBtn').onclick = () => {
+    if (!window._billData) return;
+    const { orderNum, total } = window._billData;
+    const tableOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed' && o.status !== 'done');
+    // Mark orders as bill-requested (not yet finalized — admin will close them with Done)
+    tableOrders.forEach(o => updateOrder(o.num, { status: 'bill_requested', billRequestTime: Date.now() }));
+    // Notify admin
+    const notify = {
+      num: 'BILL-' + Date.now(),
+      table: selectedTable || '?',
+      type: 'bill',
+      time: Date.now(),
+      itemCount: 1,
+      total: total,
+      orderRef: orderNum,
+      status: 'alert'
+    };
+    saveOrder(notify);
     document.getElementById('billModal').classList.remove('show');
-    if (window._billData) printBill(window._billData.orderNum, window._billData.items, window._billData.total, selectedTable);
+    showToast(i18n[currentLang].billRequested || 'Bill requested — staff will be with you shortly');
   };
 
   // ============ LANG / THEME ============
@@ -3871,7 +3904,9 @@
 
   function renderAdminOrders() {
     const orders = getOrders();
-    const realOrders = orders.filter(o => !o.type);
+    // Live Orders shows: alerts + open orders + bill_requested orders
+    const liveOrders = orders.filter(o => o.type || o.status === 'open' || o.status === 'bill_requested' || !o.status);
+    const realOrders = liveOrders.filter(o => !o.type);
     let totalRev = 0;
     realOrders.forEach(o => totalRev += (o.total || 0));
     const freeTables = tables.filter(t => t.status === 'free').length;
@@ -3881,52 +3916,161 @@
     document.getElementById('statTotalTables').textContent = tables.length;
     document.getElementById('statAvg').textContent = realOrders.length ? Math.round(totalRev / realOrders.length).toLocaleString() : 0;
 
-    if (orders.length === 0) {
+    if (liveOrders.length === 0) {
       document.getElementById('ordersList').innerHTML = `
         <div style="text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">
-          No orders yet. Waiting for customers...
+          No active orders. Waiting for customers...
         </div>`;
       return;
     }
-    document.getElementById('ordersList').innerHTML = orders.map((o, idx) => {
+    document.getElementById('ordersList').innerHTML = liveOrders.map((o, idx) => {
       const timeAgo = Math.floor((Date.now() - o.time) / 60000);
       const timeStr = timeAgo < 1 ? 'just now' : timeAgo + ' min ago';
-      if (o.type === 'waiter' || o.type === 'bill') {
+
+      // Waiter / Bill request alerts
+      if (o.type === 'waiter') {
         return `
           <div class="order-card ${idx === 0 ? 'new' : ''}" style="border-left:3px solid var(--gold)">
-            <div class="order-num">${o.type === 'waiter' ? '🛎' : '🧾'}</div>
+            <div class="order-num">🛎</div>
             <div class="order-info">
               <div class="order-table">Table <strong>${o.table}</strong></div>
-              <div class="order-items">${o.type === 'waiter' ? 'Customer is calling for a waiter' : 'Customer is requesting the bill'}</div>
+              <div class="order-items">Customer is calling for a waiter</div>
               <div class="order-time">${timeStr}</div>
             </div>
             <div></div>
             <div class="order-actions">
-              <button class="order-btn primary" onclick="window._removeOrder('${o.num}')">Acknowledge</button>
+              <button class="order-btn primary" onclick="window._acknowledgeAlert('${o.num}')">Acknowledge</button>
             </div>
           </div>`;
       }
-      const itemsStr = o.items.map(i => `${i.qty}× ${i.name}`).join(' · ');
+      if (o.type === 'bill') {
+        const refOrder = getOrders().find(x => x.num === o.orderRef);
+        return `
+          <div class="order-card ${idx === 0 ? 'new' : ''}" style="border-left:3px solid var(--burgundy);background:color-mix(in srgb, var(--burgundy) 5%, var(--surface))">
+            <div class="order-num">🧾</div>
+            <div class="order-info">
+              <div class="order-table">Table <strong>${o.table}</strong> · BILL REQUEST</div>
+              <div class="order-items">Order ${o.orderRef} · ${(o.total || 0).toLocaleString()} ฿</div>
+              <div class="order-time">${timeStr}</div>
+            </div>
+            <div></div>
+            <div class="order-actions">
+              ${refOrder ? `
+                <button class="order-btn assign-table" onclick="window._viewBill('${o.orderRef}')">👁 View Bill</button>
+                <button class="order-btn gold" onclick="window._printBill('${o.orderRef}')">🖨 Print Bill</button>
+                <button class="order-btn primary" onclick="window._completeBill('${o.num}', '${o.orderRef}')">✓ Done</button>
+              ` : `
+                <button class="order-btn primary" onclick="window._acknowledgeAlert('${o.num}')">Acknowledge</button>
+              `}
+            </div>
+          </div>`;
+      }
+
+      // Regular order
+      const itemsStr = o.items.map(i => `${i.qty}× ${i.name}${i.printed ? '' : ' ★'}`).join(' · ');
       const notesStr = o.items.filter(i => i.opts && i.opts.note).map(i => `<div class="order-note">${i.name}: "${i.opts.note}"</div>`).join('');
+      const newItemCount = o.items.filter(i => !i.printed).length;
+      const hasNew = newItemCount > 0;
+      const isBillReq = o.status === 'bill_requested';
+
       return `
-        <div class="order-card ${idx === 0 ? 'new' : ''}">
+        <div class="order-card ${idx === 0 ? 'new' : ''} ${hasNew ? '' : ''}" ${isBillReq ? 'style="border-left:3px solid var(--burgundy)"' : (hasNew ? 'style="border-left:3px solid #f39c12"' : '')}>
           <div class="order-num">#${o.num}</div>
           <div class="order-info">
-            <div class="order-table">Table <strong>${o.table}</strong> · ${(o.language || 'en').toUpperCase()}</div>
+            <div class="order-table">
+              Table <strong>${o.table}</strong> · ${(o.language || 'en').toUpperCase()}
+              ${hasNew ? `<span style="background:#f39c12;color:#fff;font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">★ ${newItemCount} NEW</span>` : ''}
+              ${isBillReq ? `<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">BILL REQUESTED</span>` : ''}
+            </div>
             <div class="order-items">${itemsStr}</div>
             ${notesStr}
             <div class="order-time">${timeStr}</div>
           </div>
           <div class="order-total">${(o.total || 0).toLocaleString()} ฿</div>
           <div class="order-actions">
-            <button class="order-btn assign-table" onclick="window._reassign('${o.num}')">Reassign</button>
-            <button class="order-btn gold" onclick="window._printOrder('${o.num}')">🖨 Print</button>
-            <button class="order-btn primary" onclick="window._removeOrder('${o.num}')">✓ Done</button>
+            ${isBillReq ? `
+              <button class="order-btn assign-table" onclick="window._viewBill('${o.num}')">👁 View Bill</button>
+              <button class="order-btn gold" onclick="window._printBill('${o.num}')">🖨 Print Bill</button>
+              <button class="order-btn primary" onclick="window._markDone('${o.num}')">✓ Done</button>
+            ` : `
+              <button class="order-btn assign-table" onclick="window._reassign('${o.num}')">Reassign</button>
+              <button class="order-btn ${hasNew ? 'primary' : 'gold'}" onclick="window._printKitchen('${o.num}')">🍳 ${hasNew ? 'Print Kitchen' : 'Reprint Kitchen'}</button>
+              <button class="order-btn primary" onclick="window._markDone('${o.num}')">✓ Done</button>
+            `}
           </div>
         </div>`;
     }).join('');
   }
 
+  // Acknowledge waiter alert
+  window._acknowledgeAlert = (num) => {
+    deleteOrder(num);
+    renderAdminOrders();
+  };
+
+  // Print Kitchen Ticket — new items only
+  window._printKitchen = (num) => {
+    printKitchenTicket(num);
+    setTimeout(renderAdminOrders, 400);
+  };
+
+  // View Bill — show admin the bill preview
+  window._viewBill = (num) => {
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    document.getElementById('billRestName').textContent = appSettings.restaurantName || 'ARMENIA RESTAURANT';
+    document.getElementById('billTableNum').textContent = order.table || '?';
+    document.getElementById('billOrderNum').textContent = order.num;
+    document.getElementById('billTimeRow').innerHTML = `Time: <strong>${new Date().toLocaleTimeString()}</strong>`;
+    document.getElementById('billItemsList').innerHTML = (order.items || []).map(i => `
+      <div class="bill-item">
+        <div>
+          <div class="bill-item-name">${i.qty > 1 ? i.qty + '× ' : ''}${i.nameLocal || i.name}</div>
+          ${i.opts?.note ? `<div class="bill-item-note">⚠ ${i.opts.note}</div>` : ''}
+          ${i.opts?.addonNames?.length ? `<div class="bill-item-note">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
+        </div>
+        <div class="bill-item-price">${(i.price * i.qty).toLocaleString()} ฿</div>
+      </div>
+    `).join('');
+    document.getElementById('billTotalVal').textContent = (order.total || 0).toLocaleString();
+    // Hide Confirm button for admin view (admin doesn't need to confirm)
+    document.getElementById('billConfirmBtn').style.display = 'none';
+    document.getElementById('billCloseBtn').textContent = 'Close';
+    document.getElementById('billModal').classList.add('show');
+  };
+
+  // Print Bill from admin
+  window._printBill = (num) => {
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    printBill(order.num, order.items || [], order.total || 0, order.table);
+  };
+
+  // Complete Bill — close out: mark order billed/done, remove the bill alert, free the table
+  window._completeBill = (alertNum, orderRefNum) => {
+    if (!confirm(`Complete and close order #${orderRefNum}?`)) return;
+    const order = getOrders().find(o => o.num === orderRefNum);
+    if (order) {
+      updateOrder(orderRefNum, { status: 'billed', billedTime: Date.now() });
+      const t = tables.find(x => x.num === order.table);
+      if (t && t.status === 'occupied') { t.status = 'free'; saveTables(); }
+    }
+    deleteOrder(alertNum);
+    renderAdminOrders();
+  };
+
+  // Mark order Done (for orders without bill request) — keeps for history
+  window._markDone = (num) => {
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    if (!confirm(`Mark order #${num} as Done?`)) return;
+    updateOrder(num, { status: 'done', doneTime: Date.now() });
+    const t = tables.find(x => x.num === order.table);
+    if (t && t.status === 'occupied') { t.status = 'free'; saveTables(); }
+    renderAdminOrders();
+  };
+
+  // Legacy
   window._removeOrder = (num) => {
     deleteOrder(num);
     renderAdminOrders();
@@ -4270,6 +4414,56 @@
     setTimeout(() => { w.print(); }, 300);
   }
 
+  // KITCHEN TICKET — prints only unprinted items, then marks them printed
+  function printKitchenTicket(orderNum) {
+    const order = getOrders().find(o => o.num === orderNum);
+    if (!order || !order.items) return;
+    const newItems = order.items.filter(i => !i.printed);
+    if (newItems.length === 0) {
+      showToast('All items already sent to kitchen');
+      return;
+    }
+    const restName = appSettings.restaurantName || 'ARMENIA';
+    const w = window.open('', '_blank', 'width=340,height=600');
+    w.document.write(`
+      <html><head><style>
+        body { font-family: monospace; font-size: 14px; padding: 16px; max-width: 300px; }
+        h2 { text-align: center; margin: 4px 0; font-size: 17px; letter-spacing: 0.1em; }
+        .sub { text-align: center; font-size: 11px; margin: 2px 0; }
+        .line { border-top: 1px dashed #000; margin: 10px 0; }
+        .double-line { border-top: 2px solid #000; margin: 10px 0; }
+        .row { display: flex; justify-content: space-between; margin: 6px 0; font-size: 13px; }
+        .item { margin: 8px 0; padding: 6px 0; border-bottom: 1px dotted #ccc; }
+        .item-name { font-weight: bold; font-size: 15px; }
+        .qty { font-size: 22px; font-weight: bold; margin-right: 6px; }
+        .note { font-style: italic; font-size: 12px; margin-top: 3px; color: #000; background: #f0f0f0; padding: 3px 6px; }
+        .addons { font-size: 12px; margin-top: 2px; }
+      </style></head><body>
+        <h2>★ KITCHEN ★</h2>
+        <p class="sub">${restName}</p>
+        <div class="double-line"></div>
+        <div class="row"><span>Order:</span><strong>${order.num}</strong></div>
+        <div class="row"><span>Table:</span><strong style="font-size:18px">${order.table}</strong></div>
+        <div class="row"><span>Time:</span><span>${new Date().toLocaleTimeString()}</span></div>
+        <div class="row" style="color:#c00;font-weight:bold;font-size:12px"><span>★ NEW ITEMS — ${newItems.length} item(s)</span></div>
+        <div class="double-line"></div>
+        ${newItems.map(i => `
+          <div class="item">
+            <div class="item-name"><span class="qty">${i.qty}×</span>${i.name}</div>
+            ${i.opts?.addonNames?.length ? `<div class="addons">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
+            ${i.opts?.note ? `<div class="note">⚠ ${i.opts.note}</div>` : ''}
+          </div>
+        `).join('')}
+        <div class="double-line"></div>
+        <p class="sub" style="font-size:10px;margin-top:14px">--- Kitchen copy ---</p>
+      </body></html>
+    `);
+    setTimeout(() => { w.print(); }, 300);
+    // Mark these items as printed
+    const updatedItems = order.items.map(i => i.printed ? i : { ...i, printed: true });
+    updateOrder(order.num, { items: updatedItems, hasNewItems: false });
+  }
+
   window._printOrder = (num) => {
     const order = getOrders().find(o => o.num === num);
     if (!order) return;
@@ -4282,7 +4476,7 @@
     const now = Date.now();
     const cutoffs = { day: 86400000, week: 604800000, month: 2592000000, all: Infinity };
     const cutoff = cutoffs[period] || Infinity;
-    const allOrders = getOrders().filter(o => !o.type && (o.status === 'billed' || o.status === 'done' || o.status === 'open') && (now - o.time) <= cutoff);
+    const allOrders = getOrders().filter(o => !o.type && (o.status === 'billed' || o.status === 'done' || o.status === 'open' || o.status === 'bill_requested') && (now - o.time) <= cutoff);
     const rev = allOrders.reduce((s, o) => s + (o.total || 0), 0);
     const tables = new Set(allOrders.map(o => o.table)).size;
     document.getElementById('histStatOrders').textContent = allOrders.length;
