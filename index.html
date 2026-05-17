@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Armenia Restaurant Pattaya</title>
-<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -236,34 +235,25 @@
 
   /* ============ APP ============ */
   .app {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
     height: 100vh;
-    height: 100dvh; /* dynamic viewport height for mobile browsers */
     position: relative;
     z-index: 2;
-    overflow: hidden;
-  }
-  .app > main {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    min-height: 0;
-  }
-  .app > .bottom-bar {
-    flex-shrink: 0;
   }
 
-  /* CUSTOM HEADER — same color on light & dark theme */
+  /* CUSTOM HEADER */
   .custom-header {
     display: none;
     padding: 8px 32px;
     text-align: center;
-    background: #722f37;
-    color: #f4dca5;
+    background: var(--burgundy);
+    color: var(--gold-soft);
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: var(--font-size-header, 14px);
-    border-bottom: 1px solid #b8860b;
+    font-size: 14px;
+    border-bottom: 1px solid var(--gold);
   }
   .custom-header.show { display: block; }
 
@@ -303,14 +293,14 @@
   .brand-mark::before { content: ''; position: absolute; inset: 2px; border: 1px solid var(--gold); opacity: 0.5; }
   .brand-text h1 {
     font-family: 'Cinzel', serif;
-    font-size: var(--font-size-brand, 19px);
+    font-size: 19px;
     font-weight: 500;
     letter-spacing: 0.06em;
   }
   .brand-text p {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: var(--font-size-tagline, 13px);
+    font-size: 13px;
     color: var(--burgundy);
     margin-top: 1px;
   }
@@ -376,53 +366,24 @@
 
   /* BANNER / VIDEO */
   .banner-area {
-    margin: 0 auto 26px;
+    margin-bottom: 26px;
     border: 1px solid var(--gold-soft);
-    background: #000;
+    background: var(--surface);
     overflow: hidden;
     position: relative;
-    width: 100%;
-    aspect-ratio: 16/9;
-    max-height: 400px;
+    aspect-ratio: 21/6;
     display: none;
   }
   .banner-area.show { display: block; }
   .banner-area img {
-    position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: center;
     display: block;
   }
-  .banner-area iframe,
-  .banner-area video {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
+  .banner-area iframe {
     width: 100%; height: 100%;
     border: none;
     display: block;
-    pointer-events: none;
-    object-fit: cover;
-  }
-  .banner-area .yt-frame-wrap {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: calc(100% + 160px); /* extra height to crop YouTube top/bottom UI */
-    pointer-events: none;
-  }
-  .banner-area .yt-frame-wrap iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%; height: 100%;
-    transform: none;
-  }
-  .banner-area .yt-cover {
-    position: absolute; inset: 0;
-    pointer-events: none;
-    z-index: 1;
   }
   .banner-area .placeholder {
     width: 100%; height: 100%;
@@ -665,7 +626,7 @@
   }
   .dish-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: var(--font-size-dish-name, 20px);
+    font-size: 20px;
     font-weight: 600;
     line-height: 1.15;
   }
@@ -673,12 +634,12 @@
     font-style: italic;
     font-weight: 500;
     color: var(--burgundy);
-    font-size: calc(var(--font-size-dish-name, 20px) * 0.75);
+    font-size: 15px;
     display: block;
     margin-top: 1px;
   }
   .dish-desc {
-    font-size: var(--font-size-dish-desc, 12px);
+    font-size: 12px;
     color: var(--ink-soft);
     line-height: 1.4;
     flex: 1;
@@ -778,12 +739,12 @@
     display: none;
     padding: 8px 32px;
     text-align: center;
-    background: #1a1209;
-    color: #f4dca5;
+    background: var(--ink);
+    color: var(--gold-soft);
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: var(--font-size-footer, 12px);
-    border-top: 1px solid #b8860b;
+    font-size: 12px;
+    border-top: 1px solid var(--gold);
   }
   .custom-footer.show { display: block; }
 
@@ -1789,41 +1750,6 @@
     overflow: hidden;
   }
   .idle-screen.show { display: flex; }
-
-  /* Staff settings button — discreet, top-right on idle & table-select */
-  .staff-settings-btn {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 1px solid rgba(184, 134, 11, 0.3);
-    background: rgba(255, 251, 243, 0.15);
-    color: var(--gold-soft);
-    font-size: 17px;
-    cursor: pointer;
-    z-index: 100;
-    backdrop-filter: blur(8px);
-    transition: all 0.2s;
-    display: grid;
-    place-items: center;
-  }
-  .staff-settings-btn:hover {
-    background: rgba(255, 251, 243, 0.3);
-    border-color: var(--gold);
-    transform: rotate(45deg);
-  }
-  /* On table-select (light bg), use darker styling */
-  .table-select .staff-settings-btn {
-    background: var(--surface);
-    border-color: var(--line);
-    color: var(--ink-soft);
-  }
-  .table-select .staff-settings-btn:hover {
-    border-color: var(--gold);
-    color: var(--burgundy);
-  }
   .idle-video {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
@@ -2004,130 +1930,6 @@
   .de-actions { display: flex; gap: 10px; margin-top: 16px; }
   .de-btn { flex: 1; padding: 12px; border: 1px solid var(--line); background: transparent; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; color: var(--ink); }
   .de-btn.primary { background: var(--burgundy); color: var(--gold-soft); border-color: var(--gold); font-family: 'Cinzel',serif; }
-
-  /* ===================================================================
-     RESPONSIVE
-     =================================================================== */
-
-  /* TABLET */
-  @media (max-width: 1024px) {
-    header { padding: 0 18px; height: 70px; }
-    header::after { left: 18px; right: 18px; }
-    .brand-mark { width: 42px; height: 42px; font-size: 19px; }
-    main { padding: 18px 18px; }
-    .featured-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-    .menu-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
-    .banner-area { max-height: 320px; margin-bottom: 22px; }
-
-    /* Admin */
-    .admin-tabs { overflow-x: auto; padding: 0 16px; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
-    .admin-tabs::-webkit-scrollbar { display: none; }
-    .admin-tab { white-space: nowrap; flex-shrink: 0; }
-    #fbStatus { display: none; }
-    .order-card { grid-template-columns: auto 1fr auto; gap: 12px; }
-    .order-actions { flex-wrap: wrap; }
-  }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
-    header {
-      padding: 0 12px;
-      height: auto;
-      min-height: 60px;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding-top: 8px;
-      padding-bottom: 8px;
-    }
-    header::after { display: none; }
-    .brand { gap: 10px; }
-    .brand-mark { width: 36px; height: 36px; font-size: 16px; }
-    .header-right { gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
-    .table-badge { padding: 5px 9px; font-size: 9px; }
-    .table-badge strong { font-size: 12px; }
-    .lang-btn { padding: 5px 8px; font-size: 9px; }
-    .icon-btn { width: 32px; height: 32px; font-size: 13px; }
-
-    main { padding: 12px 10px; }
-
-    /* Banner */
-    .banner-area { max-height: 230px; margin-bottom: 14px; }
-
-    /* Featured */
-    .featured-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .featured-img { aspect-ratio: 4/3; font-size: 32px; }
-    .featured-name { font-size: 14px; }
-    .featured-price { font-size: 13px !important; }
-
-    /* Categories — horizontal scroll */
-    .categories { overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; flex-wrap: nowrap !important; }
-    .categories::-webkit-scrollbar { display: none; }
-    .cat-btn { white-space: nowrap; flex-shrink: 0; padding: 7px 14px; font-size: 12px; }
-
-    /* Menu grid */
-    .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .dish-add { width: 30px; height: 30px; font-size: 18px; }
-    .dish-body { padding: 10px 11px 12px; }
-
-    /* Bottom bar — must always stay visible */
-    .bottom-bar {
-      padding: 10px 10px;
-      gap: 6px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      flex-wrap: nowrap;
-    }
-    .bottom-bar::-webkit-scrollbar { display: none; }
-    .bb-btn { padding: 9px 12px; font-size: 12px; flex-shrink: 0; gap: 5px; white-space: nowrap; }
-    .bb-voice .mic-icon { width: 22px; height: 22px; font-size: 11px; }
-    .bb-spacer { display: none; }
-    .bb-cart { margin-left: auto; }
-
-    /* Modal */
-    .modal-card { max-width: 95vw; max-height: 92vh; }
-    .modal-foot { flex-direction: column; gap: 10px; align-items: stretch; }
-    .modal-foot .qty-controls { justify-content: center; }
-    .modal-add { width: 100%; justify-content: center; }
-
-    /* Idle */
-    .idle-title { font-size: 38px; }
-    .idle-sub { font-size: 18px; }
-    .idle-cta { padding: 14px 28px; font-size: 12px; }
-
-    /* Table select */
-    .ts-title { font-size: 18px; }
-    .ts-sub { font-size: 13px; }
-    .ts-lang-btn { padding: 7px 14px; font-size: 12px; }
-    .ts-grid { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 8px; }
-    .ts-card { padding: 12px 8px; }
-    .ts-card-num { font-size: 24px; }
-
-    /* Admin */
-    .stats-row { grid-template-columns: 1fr 1fr !important; gap: 8px; }
-    .order-card { grid-template-columns: 1fr; gap: 8px; padding: 14px; }
-    .order-num { font-size: 22px !important; }
-    .order-actions { flex-wrap: wrap; gap: 6px; }
-    .order-actions .order-btn { flex: 1 1 auto; padding: 9px 12px; font-size: 11px; }
-    .admin-tab { padding: 8px 11px; font-size: 11px; }
-    .settings-section { padding: 16px 14px; }
-    .de-row { grid-template-columns: 1fr !important; }
-
-    /* PIN modal */
-    .pin-key { padding: 14px 8px; font-size: 18px; }
-  }
-
-  /* SMALL PHONES */
-  @media (max-width: 440px) {
-    .menu-grid { grid-template-columns: 1fr; }
-    .featured-grid { grid-template-columns: 1fr; }
-    .featured-img { aspect-ratio: 16/9; }
-    .ts-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-
-  /* SAFE AREA for notched iPhones */
-  @supports (padding: max(0px)) {
-    .bottom-bar { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
-  }
 </style>
 </head>
 <body>
@@ -2137,7 +1939,7 @@
   <div class="idle-static-bg"></div>
   <div class="idle-video" id="idleVideoArea"></div>
   <div class="idle-overlay"></div>
-  <button class="staff-settings-btn" id="staffBtnIdle" title="Staff Settings">⚙</button>
+  <button id="staffBtnIdle" onclick="openAdminDashboard()" style="position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(184,134,11,0.4);background:rgba(255,251,243,0.15);color:#f4dca5;font-size:17px;cursor:pointer;z-index:100;backdrop-filter:blur(8px);display:grid;place-items:center" title="Staff">⚙</button>
   <div class="idle-content">
     <div class="idle-logo">A</div>
     <div class="idle-title">ARMENIA</div>
@@ -2148,7 +1950,7 @@
 
 <!-- ============ TABLE SELECT + LANGUAGE (combined) ============ -->
 <div class="table-select" id="tableSelect">
-  <button class="staff-settings-btn" id="staffBtnTable" title="Staff Settings">⚙</button>
+  <button onclick="openAdminDashboard()" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);font-size:15px;cursor:pointer;z-index:100;display:grid;place-items:center" title="Staff">⚙</button>
   <div class="ts-header">
     <div class="ts-logo-wrap" id="tsLogoWrap">
       <div class="ts-mark" id="tsLogoMark">A</div>
@@ -2201,6 +2003,16 @@
   <main>
     <!-- BANNER / VIDEO -->
     <div class="banner-area" id="bannerArea"></div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-text">
+        <h2 data-i18n="hero1">Welcome.<br><em data-i18n="hero2">Բարի գալուստ</em></h2>
+        <p data-i18n="heroSub">Authentic Armenian cuisine since 2024 — tap to explore, or speak to our assistant in any language.</p>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-num">№ <span id="dishCount">50</span> · <span data-i18n="dishes">DISHES</span></div>
+    </div>
 
     <!-- FEATURED -->
     <div class="featured-section" id="featuredSection">
@@ -2339,19 +2151,48 @@
       <span class="bill-total-val"><span id="billTotalVal">0</span> ฿</span>
     </div>
     <div class="bill-thanks">Շնորհակալություն · Thank you · ขอบคุณ</div>
+    <!-- Customer actions -->
     <div style="font-size:11px;text-align:center;color:var(--ink-soft);font-style:italic;margin-top:6px;margin-bottom:-4px" id="billCustomerHint">Tap Confirm to request the bill from staff</div>
     <div class="bill-actions" id="billCustomerActions">
       <button class="bill-close-btn" id="billCloseBtn">Cancel</button>
       <button class="bill-print-btn" id="billConfirmBtn">✓ Confirm Bill Request</button>
     </div>
-    <!-- Admin-only actions (shown when admin opens checkout) -->
-    <div class="bill-actions" id="billAdminActions" style="display:none;flex-direction:column;gap:8px">
-      <button class="bill-print-btn" onclick="window._printBillFromModal()" style="background:var(--gold);color:#fff">🖨 Print Bill</button>
-      <button class="bill-print-btn" onclick="window._completePayment()" style="background:#2d6a4f;color:#fff">✓ Confirm Paid &amp; Close Order</button>
-      <button class="bill-close-btn" onclick="document.getElementById('billModal').classList.remove('show')">Cancel</button>
+    <!-- Admin actions (shown when admin opens checkout) -->
+    <div style="display:none;flex-direction:column;gap:8px;margin-top:14px" id="billAdminActions">
+      <button id="billAdminPrintBtn" style="padding:13px;background:var(--gold);color:#fff;border:none;font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:'Cinzel',serif">🖨 Print Bill</button>
+      <button id="billAdminPayBtn"   style="padding:13px;background:#2d6a4f;color:#fff;border:none;font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:'Cinzel',serif">✓ Confirm Paid &amp; Close Order</button>
+      <button onclick="document.getElementById('billModal').classList.remove('show')" style="padding:10px;background:transparent;color:var(--ink-soft);border:1px solid var(--line);font-size:11px;letter-spacing:.1em;cursor:pointer">Cancel</button>
     </div>
   </div>
 </div>
+
+<!-- ============ PIN MODAL ============ -->
+<div id="pinModal" style="position:fixed;inset:0;z-index:2000;background:rgba(26,18,9,.85);display:none;align-items:center;justify-content:center">
+  <div style="background:var(--surface);border:1px solid var(--gold);padding:40px 36px;max-width:340px;width:90%;text-align:center">
+    <div style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:6px">ADMIN ACCESS</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--ink-soft);margin-bottom:24px">Enter 6-digit PIN</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px">
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">
+      <button class="pin-key" data-v="1">1</button><button class="pin-key" data-v="2">2</button><button class="pin-key" data-v="3">3</button>
+      <button class="pin-key" data-v="4">4</button><button class="pin-key" data-v="5">5</button><button class="pin-key" data-v="6">6</button>
+      <button class="pin-key" data-v="7">7</button><button class="pin-key" data-v="8">8</button><button class="pin-key" data-v="9">9</button>
+      <button class="pin-key" data-v="clear" style="font-size:11px">CLR</button>
+      <button class="pin-key" data-v="0">0</button>
+      <button class="pin-key" data-v="back">⌫</button>
+    </div>
+    <div id="pinError" style="color:#c0392b;font-size:12px;height:16px;margin-bottom:8px"></div>
+    <button id="pinCancel" style="font-size:11px;letter-spacing:.15em;color:var(--ink-soft);background:none;border:none;cursor:pointer;text-transform:uppercase;padding:4px 8px">Cancel</button>
+  </div>
+</div>
+<style>
+.pin-dot { width:14px;height:14px;border-radius:50%;border:2px solid var(--gold);background:transparent;transition:background .15s; }
+.pin-dot.filled { background:var(--burgundy);border-color:var(--burgundy); }
+.pin-key { padding:16px 10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:20px;font-weight:500;cursor:pointer;border-radius:4px;transition:all .1s; }
+.pin-key:active { background:var(--burgundy);color:var(--gold-soft);transform:scale(.95); }
+</style>
 
 <!-- ============ CONFIRM ============ -->
 <div class="confirm" id="confirm">
@@ -2409,7 +2250,7 @@
       <button class="admin-tab" data-tab="history">History</button>
       <button class="admin-tab" data-tab="branding">Branding</button>
       <button class="admin-tab" data-tab="settings">Settings</button>
-      <span id="fbStatus" style="margin-left:auto;font-size:11px;opacity:0.7;align-self:center;padding-right:8px">⏳ Connecting...</span>
+      <span id="fbStatus" style="margin-left:auto;font-size:11px;opacity:.7;align-self:center;padding-right:8px">⏳</span>
     </div>
     <button class="icon-btn" id="adminClose">✕</button>
   </div>
@@ -2513,15 +2354,14 @@
           <label>Banner Type</label>
           <select id="bannerType">
             <option value="none">None</option>
-            <option value="image">Image</option>
-            <option value="youtube">Video (YouTube / Vimeo / .mp4)</option>
+            <option value="image">Image URL</option>
+            <option value="youtube">YouTube Video</option>
           </select>
-          <div class="help">Banner shows at 16:9 aspect ratio. Video plays without title, controls, or branding.</div>
         </div>
         <div class="field" id="bannerUrlField">
-          <label>URL</label>
-          <input type="text" id="bannerUrl" placeholder="https://...">
-          <div class="help">Image: direct .jpg/.png link. Video: YouTube URL, Vimeo URL, or direct .mp4/.webm file.</div>
+          <label>Banner Image URL or YouTube URL</label>
+          <input type="text" id="bannerUrl" placeholder="https://example.com/banner.jpg or https://youtube.com/watch?v=...">
+          <div class="help">For YouTube, paste any standard URL — auto-converts to embed format.</div>
         </div>
         <button class="save-btn" id="saveBanner">Save Banner</button>
       </div>
@@ -2545,56 +2385,6 @@
         </div>
       </div>
 
-      <div class="settings-section">
-        <h3>Font <em>Sizes</em></h3>
-        <div class="help" style="margin-bottom:14px">Customize the size of each text element individually (in pixels).</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
-          <div class="field"><label>Restaurant Name (header)</label><input type="number" id="fsBrand" min="10" max="40" placeholder="19"></div>
-          <div class="field"><label>Tagline (header)</label><input type="number" id="fsTagline" min="8" max="22" placeholder="13"></div>
-          <div class="field"><label>Dish Name</label><input type="number" id="fsDishName" min="12" max="32" placeholder="20"></div>
-          <div class="field"><label>Dish Description</label><input type="number" id="fsDishDesc" min="9" max="18" placeholder="12"></div>
-          <div class="field"><label>Top Header Banner</label><input type="number" id="fsHeader" min="10" max="22" placeholder="14"></div>
-          <div class="field"><label>Bottom Footer Banner</label><input type="number" id="fsFooter" min="9" max="20" placeholder="12"></div>
-        </div>
-        <button class="save-btn" id="saveFontSizes" style="margin-top:14px">Save Font Sizes</button>
-        <button class="save-btn" id="resetFontSizes" style="margin-top:14px;background:transparent;color:var(--ink-soft);border-color:var(--line)">Reset to Default</button>
-      </div>
-
-      <div class="settings-section">
-        <h3>Button <em>Labels</em></h3>
-        <div class="help" style="margin-bottom:14px">Customize labels for the bottom action buttons (Ask Assistant · Call Waiter · Bill). Leave blank to use default.</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
-          <div style="font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;font-weight:600">🇬🇧 English</div>
-          <div style="font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;font-weight:600">🇹🇭 ไทย</div>
-          <div style="font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;font-weight:600">🇷🇺 Русский</div>
-        </div>
-        <div class="field" style="margin-bottom:6px">
-          <label style="font-size:9px">Ask Assistant button</label>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-            <input type="text" id="lbl_askMe_en" placeholder="Ask Assistant">
-            <input type="text" id="lbl_askMe_th" placeholder="ถามผู้ช่วย">
-            <input type="text" id="lbl_askMe_ru" placeholder="Спросить">
-          </div>
-        </div>
-        <div class="field" style="margin-bottom:6px">
-          <label style="font-size:9px">Call Waiter button</label>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-            <input type="text" id="lbl_callWaiter_en" placeholder="Call Waiter">
-            <input type="text" id="lbl_callWaiter_th" placeholder="เรียกพนักงาน">
-            <input type="text" id="lbl_callWaiter_ru" placeholder="Позвать официанта">
-          </div>
-        </div>
-        <div class="field">
-          <label style="font-size:9px">Bill button</label>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-            <input type="text" id="lbl_askBill_en" placeholder="Bill">
-            <input type="text" id="lbl_askBill_th" placeholder="ขอบิล">
-            <input type="text" id="lbl_askBill_ru" placeholder="Счёт">
-          </div>
-        </div>
-        <button class="save-btn" id="saveBtnLabels" style="margin-top:14px">Save Button Labels</button>
-      </div>
-
     </div>
 
     <!-- SETTINGS -->
@@ -2603,31 +2393,9 @@
         <h3>Restaurant <em>Information</em></h3>
         <div class="field"><label>Restaurant Name</label><input type="text" id="settingName" value="ARMENIA"></div>
         <div class="field"><label>Tagline</label><input type="text" id="settingTagline" value="Restaurant · Pattaya"></div>
-        <div class="field"><label>Phone</label><input type="text" id="settingPhone" placeholder="+66 62 664 0700"></div>
-        <div class="field"><label>Address</label><input type="text" id="settingAddress" placeholder="334/113-115 M12, Jomtien Beach, Pattaya"></div>
+        <div class="field"><label>Phone</label><input type="text" value="+66 62 664 0700"></div>
+        <div class="field"><label>Address</label><input type="text" value="334/113-115 M12, Jomtien Beach, Pattaya"></div>
         <button class="save-btn" id="saveInfo">Save</button>
-      </div>
-
-      <div class="settings-section">
-        <h3>Admin <em>PIN</em></h3>
-        <div class="help" style="margin-bottom:14px">6-digit PIN required to access Admin Dashboard. Default: <strong>000000</strong></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:400px">
-          <div class="field">
-            <label>Current PIN</label>
-            <input type="password" id="pinCurrent" maxlength="6" placeholder="••••••" style="letter-spacing:0.3em;font-size:18px;text-align:center">
-          </div>
-          <div></div>
-          <div class="field">
-            <label>New PIN</label>
-            <input type="password" id="pinNew" maxlength="6" placeholder="••••••" style="letter-spacing:0.3em;font-size:18px;text-align:center">
-          </div>
-          <div class="field">
-            <label>Confirm New PIN</label>
-            <input type="password" id="pinConfirm" maxlength="6" placeholder="••••••" style="letter-spacing:0.3em;font-size:18px;text-align:center">
-          </div>
-        </div>
-        <button class="save-btn" id="savePinBtn" style="margin-top:10px">Change PIN</button>
-        <div id="pinChangeMsg" style="margin-top:8px;font-size:13px;height:18px"></div>
       </div>
 
       <div class="settings-section">
@@ -2646,36 +2414,13 @@
         <h3>Kitchen <em>Printer</em></h3>
         <div class="field">
           <label>Printer Type</label>
-          <select id="printerType">
-            <option value="escpos">ESC/POS Network Printer</option>
-            <option value="bluetooth">Bluetooth Thermal Printer</option>
-            <option value="printnode">PrintNode Cloud</option>
+          <select>
+            <option>ESC/POS Network Printer</option>
+            <option>Bluetooth Thermal Printer</option>
+            <option>PrintNode Cloud</option>
           </select>
         </div>
-        <div class="field"><label>Printer IP Address</label><input type="text" id="printerIP" placeholder="192.168.1.100"></div>
-        <button class="save-btn" id="savePrinter">Save Printer</button>
-      </div>
-
-      <div class="settings-section">
-        <h3>Telegram <em>Notifications</em></h3>
-        <div class="help" style="margin-bottom:14px">
-          Send new order notifications to a Telegram chat or group.<br>
-          <strong>Setup:</strong> 1) Message @BotFather on Telegram to create a bot, get the Bot Token. 2) Add the bot to your group (or DM it). 3) Visit <code style="background:var(--bg);padding:2px 5px">https://api.telegram.org/bot[YOUR_TOKEN]/getUpdates</code> after sending a message to find your Chat ID.
-        </div>
-        <div class="field">
-          <label>Enable Telegram Notifications</label>
-          <select id="telegramEnabled">
-            <option value="no">Disabled</option>
-            <option value="yes">Enabled</option>
-          </select>
-        </div>
-        <div class="field"><label>Bot Token</label><input type="text" id="telegramToken" placeholder="123456789:ABCDEFghijk-LMNOPqrstuvWXYZ"></div>
-        <div class="field"><label>Chat ID (group: starts with -100; personal: positive number)</label><input type="text" id="telegramChatId" placeholder="-1001234567890 or 987654321"></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="save-btn" id="saveTelegram">Save Telegram</button>
-          <button class="save-btn" id="testTelegram" style="background:transparent;color:var(--ink);border-color:var(--line)">📨 Send Test Message</button>
-        </div>
-        <div id="telegramTestMsg" style="margin-top:8px;font-size:13px;height:18px"></div>
+        <div class="field"><label>Printer IP Address</label><input type="text" value="192.168.1.100"></div>
       </div>
     </div>
   </div>
@@ -2767,56 +2512,6 @@
   </div>
 </div>
 
-<!-- ============ ADMIN PIN MODAL ============ -->
-<div id="pinModal" style="
-  position:fixed;inset:0;z-index:2000;
-  background:rgba(26,18,9,0.85);
-  display:none;align-items:center;justify-content:center;
-">
-  <div style="
-    background:var(--surface);border:1px solid var(--gold);
-    padding:40px 36px;max-width:340px;width:90%;text-align:center;
-  ">
-    <div style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.2em;color:var(--gold);margin-bottom:6px">ADMIN ACCESS</div>
-    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--ink-soft);margin-bottom:24px">Enter 6-digit PIN</div>
-    <div id="pinDots" style="display:flex;gap:10px;justify-content:center;margin-bottom:24px">
-      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
-      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">
-      <button class="pin-key" data-v="1">1</button><button class="pin-key" data-v="2">2</button><button class="pin-key" data-v="3">3</button>
-      <button class="pin-key" data-v="4">4</button><button class="pin-key" data-v="5">5</button><button class="pin-key" data-v="6">6</button>
-      <button class="pin-key" data-v="7">7</button><button class="pin-key" data-v="8">8</button><button class="pin-key" data-v="9">9</button>
-      <button class="pin-key" data-v="clear" style="font-size:11px;letter-spacing:0.05em">CLR</button>
-      <button class="pin-key" data-v="0">0</button>
-      <button class="pin-key" data-v="back" style="font-size:18px">⌫</button>
-    </div>
-    <div id="pinError" style="color:#c0392b;font-size:12px;height:16px;margin-bottom:8px"></div>
-    <button id="pinCancel" style="font-size:11px;letter-spacing:0.15em;color:var(--ink-soft);background:none;border:none;cursor:pointer;text-transform:uppercase;padding:4px 8px">Cancel</button>
-  </div>
-</div>
-
-<style>
-.pin-dot {
-  width:14px;height:14px;border-radius:50%;
-  border:2px solid var(--gold);background:transparent;
-  transition:background 0.15s;
-}
-.pin-dot.filled { background:var(--burgundy);border-color:var(--burgundy); }
-.pin-key {
-  padding:16px 10px;
-  border:1px solid var(--line);
-  background:var(--bg);
-  color:var(--ink);
-  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-size:20px;font-weight:500;
-  cursor:pointer;
-  transition:all 0.1s;
-  border-radius:4px;
-}
-.pin-key:active { background:var(--burgundy);color:var(--gold-soft);transform:scale(0.95); }
-</style>
-
 <script>
   // ============ I18N ============
   const i18n = {
@@ -2843,11 +2538,6 @@
       billRequested: 'Your bill will be brought shortly',
       free: 'Available', occupied: 'Occupied', reserved: 'Reserved',
       editNote: 'Edit Note', cancel: 'Cancel', save: 'Save',
-      activeOrder: 'YOUR ACTIVE ORDER', newItems: 'NEW ITEMS TO ORDER', subtotal: 'Active Subtotal',
-      cancelOrder: '✕ Cancel Order', cannotCancel: 'Cannot cancel — being prepared',
-      confirmCancel: 'Cancel this order?', orderCancelled: 'Order cancelled',
-      statusReceived: 'ORDER RECEIVED', statusPreparing: 'IN PROGRESS',
-      statusPartial: 'PARTIALLY PREPARING', statusServed: 'SERVED', statusBillReq: 'BILL REQUESTED',
       cats: { all: 'All', appetizers: 'Appetizers', salads: 'Salads', soups: 'Soups', barbecue: 'Barbecue', mains: 'Main Courses', sides: 'Side Dishes', pastry: 'Pastry', bread: 'Hand Molding', desserts: 'Desserts', extra: 'Extra', drinks: 'Soft Drinks' },
       aiSays: {
         meat: 'Our khorovats is grilled over open flame in the traditional way.',
@@ -2880,11 +2570,6 @@
       waiterCalled: 'พนักงานกำลังมาค่ะ', billRequested: 'จะนำบิลมาให้ค่ะ',
       free: 'ว่าง', occupied: 'มีลูกค้า', reserved: 'จองแล้ว',
       editNote: 'แก้ไขหมายเหตุ', cancel: 'ยกเลิก', save: 'บันทึก',
-      activeOrder: 'ออเดอร์ของคุณ', newItems: 'รายการใหม่ที่จะสั่ง', subtotal: 'ยอดรวมออเดอร์',
-      cancelOrder: '✕ ยกเลิกออเดอร์', cannotCancel: 'ไม่สามารถยกเลิก — กำลังเตรียม',
-      confirmCancel: 'ยกเลิกออเดอร์นี้?', orderCancelled: 'ยกเลิกออเดอร์แล้ว',
-      statusReceived: 'รับออเดอร์แล้ว', statusPreparing: 'กำลังเตรียม',
-      statusPartial: 'เตรียมบางส่วน', statusServed: 'เสิร์ฟแล้ว', statusBillReq: 'ขอบิลแล้ว',
       cats: { all: 'ทั้งหมด', appetizers: 'อาหารทานเล่น', salads: 'สลัด', soups: 'ซุป', barbecue: 'บาร์บีคิว', mains: 'จานหลัก', sides: 'เครื่องเคียง', pastry: 'แป้ง', bread: 'ขนมปังทำมือ', desserts: 'ของหวาน', extra: 'พิเศษ', drinks: 'เครื่องดื่ม' },
       aiSays: {
         meat: 'โคโรวัทของเราย่างไฟตามแบบดั้งเดิม',
@@ -2917,11 +2602,6 @@
       waiterCalled: 'Официант идёт', billRequested: 'Сейчас принесём счёт',
       free: 'Свободен', occupied: 'Занят', reserved: 'Бронь',
       editNote: 'Изменить заметку', cancel: 'Отмена', save: 'Сохранить',
-      activeOrder: 'ВАШ ЗАКАЗ', newItems: 'НОВЫЕ ПОЗИЦИИ', subtotal: 'Промежуточный итог',
-      cancelOrder: '✕ Отменить заказ', cannotCancel: 'Нельзя отменить — готовится',
-      confirmCancel: 'Отменить этот заказ?', orderCancelled: 'Заказ отменён',
-      statusReceived: 'ЗАКАЗ ПРИНЯТ', statusPreparing: 'ГОТОВИТСЯ',
-      statusPartial: 'ЧАСТИЧНО ГОТОВИТСЯ', statusServed: 'ПОДАНО', statusBillReq: 'СЧЁТ ЗАПРОШЕН',
       cats: { all: 'Всё', appetizers: 'Закуски', salads: 'Салаты', soups: 'Супы', barbecue: 'Шашлык', mains: 'Горячее', sides: 'Гарниры', pastry: 'Выпечка', bread: 'Хлеб ручной работы', desserts: 'Десерты', extra: 'Дополнительно', drinks: 'Напитки' },
       aiSays: {
         meat: 'Наш хоровац готовится на открытом огне по традиции.',
@@ -3230,49 +2910,10 @@
   let editingNoteKey = null;
   let assignTargetOrder = null;
 
-  // Persisted state
-  // ============ STATE (must be declared before Firebase listeners) ============
-  let featuredIds = [];
-  let appSettings = {
-    headerText: '', footerText: '', bannerType: 'none', bannerUrl: '',
-    font: 'cormorant', restaurantName: 'ARMENIA', tagline: 'Restaurant · Pattaya',
-    phone: '+66 62 664 0700', address: '334/113-115 M12, Jomtien Beach, Pattaya',
-    printerType: 'escpos', printerIP: '192.168.1.100'
-  };
-  let tables = [];
-  let selectedTable = null;
-  let _orders = []; // local cache, kept in sync by listener
-
-  function generateDefaultTables() {
-    const arr = [];
-    for (let i = 1; i <= 12; i++) {
-      arr.push({ num: String(i).padStart(2, '0'), maxSeats: i <= 4 ? 2 : (i <= 8 ? 4 : 6), status: 'free' });
-    }
-    return arr;
-  }
-
-  // Initialize with defaults synchronously so first render always works
-  tables = generateDefaultTables();
-
-  // Categories — defined here so Firebase listener can reference DEFAULT_CATS
-  const DEFAULT_CATS = [
-    { id: 'all', en: 'All', th: 'ทั้งหมด', ru: 'Всё', visible: true },
-    { id: 'appetizers', en: 'Appetizers', th: 'อาหารทานเล่น', ru: 'Закуски', visible: true },
-    { id: 'salads', en: 'Salads', th: 'สลัด', ru: 'Салаты', visible: true },
-    { id: 'soups', en: 'Soups', th: 'ซุป', ru: 'Супы', visible: true },
-    { id: 'barbecue', en: 'Barbecue', th: 'บาร์บีคิว', ru: 'Шашлык', visible: true },
-    { id: 'mains', en: 'Main Courses', th: 'จานหลัก', ru: 'Горячее', visible: true },
-    { id: 'sides', en: 'Side Dishes', th: 'เครื่องเคียง', ru: 'Гарниры', visible: true },
-    { id: 'pastry', en: 'Pastry', th: 'แป้ง', ru: 'Выпечка', visible: true },
-    { id: 'bread', en: 'Hand Molding', th: 'ขนมปังทำมือ', ru: 'Хлеб ручной работы', visible: true },
-    { id: 'desserts', en: 'Desserts', th: 'ของหวาน', ru: 'Десерты', visible: true },
-    { id: 'drinks', en: 'Soft Drinks', th: 'เครื่องดื่ม', ru: 'Напитки', visible: true },
-    { id: 'extra', en: 'Extra', th: 'พิเศษ', ru: 'Дополнительно', visible: true },
-  ];
-  let appCats = JSON.parse(JSON.stringify(DEFAULT_CATS));
-
-  // ============ FIREBASE CONFIG ============
-  const firebaseConfig = {
+  // ================================================================
+  //  FIREBASE CONFIG + STATE
+  // ================================================================
+  const _FB_CONFIG = {
     apiKey: "AIzaSyC5NNUffioSHZMVWTNUrLFxiYik2r-10zs",
     authDomain: "armenia-restaurant-9d62c.firebaseapp.com",
     databaseURL: "https://armenia-restaurant-9d62c-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -3281,298 +2922,966 @@
     messagingSenderId: "880830882957",
     appId: "1:880830882957:web:ab43889bdb979d6dacaec4"
   };
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(_FB_CONFIG);
   const db = firebase.database();
 
-  // ============ FIREBASE HELPERS ============
-  // orders: stored in Firebase (realtime across all tablets)
-  // tables: stored in Firebase (realtime)
-  // settings: stored in Firebase (shared config)
-  // counter: stored in Firebase (global order number)
-  // dishes, cats, featured: Firebase + localStorage backup
-
-  // Show connection status
-  db.ref('.info/connected').on('value', snap => {
-    const connected = snap.val();
-    const indicator = document.getElementById('fbStatus');
-    if (indicator) {
-      indicator.textContent = connected ? '🟢 Online' : '🔴 Offline';
-      indicator.title = connected ? 'Firebase connected' : 'No connection — orders may not sync';
-    }
-  });
-
-  const STORAGE = {
-    featured: 'armenia_featured_v2',
-    counter: 'armenia_counter_v2_fb', // keep local as fallback
+  // ── State (initialised synchronously so render never blocks) ──
+  let featuredIds = [11, 16, 22, 42];
+  let appSettings = {
+    restaurantName:'ARMENIA', tagline:'Restaurant · Pattaya',
+    phone:'+66 62 664 0700', address:'334/113-115 M12, Jomtien Beach, Pattaya',
+    headerText:'', footerText:'', bannerType:'none', bannerUrl:'',
+    font:'cormorant', printerType:'escpos', printerIP:'192.168.1.100'
   };
+  let tables = [];
+  let selectedTable = null;
+  let _orders = [];          // local cache kept in sync by listener
+  let _adminPin = '000000';
 
-  // ---- ORDERS ----
-  function getOrders() { return _orders; }
-
-  function saveOrder(order) {
-    const safeKey = order.num.replace(/[.#$[\]]/g, '_');
-    try { db.ref('orders/' + safeKey).set(order); }
-    catch (e) { console.warn('Firebase saveOrder failed:', e); }
-  }
-
-  function deleteOrder(num) {
-    const safeKey = num.replace(/[.#$[\]]/g, '_');
-    try { db.ref('orders/' + safeKey).remove(); }
-    catch (e) { console.warn('Firebase deleteOrder failed:', e); }
-  }
-
-  function updateOrder(num, patch) {
-    const safeKey = num.replace(/[.#$[\]]/g, '_');
-    try {
-      db.ref('orders/' + safeKey).transaction(current => {
-        if (current === null) return current;
-        return { ...current, ...patch };
-      });
-    } catch (e) { console.warn('Firebase updateOrder failed:', e); }
-  }
-
-  // Listen for ANY order change → update local cache → re-render
-  db.ref('orders').on('value', snap => {
-    const data = snap.val() || {};
-    const newOrders = Object.values(data).sort((a, b) => b.time - a.time);
-
-    // Detect truly new orders (not seen in local cache before)
-    if (_orders.length > 0 && isAdminMode) {
-      const cachedNums = new Set(_orders.map(o => o.num));
-      const brandNew = newOrders.filter(o => !cachedNums.has(o.num) && (Date.now() - o.time) < 10000);
-      brandNew.forEach(o => {
-        showAdminBanner(o);
-        playNotificationSound();
-      });
+  function generateDefaultTables() {
+    const arr = [];
+    for (let i = 1; i <= 12; i++) {
+      arr.push({ num: String(i).padStart(2,'0'), maxSeats: i<=4?2:(i<=8?4:6), status:'free' });
     }
+    return arr;
+  }
+  tables = generateDefaultTables(); // always have tables on first paint
 
-    _orders = newOrders;
-
-    // Re-render wherever relevant
-    if (isAdminMode && document.getElementById('admin').classList.contains('show')) {
-      const activeTab = document.querySelector('.admin-tab.active')?.dataset.tab;
-      if (activeTab === 'orders') renderAdminOrders();
-      if (activeTab === 'history') renderHistory(document.querySelector('.hist-filter-btn.active')?.dataset.period || 'day');
-    }
-    // Customer side: re-render cart if it's open or selectedTable is set
-    if (!isAdminMode && selectedTable) {
-      renderCart();
-    }
+  // ── Connection indicator ──
+  db.ref('.info/connected').on('value', snap => {
+    const el = document.getElementById('fbStatus');
+    if (el) el.textContent = snap.val() ? '🟢 Online' : '🔴 Offline';
   });
 
-  // ---- TABLES ----
-  function saveTables() {
-    const obj = {};
-    tables.forEach(t => { obj['t' + t.num] = t; });
-    try { db.ref('tables').set(obj); }
-    catch (e) { console.warn('Firebase saveTables failed:', e); }
+  // ── Helpers ──
+  function fbSet(path, val) {
+    try { db.ref(path).set(val); } catch(e){ console.warn('fb set', path, e); }
   }
-
-  // Helper: race a Firebase once() against a timeout so app never hangs
-  function fbOnceWithTimeout(ref, ms = 5000) {
+  function fbRemove(path) {
+    try { db.ref(path).remove(); } catch(e){ console.warn('fb remove', path, e); }
+  }
+  function fbOnce(path, ms=5000) {
     return Promise.race([
-      new Promise(resolve => {
-        try {
-          ref.once('value', snap => resolve(snap));
-        } catch (e) { resolve({ val: () => null }); }
-      }),
-      new Promise(resolve => setTimeout(() => resolve({ val: () => null, timedOut: true }), ms))
+      new Promise(res => { try { db.ref(path).once('value', s=>res(s)); } catch(e){ res({val:()=>null}); } }),
+      new Promise(res => setTimeout(()=>res({val:()=>null}), ms))
     ]);
   }
 
-  function loadTablesFromFirebase() {
-    return fbOnceWithTimeout(db.ref('tables')).then(snap => {
-      const data = snap.val();
-      if (data && Object.keys(data).length > 0) {
-        tables = Object.values(data).sort((a, b) => a.num.localeCompare(b.num));
-      } else {
-        tables = generateDefaultTables();
-        try { saveTables(); } catch (e) { console.warn('Failed to save default tables:', e); }
-      }
-    }).catch(e => {
-      console.warn('Tables load failed, using defaults:', e);
-      tables = generateDefaultTables();
-    });
+  // ── ORDERS ──
+  function getOrders() { return _orders; }
+
+  function saveOrder(order) {
+    const key = order.num.replace(/[.#$[\]]/g,'_');
+    fbSet('orders/' + key, order);
+  }
+  function deleteOrder(num) {
+    const key = num.replace(/[.#$[\]]/g,'_');
+    fbRemove('orders/' + key);
+  }
+  function updateOrder(num, patch) {
+    const key = num.replace(/[.#$[\]]/g,'_');
+    try {
+      db.ref('orders/' + key).transaction(cur => cur ? {...cur,...patch} : cur);
+    } catch(e){ console.warn('fb updateOrder', e); }
   }
 
-  // Auto-heal: free up tables that have no active orders
-  // Call after both tables and orders are loaded
-  function healOrphanedTables() {
-    if (!tables.length) return;
-    const activeTableNums = new Set();
-    _orders.forEach(o => {
-      if (!o.type && (o.status === 'open' || o.status === 'bill_requested' || o.status === 'served' || !o.status)) {
-        if (o.table) activeTableNums.add(o.table);
-      }
-    });
-    let changed = false;
-    tables.forEach(t => {
-      if (t.status === 'occupied' && !activeTableNums.has(t.num)) {
-        t.status = 'free';
-        changed = true;
-      }
-    });
-    if (changed) saveTables();
-  }
+  // Orders realtime listener
+  db.ref('orders').on('value', snap => {
+    const data = snap.val() || {};
+    const incoming = Object.values(data).sort((a,b) => b.time - a.time);
 
-  // Live table updates
-  db.ref('tables').on('value', snap => {
-    const data = snap.val();
-    if (!data) return;
-    const incoming = Object.values(data).sort((a, b) => a.num.localeCompare(b.num));
-    tables = incoming;
-    if (document.getElementById('tableSelect').classList.contains('show')) renderTableSelect();
-    if (isAdminMode && document.getElementById('admin').classList.contains('show')) {
-      const activeTab = document.querySelector('.admin-tab.active')?.dataset.tab;
-      if (activeTab === 'tables') renderAdminTables();
+    // Notify admin of brand-new orders
+    if (_orders.length > 0 && isAdminMode) {
+      const seen = new Set(_orders.map(o=>o.num));
+      incoming
+        .filter(o => !seen.has(o.num) && !o.type && (Date.now()-o.time)<15000)
+        .forEach(o => { playNotificationSound(); showAdminBanner(o); });
+    }
+    _orders = incoming;
+
+    if (!isAdminMode && selectedTable) renderCart();
+    if (isAdminMode) {
+      const tab = document.querySelector('.admin-tab.active')?.dataset.tab;
+      if (tab === 'orders')  renderAdminOrders();
+      if (tab === 'history') renderHistory(document.querySelector('.hist-filter-btn.active')?.dataset.period || 'day');
     }
   });
 
-  // ---- SETTINGS ----
-  function saveSettings() {
-    try { db.ref('settings').set(appSettings); }
-    catch (e) { console.warn('Firebase saveSettings failed:', e); }
+  // ── TABLES ──
+  function saveTables() {
+    const obj = {};
+    tables.forEach(t => { obj['t'+t.num] = t; });
+    fbSet('tables', obj);
   }
 
-  function loadSettingsFromFirebase() {
-    return fbOnceWithTimeout(db.ref('settings')).then(snap => {
-      const data = snap.val();
-      if (data) {
-        appSettings = { ...appSettings, ...data };
-      }
-      // else: keep the defaults already initialized at top
-    }).catch(e => { console.warn('Settings load failed:', e); });
-  }
+  db.ref('tables').on('value', snap => {
+    const data = snap.val();
+    if (!data) return;
+    tables = Object.values(data).sort((a,b)=>a.num.localeCompare(b.num));
+    if (document.getElementById('tableSelect').classList.contains('show')) renderTableSelect();
+    if (isAdminMode) renderAdminTables();
+  });
 
-  // Live settings updates (font, branding changes propagate to all tablets)
+  // ── SETTINGS ──
+  function saveSettings() { fbSet('settings', appSettings); }
+
   db.ref('settings').on('value', snap => {
     const data = snap.val();
     if (!data) return;
     appSettings = data;
     applyBranding();
-    // Refresh admin settings form if open
     if (isAdminMode && document.getElementById('admin').classList.contains('show')) {
-      try { populateSettingsFields(); } catch(e) {}
+      try { populateSettingsFields(); } catch(e){}
     }
   });
 
-  // ---- ORDER COUNTER ----
-  let orderCounter = parseInt(localStorage.getItem(STORAGE.counter) || '41');
-
+  // ── ORDER COUNTER (Firebase transaction) ──
   function getNextOrderNum() {
-    return new Promise(resolve => {
-      db.ref('counter').transaction(current => {
-        return (current || 41) + 1;
-      }, (err, committed, snap) => {
-        if (committed && snap) {
-          const num = snap.val();
-          localStorage.setItem(STORAGE.counter, num);
-          resolve('A-' + String(num).padStart(4, '0'));
-        } else {
-          // Fallback to local counter
-          orderCounter++;
-          localStorage.setItem(STORAGE.counter, orderCounter);
-          resolve('A-' + String(orderCounter).padStart(4, '0'));
-        }
-      });
+    return new Promise(res => {
+      try {
+        db.ref('counter').transaction(cur => (cur||41)+1, (err, ok, snap) => {
+          if (ok && snap) res('A-'+String(snap.val()).padStart(4,'0'));
+          else {
+            const fb = parseInt(localStorage.getItem('_arm_ctr')||'41') + 1;
+            localStorage.setItem('_arm_ctr', fb);
+            res('A-'+String(fb).padStart(4,'0'));
+          }
+        });
+      } catch(e) {
+        const fb = parseInt(localStorage.getItem('_arm_ctr')||'41') + 1;
+        localStorage.setItem('_arm_ctr', fb);
+        res('A-'+String(fb).padStart(4,'0'));
+      }
     });
   }
 
-  // ---- FEATURED, DISHES, CATEGORIES — Firebase sync ----
-  // These were localStorage-only before. Now all tablets stay in sync.
-
-  function saveFeatured() {
-    try { db.ref('featuredIds').set(featuredIds); } catch (e) { console.warn('Firebase saveFeatured failed:', e); }
-    localStorage.setItem(STORAGE.featured, JSON.stringify(featuredIds));
-  }
-
+  // ── DISHES / CATS / FEATURED (Firebase + localStorage backup) ──
   function saveDishes() {
-    try { db.ref('dishes').set(dishes); } catch (e) { console.warn('Firebase saveDishes failed:', e); }
-    localStorage.setItem('armenia_dishes_v2', JSON.stringify(dishes));
+    fbSet('dishes', dishes);
+    try { localStorage.setItem('_arm_dishes', JSON.stringify(dishes)); } catch(e){}
   }
-
+  function saveFeatured() {
+    fbSet('featuredIds', featuredIds);
+    try { localStorage.setItem('_arm_featured', JSON.stringify(featuredIds)); } catch(e){}
+  }
   function saveCats(cats) {
-    try { db.ref('cats').set(cats); } catch (e) { console.warn('Firebase saveCats failed:', e); }
-    localStorage.setItem('armenia_cats_v2', JSON.stringify(cats));
+    fbSet('cats', cats);
+    try { localStorage.setItem('_arm_cats', JSON.stringify(cats)); } catch(e){}
   }
-
-  // Listen for changes from other tablets
-  db.ref('featuredIds').on('value', snap => {
-    const data = snap.val();
-    if (!data) return;
-    featuredIds = data;
-    renderFeatured();
-    if (isAdminMode && document.querySelector('.admin-tab.active')?.dataset.tab === 'menu') renderAdminMenu();
-  });
 
   db.ref('dishes').on('value', snap => {
     const data = snap.val();
     if (!data || !Array.isArray(data) || !data.length) return;
-    dishes.length = 0;
-    dishes.push(...data);
-    renderMenu();
-    renderFeatured();
+    dishes.length = 0; dishes.push(...data);
+    renderMenu(); renderFeatured();
     if (isAdminMode && document.querySelector('.admin-tab.active')?.dataset.tab === 'menu') renderAdminMenu();
   });
-
+  db.ref('featuredIds').on('value', snap => {
+    const data = snap.val();
+    if (!data || !Array.isArray(data)) return;
+    featuredIds = data;
+    renderFeatured();
+  });
   db.ref('cats').on('value', snap => {
     const data = snap.val();
-    if (!data) return;
+    if (!data || !Array.isArray(data)) return;
     appCats = data;
-    // Update i18n from cats
     appCats.forEach(c => {
-      if (i18n.en.cats[c.id] !== undefined) {
-        i18n.en.cats[c.id] = c.en;
-        i18n.th.cats[c.id] = c.th;
-        i18n.ru.cats[c.id] = c.ru;
-      }
+      if (i18n.en.cats[c.id]!==undefined){ i18n.en.cats[c.id]=c.en; i18n.th.cats[c.id]=c.th; i18n.ru.cats[c.id]=c.ru; }
     });
     renderCategories();
-    if (isAdminMode && document.querySelector('.admin-tab.active')?.dataset.tab === 'categories') renderAdminCategories();
   });
 
-  function loadDishesFromFirebase() {
-    return fbOnceWithTimeout(db.ref('dishes')).then(snap => {
-      const data = snap.val();
-      if (data && Array.isArray(data) && data.length) {
-        dishes.length = 0;
-        dishes.push(...data);
-      } else {
-        const saved = localStorage.getItem('armenia_dishes_v2');
-        if (saved) {
-          try { const d = JSON.parse(saved); if (Array.isArray(d) && d.length) { dishes.length = 0; dishes.push(...d); } } catch {}
-        }
-      }
-    }).catch(e => { console.warn('Dishes load failed:', e); });
+  // ── ADMIN PIN ──
+  function getAdminPin() { return _adminPin; }
+  function setAdminPin(p) {
+    _adminPin = p;
+    fbSet('adminPin', p);
+    try { localStorage.setItem('_arm_pin', p); } catch(e){}
+  }
+  db.ref('adminPin').on('value', snap => { if(snap.val()) _adminPin = snap.val(); });
+
+  // ── TELEGRAM ──
+  async function sendTelegram(text) {
+    if (appSettings.telegramEnabled !== 'yes') return;
+    const token = appSettings.telegramToken;
+    const chatId = appSettings.telegramChatId;
+    if (!token || !chatId) return;
+    try {
+      await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ chat_id:chatId, text, parse_mode:'Markdown' })
+      });
+    } catch(e){ console.warn('Telegram', e); }
   }
 
-  function loadFeaturedFromFirebase() {
-    return fbOnceWithTimeout(db.ref('featuredIds')).then(snap => {
-      const data = snap.val();
-      if (data && Array.isArray(data)) featuredIds = data;
-      else {
-        const stored = localStorage.getItem(STORAGE.featured);
-        featuredIds = stored ? JSON.parse(stored) : [11, 16, 22, 42];
-      }
-    }).catch(e => {
-      console.warn('Featured load failed:', e);
-      featuredIds = [11, 16, 22, 42];
+  function notifyTelegram(order, newItems) {
+    const lines = newItems.map(i => {
+      let s = `• ${i.qty}× *${i.name}* — ${(i.price*i.qty).toLocaleString()} ฿`;
+      if (i.opts?.addonNames?.length) s += `\n  _+ ${i.opts.addonNames.join(', ')}_`;
+      if (i.opts?.note) s += `\n  _⚠ ${i.opts.note}_`;
+      return s;
     });
+    const total = newItems.reduce((s,i)=>s+i.price*i.qty,0);
+    const msg =
+      `🆕 *New Order — ${appSettings.restaurantName||'ARMENIA'}*\n` +
+      `🏷️ Order: \`${order.num}\`  🪑 Table: *${order.table}*  🌐 ${(order.language||'EN').toUpperCase()}\n\n` +
+      lines.join('\n') + `\n\n💰 *${total.toLocaleString()} ฿*`;
+    sendTelegram(msg);
   }
 
-  function loadCatsFromFirebase() {
-    return fbOnceWithTimeout(db.ref('cats')).then(snap => {
-      const data = snap.val();
-      if (data && Array.isArray(data)) appCats = data;
-      else {
-        const stored = localStorage.getItem('armenia_cats_v2');
-        appCats = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_CATS));
+  // ================================================================
+  //  CHECKOUT (async — uses Firebase counter)
+  // ================================================================
+  document.getElementById('checkoutBtn').onclick = async () => {
+    const batchTime = Date.now();
+    const newItems = Object.values(cart).map(item => {
+      const d = dishes.find(x => x.id == item.dishId);
+      return {
+        name: d.name.en, nameLocal: d.name[currentLang],
+        qty: item.qty, price: item.price, opts: item.opts,
+        printed: false, batch: batchTime
+      };
+    });
+
+    const existing = _orders.filter(o =>
+      o.table === selectedTable && !o.type &&
+      o.status !== 'billed' && o.status !== 'done'
+    );
+
+    let orderNum;
+    if (existing.length > 0) {
+      orderNum = existing[0].num;
+      const merged = [...(existing[0].items||[]), ...newItems];
+      updateOrder(orderNum, {
+        items: merged,
+        total: merged.reduce((s,i)=>s+i.price*i.qty,0),
+        itemCount: merged.reduce((s,i)=>s+i.qty,0),
+        hasNewItems: true
+      });
+      notifyTelegram({ num:orderNum, table:selectedTable, language:currentLang }, newItems);
+    } else {
+      orderNum = await getNextOrderNum();
+      const order = {
+        num: orderNum, table: selectedTable||'?',
+        items: newItems,
+        itemCount: newItems.reduce((s,i)=>s+i.qty,0),
+        total: newItems.reduce((s,i)=>s+i.price*i.qty,0),
+        time: Date.now(), status:'open', language:currentLang, hasNewItems:true
+      };
+      saveOrder(order);
+      notifyTelegram(order, newItems);
+      // Mark table occupied
+      const t = tables.find(x=>x.num===selectedTable);
+      if (t && t.status!=='occupied') { t.status='occupied'; saveTables(); }
+    }
+
+    document.getElementById('orderNum').textContent = orderNum;
+    closeCart();
+    document.getElementById('confirm').classList.add('show');
+    cart = {};
+    setTimeout(renderCart, 600);
+    resetIdleTimer();
+  };
+
+  document.getElementById('confirmBack').onclick = () => {
+    document.getElementById('confirm').classList.remove('show');
+    resetIdleTimer();
+  };
+
+  // ================================================================
+  //  CALL WAITER / BILL
+  // ================================================================
+  document.getElementById('callWaiterBtn').onclick = () => {
+    saveOrder({ num:'CALL-'+Date.now(), table:selectedTable||'?', type:'waiter', time:Date.now(), itemCount:1, total:0, status:'alert' });
+    showToast(i18n[currentLang].waiterCalled);
+  };
+
+  document.getElementById('askBillBtn').onclick = () => {
+    const tableOrders = _orders.filter(o=>o.table===selectedTable && !o.type && o.status!=='billed' && o.status!=='done');
+    if (!tableOrders.length && !Object.keys(cart).length) { showToast('No items ordered yet'); return; }
+    let allItems=[], grandTotal=0, orderNum='—';
+    tableOrders.forEach(o=>{ allItems=[...allItems,...(o.items||[])]; grandTotal+=o.total||0; orderNum=o.num; });
+    showBillModal(orderNum, allItems, grandTotal, false);
+  };
+
+  // ================================================================
+  //  BILL MODAL
+  // ================================================================
+  function showBillModal(orderNum, items, total, isAdmin) {
+    document.getElementById('billRestName').textContent = appSettings.restaurantName||'ARMENIA';
+    document.getElementById('billAddress').textContent = [appSettings.address, appSettings.phone].filter(Boolean).join(' · ');
+    document.getElementById('billTableNum').textContent = selectedTable||'?';
+    document.getElementById('billOrderNum').textContent = orderNum;
+    document.getElementById('billTimeRow').innerHTML = `Time: <strong>${new Date().toLocaleTimeString()}</strong>`;
+    document.getElementById('billItemsList').innerHTML = items.map(i=>`
+      <div class="bill-item">
+        <div>
+          <div class="bill-item-name">${i.qty>1?i.qty+'× ':''}${i.nameLocal||i.name}</div>
+          ${i.opts?.note?`<div class="bill-item-note">⚠ ${i.opts.note}</div>`:''}
+          ${i.opts?.addonNames?.length?`<div class="bill-item-note">+ ${i.opts.addonNames.join(', ')}</div>`:''}
+        </div>
+        <div class="bill-item-price">${(i.price*i.qty).toLocaleString()} ฿</div>
+      </div>`).join('');
+    document.getElementById('billTotalVal').textContent = total.toLocaleString();
+    window._billData = { orderNum, items, total, tableNum:selectedTable||'?' };
+    // Toggle customer vs admin view
+    const customerActions = document.getElementById('billCustomerActions');
+    const adminActions    = document.getElementById('billAdminActions');
+    const hint            = document.getElementById('billCustomerHint');
+    if (customerActions) customerActions.style.display = isAdmin ? 'none' : 'flex';
+    if (adminActions)    adminActions.style.display    = isAdmin ? 'flex' : 'none';
+    if (hint)            hint.style.display            = isAdmin ? 'none' : '';
+    document.getElementById('billModal').classList.add('show');
+  }
+
+  document.getElementById('billCloseBtn').onclick = () => document.getElementById('billModal').classList.remove('show');
+
+  document.getElementById('billConfirmBtn').onclick = () => {
+    if (!window._billData) return;
+    const { orderNum, total } = window._billData;
+    const tableOrders = _orders.filter(o=>o.table===selectedTable && !o.type && o.status!=='billed' && o.status!=='done');
+    tableOrders.forEach(o=>updateOrder(o.num,{status:'bill_requested',billTime:Date.now()}));
+    saveOrder({ num:'BILL-'+Date.now(), table:selectedTable||'?', type:'bill', time:Date.now(), itemCount:1, total, orderRef:orderNum, status:'alert' });
+    document.getElementById('billModal').classList.remove('show');
+    showToast(i18n[currentLang].billRequested||'Bill requested — staff will be with you shortly');
+  };
+
+  // ================================================================
+  //  PRINT FUNCTIONS
+  // ================================================================
+  function printBill(orderNum, items, total, tableNum) {
+    const name = appSettings.restaurantName||'ARMENIA RESTAURANT';
+    const addr = [appSettings.address, appSettings.phone].filter(Boolean).join(' · ');
+    const w = window.open('','_blank','width=340,height=700');
+    w.document.write(`<html><head><style>
+      body{font-family:monospace;font-size:13px;padding:16px;max-width:300px}
+      h2{text-align:center;margin:4px 0;font-size:16px}
+      .sub{text-align:center;font-size:11px;margin:2px 0}
+      .line{border-top:1px dashed #000;margin:10px 0}
+      .row{display:flex;justify-content:space-between;margin:5px 0}
+      .note{font-style:italic;font-size:11px;margin-left:14px;color:#444}
+      .total{font-size:15px;font-weight:bold}
+      .thanks{text-align:center;margin-top:14px;font-size:12px}
+    </style></head><body>
+      <h2>${name}</h2><p class="sub">${addr}</p>
+      <div class="line"></div>
+      <div class="row"><span>Order:</span><strong>${orderNum}</strong></div>
+      <div class="row"><span>Table:</span><strong>${tableNum||'?'}</strong></div>
+      <div class="row"><span>Time:</span><span>${new Date().toLocaleString()}</span></div>
+      <div class="line"></div>
+      ${items.map(i=>`
+        <div class="row"><span>${i.qty>1?i.qty+'× ':''}${i.name}</span><span>${(i.price*i.qty).toLocaleString()} ฿</span></div>
+        ${i.opts?.note?`<div class="note">⚠ ${i.opts.note}</div>`:''}
+        ${i.opts?.addonNames?.length?`<div class="note">+ ${i.opts.addonNames.join(', ')}</div>`:''}
+      `).join('')}
+      <div class="line"></div>
+      <div class="row total"><span>TOTAL</span><span>${total.toLocaleString()} ฿</span></div>
+      <div class="thanks">Շնորհակալություն! · Thank you! · ขอบคุณ!</div>
+    </body></html>`);
+    setTimeout(()=>w.print(), 300);
+  }
+
+  function printKitchenTicket(orderNum) {
+    const order = _orders.find(o=>o.num===orderNum);
+    if (!order || !order.items) return;
+    const newItems = order.items.filter(i=>!i.printed);
+    if (!newItems.length) { showToast('All items already sent to kitchen'); return; }
+    const name = appSettings.restaurantName||'ARMENIA';
+    const w = window.open('','_blank','width=340,height=600');
+    w.document.write(`<html><head><style>
+      body{font-family:monospace;font-size:14px;padding:16px;max-width:300px}
+      h2{text-align:center;margin:4px 0;font-size:17px;letter-spacing:.1em}
+      .sub{text-align:center;font-size:11px;margin:2px 0}
+      .dbl{border-top:2px solid #000;margin:10px 0}
+      .row{display:flex;justify-content:space-between;margin:6px 0;font-size:13px}
+      .item{margin:8px 0;padding:6px 0;border-bottom:1px dotted #ccc}
+      .item-name{font-weight:bold;font-size:15px}
+      .qty{font-size:22px;font-weight:bold;margin-right:6px}
+      .note{font-style:italic;font-size:12px;margin-top:3px;background:#f0f0f0;padding:3px 6px}
+    </style></head><body>
+      <h2>★ KITCHEN ★</h2><p class="sub">${name}</p>
+      <div class="dbl"></div>
+      <div class="row"><span>Order:</span><strong>${order.num}</strong></div>
+      <div class="row"><span>Table:</span><strong style="font-size:18px">${order.table}</strong></div>
+      <div class="row"><span>Time:</span><span>${new Date().toLocaleTimeString()}</span></div>
+      <div class="row" style="color:#c00;font-weight:bold;font-size:12px"><span>★ NEW — ${newItems.length} item(s)</span></div>
+      <div class="dbl"></div>
+      ${newItems.map(i=>`
+        <div class="item">
+          <div class="item-name"><span class="qty">${i.qty}×</span>${i.name}</div>
+          ${i.opts?.addonNames?.length?`<div class="note">+ ${i.opts.addonNames.join(', ')}</div>`:''}
+          ${i.opts?.note?`<div class="note">⚠ ${i.opts.note}</div>`:''}
+        </div>`).join('')}
+      <div class="dbl"></div>
+      <p class="sub" style="font-size:10px;margin-top:14px">--- Kitchen copy ---</p>
+    </body></html>`);
+    setTimeout(()=>w.print(), 300);
+    // Mark items as printed
+    const updated = order.items.map(i=>i.printed?i:{...i,printed:true});
+    updateOrder(orderNum, {items:updated, hasNewItems:false});
+  }
+
+  // ================================================================
+  //  ADMIN LIVE ORDERS — complete flow
+  // ================================================================
+  function renderAdminOrders() {
+    const orders = _orders;
+    // Live = open (any print state) + served + bill_requested + alerts
+    const live = orders.filter(o =>
+      o.type || o.status==='open' || o.status==='served' || o.status==='bill_requested' || !o.status
+    );
+    const real = live.filter(o=>!o.type);
+    const rev  = real.reduce((s,o)=>s+(o.total||0), 0);
+    const free = tables.filter(t=>t.status==='free').length;
+
+    document.getElementById('statOrders').textContent    = real.length;
+    document.getElementById('statRevenue').textContent   = rev.toLocaleString();
+    document.getElementById('statFreeTables').textContent= free;
+    document.getElementById('statTotalTables').textContent=tables.length;
+    document.getElementById('statAvg').textContent       = real.length ? Math.round(rev/real.length).toLocaleString() : 0;
+
+    if (!live.length) {
+      document.getElementById('ordersList').innerHTML =
+        `<div style="text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">
+          No active orders — waiting for customers...
+        </div>`;
+      return;
+    }
+
+    document.getElementById('ordersList').innerHTML = live.map((o,idx)=>{
+      const ago = Math.floor((Date.now()-o.time)/60000);
+      const timeStr = ago<1?'just now':ago+' min ago';
+
+      // ── Waiter alert ──
+      if (o.type==='waiter') return `
+        <div class="order-card" style="border-left:3px solid var(--gold)">
+          <div class="order-num">🛎</div>
+          <div class="order-info">
+            <div class="order-table">Table <strong>${o.table}</strong></div>
+            <div class="order-items">Customer calling for a waiter</div>
+            <div class="order-time">${timeStr}</div>
+          </div><div></div>
+          <div class="order-actions">
+            <button class="order-btn primary" onclick="window._ack('${o.num}')">Acknowledge</button>
+          </div>
+        </div>`;
+
+      // ── Cancel alert ──
+      if (o.type==='cancel') return `
+        <div class="order-card" style="border-left:3px solid #c0392b">
+          <div class="order-num">✕</div>
+          <div class="order-info">
+            <div class="order-table">Table <strong>${o.table}</strong> — Order Cancelled</div>
+            <div class="order-items">Order ${o.orderRef||''} was cancelled by customer</div>
+            <div class="order-time">${timeStr}</div>
+          </div><div></div>
+          <div class="order-actions">
+            <button class="order-btn primary" onclick="window._ack('${o.num}')">Acknowledge</button>
+          </div>
+        </div>`;
+
+      // ── Bill alert ──
+      if (o.type==='bill') {
+        const ref = _orders.find(x=>x.num===o.orderRef);
+        return `
+        <div class="order-card" style="border-left:3px solid var(--burgundy);background:color-mix(in srgb,var(--burgundy) 5%,var(--surface))">
+          <div class="order-num">🧾</div>
+          <div class="order-info">
+            <div class="order-table">Table <strong>${o.table}</strong> — BILL REQUEST</div>
+            <div class="order-items">Order ${o.orderRef} · ${(o.total||0).toLocaleString()} ฿</div>
+            <div class="order-time">${timeStr}</div>
+          </div><div></div>
+          <div class="order-actions">
+            ${ref?`
+              <button class="order-btn assign-table" onclick="window._adminViewBill('${o.orderRef}')">👁 View Bill</button>
+              <button class="order-btn gold" onclick="window._adminPrintBill('${o.orderRef}')">🖨 Print Bill</button>
+              <button class="order-btn primary" onclick="window._payAndClose('${o.num}','${o.orderRef}')">✓ Complete Payment</button>
+            `:`<button class="order-btn primary" onclick="window._ack('${o.num}')">Acknowledge</button>`}
+          </div>
+        </div>`;
       }
-    }).catch(e => {
-      console.warn('Cats load failed:', e);
-      appCats = JSON.parse(JSON.stringify(DEFAULT_CATS));
+
+      // ── Real order ──
+      if (!o.items) return '';
+      const newCnt   = o.items.filter(i=>!i.printed).length;
+      const allPrint = o.items.every(i=>i.printed);
+      const isServed = o.status==='served';
+      const isBillR  = o.status==='bill_requested';
+      const itemsStr = o.items.map(i=>`${i.qty}× ${i.name}${i.printed?'':' ★'}`).join(' · ');
+      const notesStr = o.items.filter(i=>i.opts?.note).map(i=>`<div class="order-note">${i.name}: "${i.opts.note}"</div>`).join('');
+
+      let badge='', borderColor='';
+      if (isBillR)      { badge=`<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">🧾 BILL REQUESTED</span>`; borderColor='var(--burgundy)'; }
+      else if (isServed){ badge=`<span style="background:#2d6a4f;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">🍽 SERVED</span>`;              borderColor='#2d6a4f'; }
+      else if (allPrint){ badge=`<span style="background:#f39c12;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">⏳ IN PROGRESS</span>`;          borderColor='#f39c12'; }
+      else              { badge=`<span style="background:#3498db;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">★ ${newCnt} NEW</span>`;         borderColor='#3498db'; }
+
+      return `
+        <div class="order-card ${idx===0?'new':''}" style="${borderColor?'border-left:3px solid '+borderColor:''}">
+          <div class="order-num">#${o.num}</div>
+          <div class="order-info">
+            <div class="order-table">Table <strong>${o.table}</strong> · ${(o.language||'en').toUpperCase()} ${badge}</div>
+            <div class="order-items">${itemsStr}</div>
+            ${notesStr}
+            <div class="order-time">${timeStr}</div>
+          </div>
+          <div class="order-total">${(o.total||0).toLocaleString()} ฿</div>
+          <div class="order-actions">
+            ${isBillR ? `
+              <button class="order-btn assign-table" onclick="window._adminViewBill('${o.num}')">👁 View Bill</button>
+              <button class="order-btn gold"         onclick="window._adminPrintBill('${o.num}')">🖨 Print Bill</button>
+              <button class="order-btn primary"      onclick="window._checkout('${o.num}')">💳 Complete Payment</button>
+            ` : `
+              <button class="order-btn assign-table" onclick="window._reassign('${o.num}')">Reassign</button>
+              ${!allPrint
+                ? `<button class="order-btn primary" onclick="window._confirmKitchen('${o.num}')">✓ Confirm &amp; Print Kitchen</button>`
+                : `<button class="order-btn gold"    onclick="window._printKitchen('${o.num}')">🍳 Reprint Kitchen</button>`}
+              ${allPrint && !isServed
+                ? `<button class="order-btn assign-table" onclick="window._markServed('${o.num}')">🍽 Mark Served</button>`
+                : ''}
+              <button class="order-btn primary"      onclick="window._checkout('${o.num}')">💳 Checkout</button>
+              <button class="order-btn assign-table" onclick="window._closeNoBill('${o.num}')">✕ Close (no bill)</button>
+            `}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ── Admin order handlers ──
+  window._ack            = num => { deleteOrder(num); };
+  window._confirmKitchen = num => { printKitchenTicket(num); setTimeout(renderAdminOrders,400); };
+  window._printKitchen   = num => { printKitchenTicket(num); setTimeout(renderAdminOrders,400); };
+
+  window._markServed = num => {
+    updateOrder(num,{status:'served',servedTime:Date.now()});
+    showToast('Order #'+num+' marked as Served');
+  };
+
+  window._closeNoBill = num => {
+    if (!confirm(`Close order #${num} WITHOUT billing?\n(Comp / error / customer left)\nWill NOT count as revenue.`)) return;
+    const o = _orders.find(x=>x.num===num);
+    updateOrder(num,{status:'done',doneTime:Date.now()});
+    const t = o && tables.find(x=>x.num===o.table);
+    if (t && t.status==='occupied') { t.status='free'; saveTables(); }
+  };
+
+  window._checkout = num => {
+    const o = _orders.find(x=>x.num===num);
+    if (!o) return;
+    const savedSel = selectedTable;
+    selectedTable = o.table;   // so showBillModal picks right table
+    showBillModal(o.num, o.items||[], o.total||0, true);
+    selectedTable = savedSel;
+    window._billData.orderNum = num;
+    window._billData.tableNum = o.table;
+  };
+
+  window._adminViewBill = num => {
+    const o = _orders.find(x=>x.num===num);
+    if (!o) return;
+    const savedSel = selectedTable;
+    selectedTable = o.table;
+    showBillModal(o.num, o.items||[], o.total||0, false);
+    // In view-only mode: hide customer confirm, show only Close
+    document.getElementById('billConfirmBtn').style.display = 'none';
+    document.getElementById('billCustomerActions') && (document.getElementById('billCustomerActions').style.display='flex');
+    document.getElementById('billAdminActions')    && (document.getElementById('billAdminActions').style.display='none');
+    document.getElementById('billCloseBtn').textContent = 'Close';
+    selectedTable = savedSel;
+  };
+
+  window._adminPrintBill = num => {
+    const o = _orders.find(x=>x.num===num);
+    if (!o) return;
+    printBill(o.num, o.items||[], o.total||0, o.table);
+  };
+
+  // Complete Payment — from admin checkout OR bill-alert card
+  window._payAndClose = (alertNum, orderRefNum) => {
+    const o = _orders.find(x=>x.num===orderRefNum);
+    if (!confirm(`Complete payment for order #${orderRefNum} (${o?(o.total||0).toLocaleString():0} ฿)?`)) return;
+    updateOrder(orderRefNum,{status:'billed',billedTime:Date.now()});
+    if (alertNum) deleteOrder(alertNum);
+    const t = o && tables.find(x=>x.num===o.table);
+    if (t && t.status==='occupied') { t.status='free'; saveTables(); }
+    document.getElementById('billModal').classList.remove('show');
+    showToast('Payment complete · Order #'+orderRefNum+' closed');
+  };
+
+  // Admin bill-modal Complete Payment button
+  document.getElementById('billAdminPayBtn').onclick = () => {
+    if (!window._billData) return;
+    const num = window._billData.orderNum;
+    window._payAndClose(null, num);
+  };
+  document.getElementById('billAdminPrintBtn').onclick = () => {
+    if (!window._billData) return;
+    const {orderNum,items,total,tableNum} = window._billData;
+    printBill(orderNum, items, total, tableNum);
+  };
+
+  window._reassign = num => {
+    assignTargetOrder = num;
+    const free = tables.filter(t=>t.status==='free');
+    if (!free.length) { alert('No free tables available!'); return; }
+    document.getElementById('assignGrid').innerHTML = free.map(t=>`
+      <button class="assign-btn" onclick="window._doAssign('${t.num}')">${t.num}</button>`).join('');
+    document.getElementById('assignModal').classList.add('show');
+  };
+  window._doAssign = tableNum => {
+    if (assignTargetOrder) {
+      const o = _orders.find(x=>x.num===assignTargetOrder);
+      const oldTable = o?.table;
+      updateOrder(assignTargetOrder,{table:tableNum});
+      const newT = tables.find(x=>x.num===tableNum);
+      if (newT) { newT.status='occupied'; }
+      if (oldTable && oldTable!==tableNum) {
+        const hasOther = _orders.some(x=>x.num!==assignTargetOrder && x.table===oldTable && !x.type && x.status!=='billed' && x.status!=='done');
+        if (!hasOther) { const oldT=tables.find(x=>x.num===oldTable); if(oldT) oldT.status='free'; }
+      }
+      saveTables();
+    }
+    document.getElementById('assignModal').classList.remove('show');
+    assignTargetOrder = null;
+  };
+  document.getElementById('assignCancel').onclick = () => {
+    document.getElementById('assignModal').classList.remove('show');
+    assignTargetOrder = null;
+  };
+
+  // ── History with Reopen ──
+  function renderHistory(period) {
+    const now = Date.now();
+    const cutoff = period==='day'?86400000 : period==='week'?604800000 : 2592000000;
+    const all = _orders.filter(o => !o.type && ['billed','done','open','bill_requested','served'].includes(o.status) && (now-o.time)<=cutoff);
+
+    const rev = all.filter(o=>o.status==='billed').reduce((s,o)=>s+(o.total||0),0);
+    document.getElementById('histStatRev').textContent = rev.toLocaleString();
+
+    if (!all.length) {
+      document.getElementById('histOrdersList').innerHTML =
+        `<div style="text-align:center;padding:40px;color:var(--ink-soft);font-style:italic">No orders in this period</div>`;
+      return;
+    }
+    document.getElementById('histOrdersList').innerHTML = all.map(o=>{
+      const stBadge = o.status==='billed'
+        ? `<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 8px;border-radius:100px">BILLED</span>`
+        : o.status==='done'
+        ? `<span style="background:#555;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px">DONE</span>`
+        : `<span style="background:#f39c12;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px">${o.status.toUpperCase()}</span>`;
+      const canReopen = o.status==='billed'||o.status==='done';
+      return `
+        <div class="order-card">
+          <div class="order-num">#${o.num}</div>
+          <div class="order-info">
+            <div class="order-table">Table <strong>${o.table}</strong> ${stBadge}</div>
+            <div class="order-items">${(o.items||[]).map(i=>`${i.qty}× ${i.name}`).join(' · ')}</div>
+            <div class="order-time">${new Date(o.time).toLocaleString()}</div>
+          </div>
+          <div class="order-total">${(o.total||0).toLocaleString()} ฿</div>
+          <div class="order-actions">
+            <button class="order-btn gold" onclick="window._adminPrintBill('${o.num}')">🖨 Print Bill</button>
+            ${canReopen?`<button class="order-btn assign-table" onclick="window._reopen('${o.num}')">↻ Reopen</button>`:''}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  window._reopen = num => {
+    const o = _orders.find(x=>x.num===num);
+    if (!o) return;
+    if (!confirm(`Reopen order #${num}? Table ${o.table} will become occupied again.`)) return;
+    updateOrder(num,{status:'open',reopenedAt:Date.now()});
+    const t = tables.find(x=>x.num===o.table);
+    if (t) { t.status='occupied'; saveTables(); }
+    // Switch to Live Orders tab
+    document.querySelectorAll('.admin-tab').forEach(x=>x.classList.remove('active'));
+    document.querySelector('.admin-tab[data-tab="orders"]').classList.add('active');
+    ['orders','tables','menu','categories','history','branding','settings'].forEach(name=>{
+      document.getElementById('tab-'+name).classList.toggle('hidden', name!=='orders');
+    });
+    renderAdminOrders();
+    showToast('Order #'+num+' reopened');
+  };
+
+  // ── Admin quickOpen helper (from staff buttons) ──
+  function openAdminDashboard() {
+    if (getAdminPin()==='000000') {
+      _doOpenAdmin();
+      showToast('Default PIN is 000000 — change it in Settings → Admin PIN');
+    } else {
+      openPinModal();
+    }
+  }
+  function _doOpenAdmin() {
+    document.getElementById('idleScreen').classList.remove('show');
+    document.getElementById('tableSelect').classList.remove('show','hide');
+    document.getElementById('admin').classList.add('show');
+    isAdminMode = true; clearIdleTimer();
+    renderAdminOrders(); renderAdminTables(); renderAdminMenu();
+    try { populateSettingsFields(); } catch(e){}
+  }
+  document.getElementById('adminBtn').onclick = openAdminDashboard;
+  document.getElementById('adminClose').onclick = () => {
+    document.getElementById('admin').classList.remove('show');
+    isAdminMode = false;
+    if (!selectedTable) document.getElementById('idleScreen').classList.add('show');
+    resetIdleTimer();
+  };
+
+  // ── Admin PIN modal ──
+  const DEFAULT_PIN = '000000';
+  let pinBuffer = '';
+  function updatePinDots() {
+    document.querySelectorAll('.pin-dot').forEach((d,i)=>{
+      d.classList.toggle('filled', i<pinBuffer.length);
     });
   }
+  function pinError(msg) {
+    document.getElementById('pinError').textContent = msg;
+    document.querySelectorAll('.pin-dot').forEach(d=>{ d.style.borderColor='#c0392b'; });
+    setTimeout(()=>{ pinBuffer=''; updatePinDots(); document.getElementById('pinError').textContent='';
+      document.querySelectorAll('.pin-dot').forEach(d=>{ d.style.borderColor=''; }); }, 900);
+  }
+  function openPinModal() {
+    pinBuffer=''; updatePinDots(); document.getElementById('pinError').textContent='';
+    document.querySelectorAll('.pin-dot').forEach(d=>{ d.style.borderColor=''; });
+    document.getElementById('pinModal').style.display='flex';
+  }
+  function closePinModal() { pinBuffer=''; document.getElementById('pinModal').style.display='none'; }
+  document.querySelectorAll('.pin-key').forEach(k=>{
+    k.onclick = ()=>{
+      const v = k.dataset.v;
+      if (v==='clear'){ pinBuffer=''; updatePinDots(); return; }
+      if (v==='back'){ pinBuffer=pinBuffer.slice(0,-1); updatePinDots(); return; }
+      if (pinBuffer.length>=6) return;
+      pinBuffer+=v; updatePinDots();
+      if (pinBuffer.length===6) {
+        if (pinBuffer===getAdminPin()){ closePinModal(); _doOpenAdmin(); }
+        else pinError('Incorrect PIN');
+      }
+    };
+  });
+  document.getElementById('pinCancel').onclick = closePinModal;
+  document.addEventListener('keydown', e=>{
+    if (document.getElementById('pinModal').style.display!=='flex') return;
+    if (e.key>='0'&&e.key<='9') document.querySelector(`.pin-key[data-v="${e.key}"]`)?.click();
+    if (e.key==='Backspace') document.querySelector('.pin-key[data-v="back"]')?.click();
+    if (e.key==='Escape') closePinModal();
+  });
+
+  // ── Self-healing: free orphaned tables ──
+  function healTables() {
+    const activeTables = new Set(_orders
+      .filter(o=>!o.type && ['open','served','bill_requested'].includes(o.status))
+      .map(o=>o.table));
+    let changed = false;
+    tables.forEach(t=>{ if (t.status==='occupied' && !activeTables.has(t.num)) { t.status='free'; changed=true; } });
+    if (changed) saveTables();
+  }
+
+  // ================================================================
+  //  CART — shows active order status + new items
+  // ================================================================
+  function getStatusInfo(o) {
+    if (!o) return null;
+    const allP = o.items?.every(i=>i.printed);
+    const anyP = o.items?.some(i=>i.printed);
+    if (o.status==='served')         return { label:'🟢 SERVED',           bg:'#2d6a4f', color:'#fff' };
+    if (o.status==='bill_requested') return { label:'🍷 BILL REQUESTED',   bg:'#722f37', color:'#f4dca5' };
+    if (allP)                        return { label:'🟠 IN PROGRESS',      bg:'#f39c12', color:'#fff' };
+    if (anyP)                        return { label:'🟠 PARTIALLY READY',  bg:'#f39c12', color:'#fff' };
+    return                                  { label:'🔵 ORDER RECEIVED',   bg:'#3498db', color:'#fff' };
+  }
+
+  function renderCart() {
+    const list = document.getElementById('cartList');
+    const ids = Object.keys(cart);
+    let newTotal = 0;
+    Object.values(cart).forEach(i=>{ newTotal += i.price*i.qty; });
+
+    const activeOrders = selectedTable
+      ? _orders.filter(o=>o.table===selectedTable && !o.type && o.status!=='billed' && o.status!=='done')
+      : [];
+    const activeTotal = activeOrders.reduce((s,o)=>s+(o.total||0),0);
+    const totalCount  = ids.reduce((s,k)=>s+cart[k].qty,0) + activeOrders.reduce((s,o)=>s+(o.itemCount||0),0);
+
+    document.getElementById('cartCount').textContent = totalCount;
+
+    let activeHtml = '';
+    if (activeOrders.length) {
+      activeHtml = `<div style="margin:0 0 14px;padding:12px 14px;background:var(--bg);border:1px solid var(--line)">
+        <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--burgundy);text-transform:uppercase;font-weight:600;margin-bottom:10px">YOUR ACTIVE ORDER</div>
+        ${activeOrders.map(o=>{
+          const si = getStatusInfo(o);
+          const allP = o.items?.every(i=>i.printed);
+          return `<div style="padding:8px 0;border-bottom:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <span style="font-family:'Helvetica Neue',sans-serif;font-weight:600;color:var(--burgundy)">#${o.num}</span>
+              <span style="font-size:10px;padding:3px 9px;border-radius:100px;background:${si.bg};color:${si.color};font-weight:600">${si.label}</span>
+            </div>
+            ${(o.items||[]).map(i=>`<div style="font-size:13px;display:flex;justify-content:space-between;padding:2px 0">
+              <span>${i.qty}× ${i.nameLocal||i.name}</span>
+              <span style="color:var(--burgundy);font-weight:500;font-family:'Helvetica Neue',sans-serif">${(i.price*i.qty).toLocaleString()} ฿</span>
+            </div>`).join('')}
+            ${!allP
+              ? `<button onclick="window._cancelOrder('${o.num}')" style="margin-top:8px;width:100%;padding:7px;border:1px solid #c0392b;background:transparent;color:#c0392b;font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border-radius:4px">✕ Cancel Order</button>`
+              : `<div style="margin-top:6px;font-size:10px;color:var(--ink-soft);font-style:italic;text-align:center">Order is being prepared — cannot cancel</div>`
+            }
+          </div>`;
+        }).join('')}
+        <div style="display:flex;justify-content:space-between;padding-top:8px;font-family:'Helvetica Neue',sans-serif;font-weight:600">
+          <span style="font-size:11px;text-transform:uppercase;color:var(--ink-soft)">Active Subtotal</span>
+          <span style="color:var(--burgundy)">${activeTotal.toLocaleString()} ฿</span>
+        </div>
+      </div>`;
+    }
+
+    if (!ids.length && !activeOrders.length) {
+      list.innerHTML = `<div class="cart-empty"><div class="icon">🍷</div><p>${i18n[currentLang].emptyCart}</p></div>`;
+      document.getElementById('cartTotal').textContent = '0';
+      document.getElementById('checkoutBtn').disabled = true;
+      return;
+    }
+
+    let newItemsHtml = '';
+    if (ids.length) {
+      newItemsHtml = `<div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:.15em;color:var(--ink-soft);text-transform:uppercase;font-weight:600;margin:6px 0 10px">NEW ITEMS TO ORDER</div>`;
+      newItemsHtml += ids.map(key=>{
+        const item = cart[key];
+        const d = dishes.find(x=>x.id==item.dishId);
+        if (!d) return '';
+        const meta = item.opts?.addonNames?.length ? '+ '+item.opts.addonNames.join(', ') : '';
+        return `<div class="cart-item">
+          <div class="cart-item-img">${d.imgData?`<img src="${d.imgData}" style="width:100%;height:100%;object-fit:cover">`:d.emoji}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${d.name[currentLang]}</div>
+            <div class="cart-item-meta">${item.price} ฿ × ${item.qty}${meta?' · '+meta:''}</div>
+            ${item.opts?.note?`<div class="cart-item-note">"${item.opts.note}"</div>`:''}
+          </div>
+          <div class="cart-item-actions">
+            <button class="note-btn ${item.opts?.note?'has-note':''}" data-key="${key}" data-act="note">📝</button>
+            <div class="qty-controls">
+              <button class="qty-btn" data-key="${key}" data-act="-">−</button>
+              <span class="qty-val">${item.qty}</span>
+              <button class="qty-btn" data-key="${key}" data-act="+">+</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    list.innerHTML = activeHtml + newItemsHtml;
+    document.getElementById('cartTotal').textContent = (newTotal + activeTotal).toLocaleString();
+    document.getElementById('checkoutBtn').disabled = !ids.length;
+
+    list.querySelectorAll('.qty-btn').forEach(b=>{
+      b.onclick = ()=>{
+        const k=b.dataset.key;
+        if (b.dataset.act==='+') cart[k].qty++;
+        else { cart[k].qty--; if(cart[k].qty<=0) delete cart[k]; }
+        renderCart();
+      };
+    });
+    list.querySelectorAll('.note-btn').forEach(b=>{ b.onclick=()=>openNoteEdit(b.dataset.key); });
+  }
+
+  // Customer cancel order
+  window._cancelOrder = num => {
+    const o = _orders.find(x=>x.num===num);
+    if (!o) return;
+    if (o.items?.some(i=>i.printed)) { showToast('Cannot cancel — order is being prepared'); return; }
+    if (!confirm('Cancel this order?')) return;
+    deleteOrder(num);
+    const others = _orders.filter(x=>x.num!==num && x.table===o.table && !x.type && x.status!=='billed' && x.status!=='done');
+    if (!others.length) { const t=tables.find(x=>x.num===o.table); if(t){t.status='free';saveTables();} }
+    saveOrder({ num:'CANCEL-'+Date.now(), table:o.table, type:'cancel', time:Date.now(), itemCount:1, total:0, orderRef:num, status:'alert' });
+    showToast('Order cancelled');
+  };
+
+  // ── Add to cart: auto-open cart sheet ──
+  function quickAdd(id) {
+    const d = dishes.find(x=>x.id===id);
+    const key = `${id}-default`;
+    if (cart[key]) cart[key].qty++;
+    else cart[key] = { dishId:id, qty:1, price:d.price, opts:{size:'full',spice:0,toppings:[],addonNames:[],note:''} };
+    renderCart();
+    openCart();
+  }
+
+  document.getElementById('modalAdd').onclick = () => {
+    modalOpts.note = document.getElementById('modalNote').value.trim();
+    const addons = currentDish.addons || [];
+    const addonNames = modalOpts.toppings.map(aid=>addons.find(a=>a.id===aid)?.name).filter(Boolean);
+    const key = `${currentDish.id}-${modalOpts.toppings.sort().join(',')}-${modalOpts.note.substr(0,10)}`;
+    const finalPrice = calcModalPrice();
+    if (cart[key]) cart[key].qty += modalQty;
+    else cart[key] = { dishId:currentDish.id, qty:modalQty, price:finalPrice, opts:{toppings:[...modalOpts.toppings],addonNames,note:modalOpts.note} };
+    renderCart();
+    closeModal();
+    openCart();
+  };
+
+  // ================================================================
+  //  ASYNC INIT — Load all from Firebase then render
+  // ================================================================
+  async function initApp() {
+    // Load settings
+    const settSnap = await fbOnce('settings');
+    if (settSnap.val()) appSettings = {...appSettings, ...settSnap.val()};
+
+    // Load tables
+    const tabSnap = await fbOnce('tables');
+    if (tabSnap.val() && Object.keys(tabSnap.val()).length) {
+      tables = Object.values(tabSnap.val()).sort((a,b)=>a.num.localeCompare(b.num));
+    } else {
+      tables = generateDefaultTables();
+      saveTables(); // seed Firebase on first run
+    }
+
+    // Load dishes (Firebase preferred, localStorage fallback)
+    const dishSnap = await fbOnce('dishes');
+    if (dishSnap.val() && Array.isArray(dishSnap.val()) && dishSnap.val().length) {
+      dishes.length=0; dishes.push(...dishSnap.val());
+    } else {
+      try { const d=JSON.parse(localStorage.getItem('_arm_dishes')||'null'); if(d&&d.length){dishes.length=0;dishes.push(...d);} } catch(e){}
+    }
+
+    // Load featured
+    const featSnap = await fbOnce('featuredIds');
+    if (featSnap.val() && Array.isArray(featSnap.val())) featuredIds = featSnap.val();
+    else { try { const f=JSON.parse(localStorage.getItem('_arm_featured')||'null'); if(f) featuredIds=f; } catch(e){} }
+
+    // Load cats
+    const catSnap = await fbOnce('cats');
+    const catData = catSnap.val();
+    if (catData && Array.isArray(catData)) appCats = catData;
+    else {
+      try { const c=JSON.parse(localStorage.getItem('_arm_cats')||'null'); if(c) appCats=c; } catch(e){}
+    }
+    appCats.forEach(c=>{
+      if (i18n.en.cats[c.id]!==undefined){i18n.en.cats[c.id]=c.en;i18n.th.cats[c.id]=c.th;i18n.ru.cats[c.id]=c.ru;}
+    });
+
+    // Load admin PIN
+    const pinSnap = await fbOnce('adminPin');
+    if (pinSnap.val()) _adminPin = pinSnap.val();
+    else { const lp=localStorage.getItem('_arm_pin'); if(lp) _adminPin=lp; }
+
+    // Render everything
+    applyBranding();
+    renderCategories();
+    renderMenu();
+    renderCart();
+    renderFeatured();
+    renderTableSelect();
+
+    // Self-heal after orders listener fires (500ms)
+    setTimeout(()=>{ healTables(); renderTableSelect(); }, 600);
+  }
+
+  initApp();
 
   function playNotificationSound() {
     try {
@@ -3676,17 +3985,6 @@
   }
 
   // ============ APP RENDER ============
-  function applyFontSizes() {
-    const fs = appSettings.fontSizes || {};
-    const root = document.documentElement.style;
-    root.setProperty('--font-size-brand', (fs.brand || 19) + 'px');
-    root.setProperty('--font-size-tagline', (fs.tagline || 13) + 'px');
-    root.setProperty('--font-size-dish-name', (fs.dishName || 20) + 'px');
-    root.setProperty('--font-size-dish-desc', (fs.dishDesc || 12) + 'px');
-    root.setProperty('--font-size-header', (fs.header || 14) + 'px');
-    root.setProperty('--font-size-footer', (fs.footer || 12) + 'px');
-  }
-
   function applyBranding() {
     const name = appSettings.restaurantName || 'ARMENIA';
     document.getElementById('brandName').textContent = name;
@@ -3712,65 +4010,34 @@
     if (appSettings.footerText) { cf.textContent = appSettings.footerText; cf.classList.add('show'); } else { cf.classList.remove('show'); }
     renderBanner();
     document.documentElement.setAttribute('data-font', appSettings.font || 'cormorant');
-    applyFontSizes();
-    // Apply button labels (re-run setLang)
-    if (typeof setLang === 'function') setLang(currentLang || 'en');
   }
 
   function renderBanner() {
     const ba = document.getElementById('bannerArea');
-    if (!appSettings.bannerType || appSettings.bannerType === 'none' || !appSettings.bannerUrl) {
+    if (!appSettings.bannerType || appSettings.bannerType === 'none') {
       ba.classList.remove('show');
       ba.innerHTML = '';
       return;
     }
-    const url = appSettings.bannerUrl.trim();
-    // IMAGE
-    if (appSettings.bannerType === 'image') {
-      ba.innerHTML = `<img src="${url}" alt="" onerror="this.parentElement.innerHTML='<div class=placeholder>Banner image failed to load</div>'">`;
+    if (appSettings.bannerType === 'image' && appSettings.bannerUrl) {
+      ba.innerHTML = `<img src="${appSettings.bannerUrl}" alt="banner" onerror="this.parentElement.innerHTML='<div class=placeholder>Banner image failed to load</div>'">`;
       ba.classList.add('show');
-      return;
-    }
-    // VIDEO (auto-detect type)
-    const ytId = extractYouTubeId(url);
-    const vimeoId = extractVimeoId(url);
-    if (ytId) {
-      // YouTube — hide all UI: use embed params + zoom-crop wrapper to hide title bar
-      const params = 'autoplay=1&mute=1&loop=1&playlist=' + ytId +
-                     '&controls=0&rel=0&showinfo=0&modestbranding=1' +
-                     '&iv_load_policy=3&fs=0&disablekb=1&playsinline=1' +
-                     '&cc_load_policy=0&start=0';
-      ba.innerHTML = `
-        <div class="yt-frame-wrap">
-          <iframe
-            src="https://www.youtube.com/embed/${ytId}?${params}"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen></iframe>
-        </div>
-        <div class="yt-cover"></div>`;
-      ba.classList.add('show');
-    } else if (vimeoId) {
-      ba.innerHTML = `<iframe src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&muted=1&loop=1&background=1&controls=0&title=0&byline=0&portrait=0" allow="autoplay" frameborder="0"></iframe>`;
-      ba.classList.add('show');
-    } else if (/\.(mp4|webm|ogg|mov)(\?|$)/i.test(url)) {
-      // Direct video file
-      ba.innerHTML = `<video src="${url}" autoplay muted loop playsinline></video>`;
-      ba.classList.add('show');
+    } else if (appSettings.bannerType === 'youtube' && appSettings.bannerUrl) {
+      const videoId = extractYouTubeId(appSettings.bannerUrl);
+      if (videoId) {
+        ba.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        ba.classList.add('show');
+      } else {
+        ba.innerHTML = '<div class="placeholder">Invalid YouTube URL</div>';
+        ba.classList.add('show');
+      }
     } else {
-      ba.innerHTML = '<div class="placeholder">Unsupported video URL. Use YouTube, Vimeo, or direct .mp4/.webm link.</div>';
-      ba.classList.add('show');
+      ba.classList.remove('show');
     }
   }
 
   function extractYouTubeId(url) {
     const re = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const m = url.match(re);
-    return m ? m[1] : null;
-  }
-
-  function extractVimeoId(url) {
-    const re = /vimeo\.com\/(?:video\/)?(\d+)/;
     const m = url.match(re);
     return m ? m[1] : null;
   }
@@ -3806,8 +4073,7 @@
 
   function renderMenu() {
     const list = currentCat === 'all' ? dishes : dishes.filter(d => d.cat === currentCat);
-    const dc = document.getElementById('dishCount');
-    if (dc) dc.textContent = String(dishes.length).padStart(2, '0');
+    document.getElementById('dishCount').textContent = String(dishes.length).padStart(2, '0');
     document.getElementById('menuGrid').innerHTML = list.map(d => `
       <div class="dish" data-id="${d.id}">
         <div class="dish-img ${d.bg}">
@@ -3830,1700 +4096,6 @@
     document.querySelectorAll('.dish-add').forEach(b => { b.onclick = (e) => { e.stopPropagation(); quickAdd(parseInt(b.dataset.id)); }; });
   }
 
-  function renderCart() {
-    const list = document.getElementById('cartList');
-    const ids = Object.keys(cart);
-    let count = 0, total = 0;
-    Object.values(cart).forEach(item => { count += item.qty; total += item.price * item.qty; });
-
-    // Get this table's active orders (not yet billed/done)
-    const activeOrders = selectedTable
-      ? getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed' && o.status !== 'done')
-      : [];
-    const activeItemCount = activeOrders.reduce((s, o) => s + (o.itemCount || 0), 0);
-    const activeTotal = activeOrders.reduce((s, o) => s + (o.total || 0), 0);
-
-    // Cart count = items in cart + active items already ordered
-    document.getElementById('cartCount').textContent = count + activeItemCount;
-
-    let activeOrdersHtml = '';
-    if (activeOrders.length > 0) {
-      activeOrdersHtml = `
-        <div style="margin: 6px 0 14px 0; padding: 12px 14px; background: var(--bg); border: 1px solid var(--line-gold);">
-          <div style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.15em; color: var(--burgundy); text-transform: uppercase; font-weight: 600; margin-bottom: 10px;">
-            ${i18n[currentLang].activeOrder || 'YOUR ACTIVE ORDER'}
-          </div>
-          ${activeOrders.map(o => {
-            const allPrinted = o.items.every(i => i.printed);
-            const statusInfo = getOrderStatusInfo(o);
-            return `
-              <div style="padding: 10px 0; border-bottom: 1px solid var(--line);">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                  <div style="font-family:'Helvetica Neue',sans-serif;font-weight:600;color:var(--burgundy)">#${o.num}</div>
-                  <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border-radius:100px;background:${statusInfo.bg};color:${statusInfo.color};font-weight:600">${statusInfo.label}</div>
-                </div>
-                ${o.items.map(i => `
-                  <div style="font-size:13px;color:var(--ink);display:flex;justify-content:space-between;padding:2px 0">
-                    <span>${i.qty}× ${i.nameLocal || i.name}${i.printed ? '' : ' <span style="color:#f39c12;font-size:10px">●</span>'}</span>
-                    <span style="font-family:'Helvetica Neue',sans-serif;color:var(--burgundy);font-weight:500">${(i.price * i.qty).toLocaleString()} ฿</span>
-                  </div>
-                `).join('')}
-                ${!allPrinted ? `
-                  <button onclick="window._cancelOrder('${o.num}')" style="margin-top:8px;width:100%;padding:7px;border:1px solid #c0392b;background:transparent;color:#c0392b;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;border-radius:4px;font-weight:600">${i18n[currentLang].cancelOrder || '✕ Cancel Order'}</button>
-                ` : `
-                  <div style="margin-top:6px;font-size:10px;color:var(--ink-soft);font-style:italic;text-align:center">${i18n[currentLang].cannotCancel || 'Order is being prepared — cannot cancel'}</div>
-                `}
-              </div>
-            `;
-          }).join('')}
-          <div style="display:flex;justify-content:space-between;padding-top:10px;margin-top:4px;font-family:'Helvetica Neue',sans-serif;font-weight:600">
-            <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-soft)">${i18n[currentLang].subtotal || 'Active Subtotal'}</span>
-            <span style="color:var(--burgundy)">${activeTotal.toLocaleString()} ฿</span>
-          </div>
-        </div>
-      `;
-    }
-
-    if (ids.length === 0 && activeOrders.length === 0) {
-      list.innerHTML = `<div class="cart-empty"><div class="icon">🍷</div><p>${i18n[currentLang].emptyCart}</p></div>`;
-      document.getElementById('cartTotal').textContent = '0';
-      document.getElementById('checkoutBtn').disabled = true;
-      return;
-    }
-
-    let newCartHtml = '';
-    if (ids.length > 0) {
-      newCartHtml = `
-        <div style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.15em; color: var(--ink-soft); text-transform: uppercase; font-weight: 600; margin: 6px 0 10px 0;">
-          ${i18n[currentLang].newItems || 'NEW ITEMS TO ORDER'}
-        </div>
-      ` + ids.map(key => {
-        const item = cart[key];
-        const d = dishes.find(x => x.id == item.dishId);
-        const meta = [];
-        if (item.opts.addonNames && item.opts.addonNames.length) meta.push('+ ' + item.opts.addonNames.join(', '));
-        return `
-          <div class="cart-item">
-            <div class="cart-item-img">${d.imgData ? `<img src="${d.imgData}" style="width:100%;height:100%;object-fit:cover">` : d.emoji}</div>
-            <div class="cart-item-info">
-              <div class="cart-item-name">${d.name[currentLang]}</div>
-              <div class="cart-item-meta">${item.price} ฿ × ${item.qty}${meta.length ? ' · ' + meta.join(' · ') : ''}</div>
-              ${item.opts.note ? `<div class="cart-item-note">"${item.opts.note}"</div>` : ''}
-            </div>
-            <div class="cart-item-actions">
-              <button class="note-btn ${item.opts.note ? 'has-note' : ''}" data-key="${key}" data-act="note">📝</button>
-              <div class="qty-controls">
-                <button class="qty-btn" data-key="${key}" data-act="-">−</button>
-                <span class="qty-val">${item.qty}</span>
-                <button class="qty-btn" data-key="${key}" data-act="+">+</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    list.innerHTML = activeOrdersHtml + newCartHtml;
-
-    // Total = active orders + new cart (so Bill total is correct)
-    const grandTotal = total + activeTotal;
-    document.getElementById('cartTotal').textContent = grandTotal.toLocaleString();
-    document.getElementById('checkoutBtn').disabled = ids.length === 0;
-
-    document.querySelectorAll('.cart-item .qty-btn').forEach(b => {
-      b.onclick = () => {
-        const k = b.dataset.key;
-        if (b.dataset.act === '+') cart[k].qty++;
-        else { cart[k].qty--; if (cart[k].qty <= 0) delete cart[k]; }
-        renderCart();
-      };
-    });
-    document.querySelectorAll('.note-btn').forEach(b => {
-      b.onclick = () => openNoteEdit(b.dataset.key);
-    });
-  }
-
-  function getOrderStatusInfo(o) {
-    const allPrinted = o.items.every(i => i.printed);
-    const anyPrinted = o.items.some(i => i.printed);
-    if (o.status === 'served') return { label: i18n[currentLang].statusServed || 'SERVED', bg: '#2d6a4f', color: '#fff' };
-    if (o.status === 'bill_requested') return { label: i18n[currentLang].statusBillReq || 'BILL REQUESTED', bg: '#722f37', color: '#f4dca5' };
-    if (allPrinted) return { label: i18n[currentLang].statusPreparing || 'IN PROGRESS', bg: '#f39c12', color: '#fff' };
-    if (anyPrinted) return { label: i18n[currentLang].statusPartial || 'PARTIALLY PREPARING', bg: '#f39c12', color: '#fff' };
-    return { label: i18n[currentLang].statusReceived || 'ORDER RECEIVED', bg: '#3498db', color: '#fff' };
-  }
-
-  // Customer cancel order (only allowed if no items printed yet)
-  window._cancelOrder = (num) => {
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    const anyPrinted = order.items.some(i => i.printed);
-    if (anyPrinted) {
-      showToast(i18n[currentLang].cannotCancel || 'Cannot cancel — order is being prepared');
-      return;
-    }
-    if (!confirm(i18n[currentLang].confirmCancel || 'Cancel this order?')) return;
-    deleteOrder(num);
-    // Free up table
-    const t = tables.find(x => x.num === order.table);
-    if (t && t.status === 'occupied') {
-      // Check if there are other active orders for this table
-      const others = getOrders().filter(o => o.table === order.table && o.num !== num && !o.type && o.status !== 'billed' && o.status !== 'done');
-      if (others.length === 0) { t.status = 'free'; saveTables(); }
-    }
-    renderCart();
-    showToast(i18n[currentLang].orderCancelled || 'Order cancelled');
-    // Notify admin (optional alert)
-    const notify = { num: 'CANCEL-' + Date.now(), table: order.table, type: 'cancel', time: Date.now(), itemCount: 1, total: 0, orderRef: num, status: 'alert' };
-    saveOrder(notify);
-  };
-
-  function openNoteEdit(key) {
-    editingNoteKey = key;
-    document.getElementById('noteEditInput').value = cart[key].opts.note || '';
-    document.getElementById('noteModal').classList.add('show');
-  }
-  document.getElementById('noteCancel').onclick = () => document.getElementById('noteModal').classList.remove('show');
-  document.getElementById('noteSave').onclick = () => {
-    if (editingNoteKey && cart[editingNoteKey]) {
-      cart[editingNoteKey].opts.note = document.getElementById('noteEditInput').value.trim();
-      renderCart();
-    }
-    document.getElementById('noteModal').classList.remove('show');
-  };
-
-  function quickAdd(id) {
-    const d = dishes.find(x => x.id === id);
-    const key = `${id}-default`;
-    if (cart[key]) cart[key].qty++;
-    else cart[key] = { dishId: id, qty: 1, price: d.price, opts: { size: 'full', spice: 0, toppings: [], note: '' } };
-    renderCart();
-    openCart(); // Auto-show cart sheet so customer sees the item
-  }
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(window._toast);
-    window._toast = setTimeout(() => t.classList.remove('show'), 2000);
-  }
-
-  // ============ MODAL ============
-  function openModal(id) {
-    const d = dishes.find(x => x.id === id);
-    currentDish = d;
-    modalQty = 1;
-    modalOpts = { toppings: [], note: '' };
-    const m = document.getElementById('modal');
-    const imgEl = m.querySelector('.modal-img');
-    imgEl.className = 'modal-img ' + d.bg;
-    // Show photo or emoji
-    const imgContent = d.imgData
-      ? `<img src="${d.imgData}" alt="${d.name.en}"><button class="modal-close" id="modalClose">✕</button>`
-      : `<span style="font-size:88px">${d.emoji}</span><button class="modal-close" id="modalClose">✕</button>`;
-    imgEl.innerHTML = imgContent;
-    document.getElementById('modalClose').onclick = closeModal;
-    document.getElementById('modalName').firstChild.textContent = d.name[currentLang];
-    document.getElementById('modalNameNative').textContent = d.native[currentLang];
-    document.getElementById('modalPriceVal').textContent = d.price;
-    document.getElementById('modalDesc').textContent = d.desc[currentLang];
-    document.getElementById('mQty').textContent = 1;
-    document.getElementById('modalNote').value = '';
-    // Render per-dish add-ons
-    const addons = d.addons || [];
-    const pillsEl = document.getElementById('modalAddonPills');
-    const groupEl = document.getElementById('modalAddonsGroup');
-    if (addons.length > 0) {
-      groupEl.style.display = '';
-      pillsEl.innerHTML = addons.map(a => `
-        <button class="opt-pill" data-addon-id="${a.id}">+ ${a.name} <span class="extra">+${a.price}฿</span></button>
-      `).join('');
-      pillsEl.querySelectorAll('.opt-pill').forEach(p => {
-        p.onclick = () => {
-          const aid = p.dataset.addonId;
-          const idx = modalOpts.toppings.indexOf(aid);
-          if (idx >= 0) { modalOpts.toppings.splice(idx, 1); p.classList.remove('active'); }
-          else { modalOpts.toppings.push(aid); p.classList.add('active'); }
-          updateModalTotal();
-        };
-      });
-    } else {
-      groupEl.style.display = 'none';
-    }
-    updateModalTotal();
-    m.classList.add('show');
-  }
-  function closeModal() { document.getElementById('modal').classList.remove('show'); }
-
-  function calcModalPrice() {
-    if (!currentDish) return 0;
-    let p = currentDish.price;
-    const addons = currentDish.addons || [];
-    modalOpts.toppings.forEach(aid => {
-      const a = addons.find(x => x.id === aid);
-      if (a) p += a.price;
-    });
-    return p;
-  }
-  function updateModalTotal() {
-    document.getElementById('modalTotal').textContent = (calcModalPrice() * modalQty).toLocaleString() + ' ฿';
-  }
-
-  document.getElementById('mQtyMinus').onclick = () => { if (modalQty > 1) { modalQty--; document.getElementById('mQty').textContent = modalQty; updateModalTotal(); } };
-  document.getElementById('mQtyPlus').onclick = () => { modalQty++; document.getElementById('mQty').textContent = modalQty; updateModalTotal(); };
-  document.getElementById('modalAdd').onclick = () => {
-    modalOpts.note = document.getElementById('modalNote').value.trim();
-    const addons = currentDish.addons || [];
-    const addonNames = modalOpts.toppings.map(aid => addons.find(a => a.id === aid)?.name).filter(Boolean);
-    const key = `${currentDish.id}-${modalOpts.toppings.sort().join(',')}-${modalOpts.note.substr(0,10)}`;
-    const finalPrice = calcModalPrice();
-    if (cart[key]) cart[key].qty += modalQty;
-    else cart[key] = { dishId: currentDish.id, qty: modalQty, price: finalPrice, opts: { toppings: [...modalOpts.toppings], addonNames, note: modalOpts.note } };
-    renderCart();
-    closeModal();
-    openCart(); // Auto-show cart so customer sees their order
-  };
-
-  // ============ CART ============
-  function openCart() {
-    document.getElementById('cartSheet').classList.add('show');
-    document.getElementById('sheetBackdrop').classList.add('show');
-  }
-  function closeCart() {
-    document.getElementById('cartSheet').classList.remove('show');
-    document.getElementById('sheetBackdrop').classList.remove('show');
-  }
-  document.getElementById('cartBtn').onclick = openCart;
-  document.getElementById('sheetClose').onclick = closeCart;
-  document.getElementById('sheetBackdrop').onclick = closeCart;
-
-  // ============ CHECKOUT ============
-  document.getElementById('checkoutBtn').onclick = async () => {
-    const batchTime = Date.now();
-    const newItems = Object.values(cart).map(item => {
-      const d = dishes.find(x => x.id == item.dishId);
-      return {
-        name: d.name.en, nameLocal: d.name[currentLang], native: d.native.en,
-        qty: item.qty, price: item.price, opts: item.opts,
-        batch: batchTime,  // tag this batch
-        printed: false     // not yet printed to kitchen
-      };
-    });
-
-    // One order number per table - reuse if exists
-    const existingOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed' && o.status !== 'done');
-    let orderNum;
-    if (existingOrders.length > 0) {
-      orderNum = existingOrders[0].num;
-      const existItems = existingOrders[0].items || [];
-      const merged = [...existItems, ...newItems];
-      const newTotal = merged.reduce((s, i) => s + i.price * i.qty, 0);
-      updateOrder(orderNum, {
-        items: merged,
-        total: newTotal,
-        itemCount: merged.reduce((s,i)=>s+i.qty,0),
-        lastBatch: batchTime,
-        hasNewItems: true
-      });
-      // Telegram notify (only new items)
-      const tgOrder = { ...existingOrders[0], items: newItems, total: newItems.reduce((s,i)=>s+i.price*i.qty,0), num: orderNum, language: currentLang };
-      notifyTelegramNewOrder(tgOrder);
-    } else {
-      orderNum = await getNextOrderNum();
-      const total = newItems.reduce((s, i) => s + i.price * i.qty, 0);
-      const itemCount = newItems.reduce((s, i) => s + i.qty, 0);
-      const order = {
-        num: orderNum, table: selectedTable || '?',
-        items: newItems, itemCount, total,
-        time: Date.now(), status: 'open',
-        language: currentLang,
-        lastBatch: batchTime,
-        hasNewItems: true
-      };
-      saveOrder(order);
-      notifyTelegramNewOrder(order);
-    }
-    document.getElementById('orderNum').textContent = orderNum;
-    closeCart();
-    document.getElementById('confirm').classList.add('show');
-    cart = {};
-    setTimeout(renderCart, 600);
-    resetIdleTimer();
-  };
-  document.getElementById('confirmBack').onclick = () => {
-    document.getElementById('confirm').classList.remove('show');
-    resetIdleTimer();
-  };
-
-  // ============ CALL WAITER / BILL ============
-  document.getElementById('callWaiterBtn').onclick = () => {
-    const notify = { num: 'CALL-' + Date.now(), table: selectedTable || '?', type: 'waiter', time: Date.now(), itemCount: 1, total: 0, status: 'alert' };
-    saveOrder(notify);
-    showToast(i18n[currentLang].waiterCalled);
-  };
-
-  document.getElementById('askBillBtn').onclick = () => {
-    // Just SHOW the bill preview to customer. Don't notify admin yet.
-    const tableOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed' && o.status !== 'done');
-    if (!tableOrders.length && Object.keys(cart).length === 0) {
-      showToast('No items ordered yet'); return;
-    }
-    if (Object.keys(cart).length > 0) {
-      // Customer has items in cart not yet sent — remind them
-      if (!confirm('You have items in your cart not sent to kitchen yet. Show bill anyway?')) return;
-    }
-    let allItems = [];
-    let grandTotal = 0;
-    let orderNum = tableOrders.length ? tableOrders[0].num : '—';
-    tableOrders.forEach(o => { allItems = allItems.concat(o.items || []); grandTotal += o.total || 0; });
-    showBillModal(orderNum, allItems, grandTotal);
-  };
-
-  function showBillModal(orderNum, items, total) {
-    document.getElementById('billRestName').textContent = appSettings.restaurantName || 'ARMENIA RESTAURANT';
-    document.getElementById('billAddress').textContent = [appSettings.address, appSettings.phone].filter(Boolean).join(' · ');
-    document.getElementById('billTableNum').textContent = selectedTable || '?';
-    document.getElementById('billOrderNum').textContent = orderNum;
-    document.getElementById('billTimeRow').innerHTML = `Time: <strong>${new Date().toLocaleTimeString()}</strong>`;
-    document.getElementById('billItemsList').innerHTML = items.map(i => `
-      <div class="bill-item">
-        <div>
-          <div class="bill-item-name">${i.qty > 1 ? i.qty + '× ' : ''}${i.nameLocal || i.name}</div>
-          ${i.opts?.note ? `<div class="bill-item-note">⚠ ${i.opts.note}</div>` : ''}
-          ${i.opts?.addonNames?.length ? `<div class="bill-item-note">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
-        </div>
-        <div class="bill-item-price">${(i.price * i.qty).toLocaleString()} ฿</div>
-      </div>
-    `).join('');
-    document.getElementById('billTotalVal').textContent = total.toLocaleString();
-    window._billData = { orderNum, items, total };
-    // Reset to customer view (Confirm button visible, admin actions hidden)
-    document.getElementById('billConfirmBtn').style.display = '';
-    document.getElementById('billCloseBtn').textContent = 'Cancel';
-    document.getElementById('billCustomerActions').style.display = 'flex';
-    const hint = document.getElementById('billCustomerHint');
-    if (hint) hint.style.display = '';
-    const adminActions = document.getElementById('billAdminActions');
-    if (adminActions) adminActions.style.display = 'none';
-    document.getElementById('billModal').classList.add('show');
-  }
-
-  document.getElementById('billCloseBtn').onclick = () => document.getElementById('billModal').classList.remove('show');
-
-  // CUSTOMER CONFIRM — this is the moment the admin gets notified
-  document.getElementById('billConfirmBtn').onclick = () => {
-    if (!window._billData) return;
-    const { orderNum, total } = window._billData;
-    const tableOrders = getOrders().filter(o => o.table === selectedTable && !o.type && o.status !== 'billed' && o.status !== 'done');
-    // Mark orders as bill-requested (not yet finalized — admin will close them with Done)
-    tableOrders.forEach(o => updateOrder(o.num, { status: 'bill_requested', billRequestTime: Date.now() }));
-    // Notify admin
-    const notify = {
-      num: 'BILL-' + Date.now(),
-      table: selectedTable || '?',
-      type: 'bill',
-      time: Date.now(),
-      itemCount: 1,
-      total: total,
-      orderRef: orderNum,
-      status: 'alert'
-    };
-    saveOrder(notify);
-    document.getElementById('billModal').classList.remove('show');
-    showToast(i18n[currentLang].billRequested || 'Bill requested — staff will be with you shortly');
-  };
-
-  // ============ LANG / THEME ============
-  function setLang(lang) {
-    currentLang = lang;
-    document.documentElement.lang = lang;
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.dataset.i18n;
-      let text = i18n[lang][key];
-      // Override with custom button labels if set in admin
-      if (appSettings.btnLabels && appSettings.btnLabels[lang] && appSettings.btnLabels[lang][key]) {
-        text = appSettings.btnLabels[lang][key];
-      }
-      if (text) el.innerHTML = text;
-    });
-    renderCategories(); renderMenu(); renderCart(); renderFeatured();
-    if (document.getElementById('tableSelect').classList.contains('show')) renderTableSelect();
-  }
-  document.querySelectorAll('.lang-btn').forEach(b => b.onclick = () => setLang(b.dataset.lang));
-
-  document.getElementById('themeBtn').onclick = () => {
-    const cur = document.documentElement.getAttribute('data-theme');
-    const next = cur === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', next);
-    document.getElementById('themeBtn').textContent = next === 'light' ? '🌙' : '☀️';
-  };
-
-  document.getElementById('tableBadge').onclick = () => {
-    if (confirm('Return to table selection screen?')) {
-      const t = tables.find(x => x.num === selectedTable);
-      if (t && t.status === 'occupied') { t.status = 'free'; saveTables(); }
-      selectedTable = null;
-      cart = {};
-      renderCart();
-      renderTableSelect();
-      document.getElementById('tableSelect').classList.add('show');
-    }
-  };
-
-  // ============ VOICE AI ============
-  let recognition = null;
-  let isListening = false;
-  const langMap = { en: 'en-US', th: 'th-TH', ru: 'ru-RU' };
-
-  function speak(text, lang) {
-    if (!window.speechSynthesis) return;
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = langMap[lang] || 'en-US';
-    u.rate = 0.95;
-    window.speechSynthesis.speak(u);
-  }
-
-  function findDishesByQuery(query) {
-    const q = query.toLowerCase();
-    const matched = dishes.filter(d => {
-      return d.keywords.some(k => q.includes(k.toLowerCase())) ||
-        Object.values(d.name).some(n => q.toLowerCase().includes(n.toLowerCase()));
-    });
-    return matched.length ? matched.slice(0, 3) : dishes.filter(d => d.tag === 'signature').slice(0, 3);
-  }
-
-  function aiRespond(transcript) {
-    const matches = findDishesByQuery(transcript);
-    let response = i18n[currentLang].aiSays.default;
-    const q = transcript.toLowerCase();
-    if (/meat|beef|pork|lamb|shashlik|kebab|grilled|шашлык|кебаб|мясо|говядина|баранина|свинина|เนื้อ|หมู|แกะ|ย่าง/.test(q)) response = i18n[currentLang].aiSays.meat;
-    else if (/soup|borscht|solyanka|суп|солянка|борщ|ซุป|โซลยานก้า|บอร์ช/.test(q)) response = i18n[currentLang].aiSays.soup;
-    else if (/spicy|hot|kharcho|острое|харчо|เผ็ด|คาร์โช/.test(q)) response = i18n[currentLang].aiSays.spicy;
-    else if (/veg|vegetable|dolma|вегет|долма|овощ|มังสวิรัติ|ผัก|โดลม่า/.test(q)) response = i18n[currentLang].aiSays.vegetarian;
-    else if (/sweet|dessert|cake|baklava|pakhlava|сладкое|пахлава|медовик|десерт|ของหวาน|พัคลาวา/.test(q)) response = i18n[currentLang].aiSays.sweet;
-
-    document.getElementById('aiText').textContent = response;
-    document.getElementById('aiSuggestions').innerHTML = matches.map(d => `
-      <button class="ai-suggest" data-id="${d.id}">${d.emoji} ${d.name[currentLang]} · ${d.price}฿</button>
-    `).join('');
-    document.querySelectorAll('.ai-suggest').forEach(b => {
-      b.onclick = () => {
-        quickAdd(parseInt(b.dataset.id));
-        document.getElementById('aiBubble').classList.remove('show');
-      };
-    });
-    document.getElementById('aiBubble').classList.add('show');
-    speak(response, currentLang);
-    setTimeout(() => document.getElementById('aiBubble').classList.remove('show'), 8000);
-  }
-
-  document.getElementById('voiceBtn').onclick = () => {
-    const btn = document.getElementById('voiceBtn');
-    const label = document.getElementById('voiceLabel');
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) {
-      btn.classList.add('listening');
-      label.textContent = i18n[currentLang].listening;
-      setTimeout(() => {
-        btn.classList.remove('listening');
-        label.textContent = i18n[currentLang].askMe;
-        const samples = { en: 'something with lamb', th: 'อยากกินแกะ', ru: 'хочу баранину' };
-        aiRespond(samples[currentLang]);
-      }, 2200);
-      return;
-    }
-    if (!recognition) {
-      recognition = new SR();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-    }
-    if (isListening) { recognition.stop(); return; }
-    recognition.lang = langMap[currentLang];
-    try { recognition.start(); } catch {}
-    isListening = true;
-    btn.classList.add('listening');
-    label.textContent = i18n[currentLang].listening;
-    recognition.onresult = (e) => aiRespond(e.results[0][0].transcript);
-    recognition.onend = () => {
-      isListening = false;
-      btn.classList.remove('listening');
-      label.textContent = i18n[currentLang].askMe;
-    };
-    recognition.onerror = () => {
-      isListening = false;
-      btn.classList.remove('listening');
-      label.textContent = i18n[currentLang].askMe;
-    };
-  };
-
-  // ============ ADMIN ============
-  // ============ ADMIN PIN ============
-  const DEFAULT_PIN = '000000';
-  let _adminPin = DEFAULT_PIN;
-
-  function getAdminPin() { return _adminPin; }
-  function setAdminPin(p) {
-    _adminPin = p;
-    try { db.ref('adminPin').set(p); } catch (e) { console.warn('Firebase setAdminPin failed:', e); }
-    localStorage.setItem('armenia_admin_pin', p); // local backup
-  }
-
-  // Listen for PIN changes from other devices
-  db.ref('adminPin').on('value', snap => {
-    const val = snap.val();
-    if (val) _adminPin = val;
-  });
-
-  function loadAdminPinFromFirebase() {
-    return fbOnceWithTimeout(db.ref('adminPin')).then(snap => {
-      const val = snap.val();
-      if (val) {
-        _adminPin = val;
-      } else {
-        // Fallback to localStorage
-        const localPin = localStorage.getItem('armenia_admin_pin');
-        if (localPin) _adminPin = localPin;
-      }
-    }).catch(e => {
-      console.warn('AdminPin load failed:', e);
-      const localPin = localStorage.getItem('armenia_admin_pin');
-      if (localPin) _adminPin = localPin;
-    });
-  }
-
-  let pinBuffer = '';
-
-  function updatePinDots() {
-    document.querySelectorAll('.pin-dot').forEach((d, i) => {
-      d.classList.toggle('filled', i < pinBuffer.length);
-    });
-  }
-
-  function pinError(msg) {
-    const el = document.getElementById('pinError');
-    el.textContent = msg;
-    document.querySelectorAll('.pin-dot').forEach(d => {
-      d.style.borderColor = '#c0392b';
-      d.style.background = d.classList.contains('filled') ? '#c0392b' : '';
-    });
-    setTimeout(() => {
-      pinBuffer = '';
-      updatePinDots();
-      el.textContent = '';
-      document.querySelectorAll('.pin-dot').forEach(d => {
-        d.style.borderColor = ''; d.style.background = '';
-      });
-    }, 900);
-  }
-
-  function openPinModal() {
-    pinBuffer = '';
-    updatePinDots();
-    document.getElementById('pinError').textContent = '';
-    document.querySelectorAll('.pin-dot').forEach(d => { d.style.borderColor = ''; d.style.background = ''; });
-    document.getElementById('pinModal').style.display = 'flex';
-  }
-  function closePinModal() {
-    pinBuffer = '';
-    document.getElementById('pinModal').style.display = 'none';
-  }
-
-  document.querySelectorAll('.pin-key').forEach(k => {
-    k.onclick = () => {
-      const v = k.dataset.v;
-      if (v === 'clear') { pinBuffer = ''; updatePinDots(); return; }
-      if (v === 'back') { pinBuffer = pinBuffer.slice(0, -1); updatePinDots(); return; }
-      if (pinBuffer.length >= 6) return;
-      pinBuffer += v;
-      updatePinDots();
-      if (pinBuffer.length === 6) {
-        if (pinBuffer === getAdminPin()) {
-          closePinModal();
-          // Open admin
-          document.getElementById('admin').classList.add('show');
-          isAdminMode = true;
-          clearIdleTimer();
-          renderAdminOrders();
-          renderAdminTables();
-          renderAdminMenu();
-          populateSettingsFields();
-        } else {
-          pinError('Incorrect PIN');
-        }
-      }
-    };
-  });
-  document.getElementById('pinCancel').onclick = closePinModal;
-  // Also allow physical keyboard
-  document.addEventListener('keydown', (e) => {
-    if (document.getElementById('pinModal').style.display !== 'flex') return;
-    if (e.key >= '0' && e.key <= '9') document.querySelector(`.pin-key[data-v="${e.key}"]`)?.click();
-    if (e.key === 'Backspace') document.querySelector('.pin-key[data-v="back"]')?.click();
-    if (e.key === 'Escape') closePinModal();
-  });
-
-  function openAdminDashboard() {
-    // Hide idle/table-select screens if visible
-    document.getElementById('idleScreen').classList.remove('show');
-    document.getElementById('tableSelect').classList.remove('show', 'hide');
-    document.getElementById('admin').classList.add('show');
-    isAdminMode = true;
-    clearIdleTimer();
-    renderAdminOrders();
-    renderAdminTables();
-    renderAdminMenu();
-    populateSettingsFields();
-  }
-
-  function requestAdminAccess() {
-    if (getAdminPin() === DEFAULT_PIN) {
-      openAdminDashboard();
-      showToast('Default PIN is 000000 — please change it in Settings');
-    } else {
-      openPinModal();
-    }
-  }
-
-  // Override the PIN success path to use the shared function
-  // (overrides the inline openAdmin code in pin-key handler)
-  document.querySelectorAll('.pin-key').forEach(k => {
-    k.onclick = () => {
-      const v = k.dataset.v;
-      if (v === 'clear') { pinBuffer = ''; updatePinDots(); return; }
-      if (v === 'back') { pinBuffer = pinBuffer.slice(0, -1); updatePinDots(); return; }
-      if (pinBuffer.length >= 6) return;
-      pinBuffer += v;
-      updatePinDots();
-      if (pinBuffer.length === 6) {
-        if (pinBuffer === getAdminPin()) {
-          closePinModal();
-          openAdminDashboard();
-        } else {
-          pinError('Incorrect PIN');
-        }
-      }
-    };
-  });
-
-  document.getElementById('adminBtn').onclick = requestAdminAccess;
-  document.getElementById('staffBtnIdle').onclick = (e) => { e.stopPropagation(); requestAdminAccess(); };
-  document.getElementById('staffBtnTable').onclick = (e) => { e.stopPropagation(); requestAdminAccess(); };
-  document.getElementById('savePinBtn').onclick = () => {
-    const cur = document.getElementById('pinCurrent').value;
-    const nw  = document.getElementById('pinNew').value;
-    const cfm = document.getElementById('pinConfirm').value;
-    const msg = document.getElementById('pinChangeMsg');
-    if (cur !== getAdminPin()) { msg.style.color='#c0392b'; msg.textContent='Current PIN is incorrect'; return; }
-    if (!/^\d{6}$/.test(nw)) { msg.style.color='#c0392b'; msg.textContent='New PIN must be exactly 6 digits'; return; }
-    if (nw !== cfm) { msg.style.color='#c0392b'; msg.textContent='PINs do not match'; return; }
-    setAdminPin(nw);
-    document.getElementById('pinCurrent').value = '';
-    document.getElementById('pinNew').value = '';
-    document.getElementById('pinConfirm').value = '';
-    msg.style.color = 'var(--green)';
-    msg.textContent = '✓ PIN changed successfully';
-    setTimeout(() => { msg.textContent = ''; }, 3000);
-  };
-  document.getElementById('adminClose').onclick = () => {
-    document.getElementById('admin').classList.remove('show');
-    isAdminMode = false;
-    // If staff was in admin without selecting a table, go back to idle
-    if (!selectedTable) {
-      document.getElementById('idleScreen').classList.add('show');
-    }
-    resetIdleTimer();
-  };
-
-  document.querySelectorAll('.admin-tab').forEach(t => {
-    t.onclick = () => {
-      document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
-      ['orders', 'tables', 'menu', 'categories', 'history', 'branding', 'settings'].forEach(name => {
-        document.getElementById('tab-' + name).classList.toggle('hidden', name !== t.dataset.tab);
-      });
-      if (t.dataset.tab === 'categories') renderAdminCategories();
-      if (t.dataset.tab === 'history') renderHistory('day');
-      if (t.dataset.tab === 'menu') renderAdminMenu();
-    };
-  });
-
-  function renderAdminOrders() {
-    const orders = getOrders();
-    // Live Orders shows: alerts + open + bill_requested + served (still need to bill or done)
-    const liveOrders = orders.filter(o => o.type || o.status === 'open' || o.status === 'bill_requested' || o.status === 'served' || !o.status);
-    const realOrders = liveOrders.filter(o => !o.type);
-    let totalRev = 0;
-    realOrders.forEach(o => totalRev += (o.total || 0));
-    const freeTables = tables.filter(t => t.status === 'free').length;
-    document.getElementById('statOrders').textContent = realOrders.length;
-    document.getElementById('statRevenue').textContent = totalRev.toLocaleString();
-    document.getElementById('statFreeTables').textContent = freeTables;
-    document.getElementById('statTotalTables').textContent = tables.length;
-    document.getElementById('statAvg').textContent = realOrders.length ? Math.round(totalRev / realOrders.length).toLocaleString() : 0;
-
-    if (liveOrders.length === 0) {
-      document.getElementById('ordersList').innerHTML = `
-        <div style="text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">
-          No active orders. Waiting for customers...
-        </div>`;
-      return;
-    }
-    document.getElementById('ordersList').innerHTML = liveOrders.map((o, idx) => {
-      const timeAgo = Math.floor((Date.now() - o.time) / 60000);
-      const timeStr = timeAgo < 1 ? 'just now' : timeAgo + ' min ago';
-
-      // Waiter / Bill request alerts
-      if (o.type === 'waiter') {
-        return `
-          <div class="order-card ${idx === 0 ? 'new' : ''}" style="border-left:3px solid var(--gold)">
-            <div class="order-num">🛎</div>
-            <div class="order-info">
-              <div class="order-table">Table <strong>${o.table}</strong></div>
-              <div class="order-items">Customer is calling for a waiter</div>
-              <div class="order-time">${timeStr}</div>
-            </div>
-            <div></div>
-            <div class="order-actions">
-              <button class="order-btn primary" onclick="window._acknowledgeAlert('${o.num}')">Acknowledge</button>
-            </div>
-          </div>`;
-      }
-      if (o.type === 'bill') {
-        const refOrder = getOrders().find(x => x.num === o.orderRef);
-        return `
-          <div class="order-card ${idx === 0 ? 'new' : ''}" style="border-left:3px solid var(--burgundy);background:color-mix(in srgb, var(--burgundy) 5%, var(--surface))">
-            <div class="order-num">🧾</div>
-            <div class="order-info">
-              <div class="order-table">Table <strong>${o.table}</strong> · BILL REQUEST</div>
-              <div class="order-items">Order ${o.orderRef} · ${(o.total || 0).toLocaleString()} ฿</div>
-              <div class="order-time">${timeStr}</div>
-            </div>
-            <div></div>
-            <div class="order-actions">
-              ${refOrder ? `
-                <button class="order-btn assign-table" onclick="window._viewBill('${o.orderRef}')">👁 View Bill</button>
-                <button class="order-btn gold" onclick="window._printBill('${o.orderRef}')">🖨 Print Bill</button>
-                <button class="order-btn primary" onclick="window._completeBill('${o.num}', '${o.orderRef}')">✓ Done</button>
-              ` : `
-                <button class="order-btn primary" onclick="window._acknowledgeAlert('${o.num}')">Acknowledge</button>
-              `}
-            </div>
-          </div>`;
-      }
-
-      // Regular order
-      const itemsStr = o.items.map(i => `${i.qty}× ${i.name}${i.printed ? '' : ' ★'}`).join(' · ');
-      const notesStr = o.items.filter(i => i.opts && i.opts.note).map(i => `<div class="order-note">${i.name}: "${i.opts.note}"</div>`).join('');
-      const newItemCount = o.items.filter(i => !i.printed).length;
-      const hasNew = newItemCount > 0;
-      const allPrinted = o.items.every(i => i.printed);
-      const isBillReq = o.status === 'bill_requested';
-      const isServed = o.status === 'served';
-
-      // Determine status badge
-      let statusBadge = '';
-      let borderColor = '';
-      if (isBillReq) {
-        statusBadge = `<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">🧾 BILL REQUESTED</span>`;
-        borderColor = 'var(--burgundy)';
-      } else if (isServed) {
-        statusBadge = `<span style="background:#2d6a4f;color:#fff;font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">🍽 SERVED</span>`;
-        borderColor = '#2d6a4f';
-      } else if (hasNew) {
-        statusBadge = `<span style="background:#3498db;color:#fff;font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">★ ${newItemCount} NEW · ORDER RECEIVED</span>`;
-        borderColor = '#3498db';
-      } else if (allPrinted) {
-        statusBadge = `<span style="background:#f39c12;color:#fff;font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">⏳ IN PROGRESS</span>`;
-        borderColor = '#f39c12';
-      }
-
-      return `
-        <div class="order-card ${idx === 0 ? 'new' : ''}" ${borderColor ? `style="border-left:3px solid ${borderColor}"` : ''}>
-          <div class="order-num">#${o.num}</div>
-          <div class="order-info">
-            <div class="order-table">
-              Table <strong>${o.table}</strong> · ${(o.language || 'en').toUpperCase()}
-              ${statusBadge}
-            </div>
-            <div class="order-items">${itemsStr}</div>
-            ${notesStr}
-            <div class="order-time">${timeStr}</div>
-          </div>
-          <div class="order-total">${(o.total || 0).toLocaleString()} ฿</div>
-          <div class="order-actions">
-            ${isBillReq ? `
-              <button class="order-btn assign-table" onclick="window._viewBill('${o.num}')">👁 View Bill</button>
-              <button class="order-btn gold" onclick="window._printBill('${o.num}')">🖨 Print Bill</button>
-              <button class="order-btn primary" onclick="window._checkoutOrder('${o.num}')">💳 Complete Payment</button>
-            ` : `
-              <button class="order-btn assign-table" onclick="window._reassign('${o.num}')">Reassign</button>
-              ${hasNew ? `<button class="order-btn primary" onclick="window._confirmKitchen('${o.num}')">✓ Confirm & Print Kitchen</button>` : `<button class="order-btn gold" onclick="window._printKitchen('${o.num}')">🍳 Reprint Kitchen</button>`}
-              ${allPrinted && !isServed ? `<button class="order-btn assign-table" onclick="window._markServed('${o.num}')">🍽 Mark Served</button>` : ''}
-              <button class="order-btn primary" onclick="window._checkoutOrder('${o.num}')">💳 Checkout</button>
-              <button class="order-btn assign-table" onclick="window._markDone('${o.num}')">✕ Close (no bill)</button>
-            `}
-          </div>
-        </div>`;
-    }).join('');
-  }
-
-  // Admin Checkout — works for any order, regardless of bill_requested status
-  // Opens bill preview, allows print, then mark as paid (status: billed)
-  window._checkoutOrder = (num) => {
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    document.getElementById('billRestName').textContent = appSettings.restaurantName || 'ARMENIA RESTAURANT';
-    document.getElementById('billAddress').textContent = [appSettings.address, appSettings.phone].filter(Boolean).join(' · ');
-    document.getElementById('billTableNum').textContent = order.table || '?';
-    document.getElementById('billOrderNum').textContent = order.num;
-    document.getElementById('billTimeRow').innerHTML = `Time: <strong>${new Date().toLocaleTimeString()}</strong>`;
-    document.getElementById('billItemsList').innerHTML = (order.items || []).map(i => `
-      <div class="bill-item">
-        <div>
-          <div class="bill-item-name">${i.qty > 1 ? i.qty + '× ' : ''}${i.nameLocal || i.name}</div>
-          ${i.opts?.note ? `<div class="bill-item-note">⚠ ${i.opts.note}</div>` : ''}
-          ${i.opts?.addonNames?.length ? `<div class="bill-item-note">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
-        </div>
-        <div class="bill-item-price">${(i.price * i.qty).toLocaleString()} ฿</div>
-      </div>
-    `).join('');
-    document.getElementById('billTotalVal').textContent = (order.total || 0).toLocaleString();
-    window._billData = { orderNum: order.num, items: order.items, total: order.total, isAdminCheckout: true };
-    // Show admin actions, hide customer-only UI
-    document.getElementById('billConfirmBtn').style.display = 'none';
-    document.getElementById('billCustomerActions').style.display = 'none';
-    const hint = document.getElementById('billCustomerHint');
-    if (hint) hint.style.display = 'none';
-    const adminActions = document.getElementById('billAdminActions');
-    if (adminActions) adminActions.style.display = 'flex';
-    document.getElementById('billModal').classList.add('show');
-  };
-
-  // Print bill from inside the admin checkout modal
-  window._printBillFromModal = () => {
-    if (!window._billData) return;
-    const { orderNum, items, total } = window._billData;
-    const order = getOrders().find(o => o.num === orderNum);
-    const tableNum = order ? order.table : '?';
-    printBill(orderNum, items, total, tableNum);
-  };
-
-  // Mark order as paid + close (from admin checkout flow)
-  window._completePayment = () => {
-    if (!window._billData) return;
-    const num = window._billData.orderNum;
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    if (!confirm(`Mark order #${num} as paid (${(order.total || 0).toLocaleString()} ฿)?\n\nThis will close the order and free up table ${order.table}.`)) return;
-    updateOrder(num, { status: 'billed', billedTime: Date.now(), paidByAdmin: true });
-    // Free up the table
-    const t = tables.find(x => x.num === order.table);
-    if (t && t.status === 'occupied') { t.status = 'free'; saveTables(); }
-    // Remove any bill alert for this order
-    const billAlert = getOrders().find(o => o.type === 'bill' && o.orderRef === num);
-    if (billAlert) deleteOrder(billAlert.num);
-    document.getElementById('billModal').classList.remove('show');
-    renderAdminOrders();
-    showToast(`Order #${num} marked as paid`);
-  };
-
-  // Confirm order + print to kitchen — marks items as printed (status: open → preparing flow)
-  window._confirmKitchen = (num) => {
-    printKitchenTicket(num);
-    // The printKitchenTicket function already marks items as printed
-    setTimeout(renderAdminOrders, 400);
-  };
-
-  // Mark items as served (customer sees status update)
-  window._markServed = (num) => {
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    updateOrder(num, { status: 'served', servedTime: Date.now() });
-    renderAdminOrders();
-    showToast(`Order #${num} marked as Served`);
-  };
-
-  // Acknowledge waiter alert
-  window._acknowledgeAlert = (num) => {
-    deleteOrder(num);
-    renderAdminOrders();
-  };
-
-  // Print Kitchen Ticket — new items only
-  window._printKitchen = (num) => {
-    printKitchenTicket(num);
-    setTimeout(renderAdminOrders, 400);
-  };
-
-  // View Bill — show admin the bill preview
-  window._viewBill = (num) => {
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    document.getElementById('billRestName').textContent = appSettings.restaurantName || 'ARMENIA RESTAURANT';
-    document.getElementById('billAddress').textContent = [appSettings.address, appSettings.phone].filter(Boolean).join(' · ');
-    document.getElementById('billTableNum').textContent = order.table || '?';
-    document.getElementById('billOrderNum').textContent = order.num;
-    document.getElementById('billTimeRow').innerHTML = `Time: <strong>${new Date().toLocaleTimeString()}</strong>`;
-    document.getElementById('billItemsList').innerHTML = (order.items || []).map(i => `
-      <div class="bill-item">
-        <div>
-          <div class="bill-item-name">${i.qty > 1 ? i.qty + '× ' : ''}${i.nameLocal || i.name}</div>
-          ${i.opts?.note ? `<div class="bill-item-note">⚠ ${i.opts.note}</div>` : ''}
-          ${i.opts?.addonNames?.length ? `<div class="bill-item-note">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
-        </div>
-        <div class="bill-item-price">${(i.price * i.qty).toLocaleString()} ฿</div>
-      </div>
-    `).join('');
-    document.getElementById('billTotalVal').textContent = (order.total || 0).toLocaleString();
-    // Admin VIEW only — hide Confirm + admin checkout actions + customer hint
-    document.getElementById('billConfirmBtn').style.display = 'none';
-    document.getElementById('billCloseBtn').textContent = 'Close';
-    document.getElementById('billCustomerActions').style.display = 'flex';
-    const hint = document.getElementById('billCustomerHint');
-    if (hint) hint.style.display = 'none';
-    const adminActions = document.getElementById('billAdminActions');
-    if (adminActions) adminActions.style.display = 'none';
-    document.getElementById('billModal').classList.add('show');
-  };
-
-  // Print Bill from admin
-  window._printBill = (num) => {
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    printBill(order.num, order.items || [], order.total || 0, order.table);
-  };
-
-  // Complete Bill — close out: mark order billed/done, remove the bill alert, free the table
-  window._completeBill = (alertNum, orderRefNum) => {
-    if (!confirm(`Complete and close order #${orderRefNum}?`)) return;
-    const order = getOrders().find(o => o.num === orderRefNum);
-    if (order) {
-      updateOrder(orderRefNum, { status: 'billed', billedTime: Date.now() });
-      const t = tables.find(x => x.num === order.table);
-      if (t && t.status === 'occupied') { t.status = 'free'; saveTables(); }
-    }
-    deleteOrder(alertNum);
-    renderAdminOrders();
-  };
-
-  // Mark order Done — close without billing (comp, error, customer left, etc.)
-  window._markDone = (num) => {
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    if (!confirm(`Close order #${num} WITHOUT billing?\n\nThis is for comped meals, errors, or when the customer left without paying. The order will NOT count as revenue. Use Checkout instead if the customer paid.`)) return;
-    updateOrder(num, { status: 'done', doneTime: Date.now() });
-    const t = tables.find(x => x.num === order.table);
-    if (t && t.status === 'occupied') { t.status = 'free'; saveTables(); }
-    renderAdminOrders();
-  };
-
-  // Legacy
-  window._removeOrder = (num) => {
-    deleteOrder(num);
-    renderAdminOrders();
-  };
-  window._reassign = (num) => {
-    assignTargetOrder = num;
-    const freeTables = tables.filter(t => t.status === 'free');
-    if (!freeTables.length) {
-      alert('No free tables available!');
-      return;
-    }
-    document.getElementById('assignGrid').innerHTML = freeTables.map(t => `
-      <button class="assign-btn" onclick="window._doAssign('${t.num}')">${t.num}</button>
-    `).join('');
-    document.getElementById('assignModal').classList.add('show');
-  };
-  window._doAssign = (tableNum) => {
-    if (assignTargetOrder) {
-      updateOrder(assignTargetOrder, { table: tableNum });
-      const t = tables.find(x => x.num === tableNum);
-      if (t) { t.status = 'occupied'; saveTables(); }
-      renderAdminOrders();
-      renderAdminTables();
-    }
-    document.getElementById('assignModal').classList.remove('show');
-    assignTargetOrder = null;
-  };
-  document.getElementById('assignCancel').onclick = () => {
-    document.getElementById('assignModal').classList.remove('show');
-    assignTargetOrder = null;
-  };
-
-  // ============ TABLES ADMIN ============
-  function renderAdminTables() {
-    const free = tables.filter(t => t.status === 'free').length;
-    const occ = tables.filter(t => t.status === 'occupied').length;
-    const res = tables.filter(t => t.status === 'reserved').length;
-    document.getElementById('poolFree').textContent = free;
-    document.getElementById('poolOccupied').textContent = occ;
-    document.getElementById('poolReserved').textContent = res;
-
-    document.getElementById('tablesGrid').innerHTML = tables.map((t, idx) => `
-      <div class="table-admin-card">
-        <div class="status-dot ${t.status}"></div>
-        <div class="table-admin-num">${t.num}</div>
-        <div class="table-admin-info">Table № ${t.num}</div>
-        <div class="table-admin-row">
-          <label>Max</label>
-          <select data-idx="${idx}" data-field="maxSeats">
-            ${[1,2,3,4,5,6,7,8,9,10].map(n => `<option value="${n}" ${t.maxSeats === n ? 'selected' : ''}>${n}</option>`).join('')}
-          </select>
-        </div>
-        <div class="table-admin-row">
-          <label>Status</label>
-          <select data-idx="${idx}" data-field="status">
-            <option value="free" ${t.status === 'free' ? 'selected' : ''}>Available</option>
-            <option value="occupied" ${t.status === 'occupied' ? 'selected' : ''}>Occupied</option>
-            <option value="reserved" ${t.status === 'reserved' ? 'selected' : ''}>Reserved</option>
-          </select>
-        </div>
-        <button class="table-delete" data-idx="${idx}">Delete</button>
-      </div>
-    `).join('');
-
-    document.querySelectorAll('.table-admin-row select').forEach(s => {
-      s.onchange = () => {
-        const idx = parseInt(s.dataset.idx);
-        const field = s.dataset.field;
-        tables[idx][field] = field === 'maxSeats' ? parseInt(s.value) : s.value;
-        saveTables();
-        renderAdminTables();
-      };
-    });
-    document.querySelectorAll('.table-delete').forEach(b => {
-      b.onclick = () => {
-        const idx = parseInt(b.dataset.idx);
-        if (confirm(`Delete Table ${tables[idx].num}?`)) {
-          tables.splice(idx, 1);
-          saveTables();
-          renderAdminTables();
-        }
-      };
-    });
-  }
-
-  document.getElementById('addTableBtn').onclick = () => {
-    const num = prompt('Enter new table number (e.g. 13):');
-    if (!num) return;
-    if (tables.find(t => t.num === num.padStart(2, '0'))) {
-      alert('Table already exists!');
-      return;
-    }
-    tables.push({ num: num.padStart(2, '0'), maxSeats: 4, status: 'free' });
-    saveTables();
-    renderAdminTables();
-  };
-
-  // ============ ADD-ONS (per-dish) ============
-  // getAddons is now per-dish: dish.addons = [{id, name, price}, ...]
-  // Keep getAddons as legacy fallback for quickAdd
-  function getAddons() { return []; } // No more global add-ons
-
-  // ============ MENU ADMIN ============
-  let editingDishId = null;
-  let editingDishAddons = []; // temp add-ons while editing
-
-  function renderAdminMenu() {
-    document.getElementById('adminMenuGrid').innerHTML = dishes.map(d => {
-      const isFeatured = featuredIds.includes(d.id);
-      const imgThumb = d.imgData
-        ? `<img src="${d.imgData}" style="width:52px;height:52px;object-fit:cover;border:1px solid var(--line-gold);">`
-        : `<div class="admin-menu-emoji">${d.emoji}</div>`;
-      return `
-        <div class="admin-menu-card ${isFeatured ? 'featured' : ''}">
-          ${imgThumb}
-          <div class="admin-menu-info">
-            <div class="admin-menu-name">${d.name.en}</div>
-            <div class="admin-menu-price">${d.price} ฿ · ${d.cat}${d.addons?.length ? ` · ${d.addons.length} add-on${d.addons.length>1?'s':''}` : ''}</div>
-          </div>
-          <div class="admin-menu-actions">
-            <button class="admin-icon-btn ${isFeatured ? 'featured' : ''}" data-id="${d.id}" data-act="feature" title="Toggle Featured">★</button>
-            <button class="admin-icon-btn" data-id="${d.id}" data-act="edit" title="Edit">✏️</button>
-            <button class="admin-icon-btn" data-id="${d.id}" data-act="delete" title="Delete" style="color:var(--burgundy)">🗑</button>
-          </div>
-        </div>
-      `;
-    }).join('') + `<div class="admin-menu-card add-card" id="addDishCardBtn">+ Add new dish</div>`;
-
-    document.querySelectorAll('[data-act="feature"]').forEach(b => {
-      b.onclick = () => {
-        const id = parseInt(b.dataset.id);
-        const idx = featuredIds.indexOf(id);
-        if (idx >= 0) featuredIds.splice(idx, 1);
-        else { if (featuredIds.length >= 4) { showToast('Max 4 featured'); return; } featuredIds.push(id); }
-        saveFeatured(); renderAdminMenu(); renderFeatured();
-      };
-    });
-    document.querySelectorAll('[data-act="edit"]').forEach(b => { b.onclick = () => openDishEdit(parseInt(b.dataset.id)); });
-    document.querySelectorAll('[data-act="delete"]').forEach(b => {
-      b.onclick = () => {
-        const id = parseInt(b.dataset.id);
-        const d = dishes.find(x => x.id === id);
-        if (!confirm(`Delete "${d?.name.en}"?`)) return;
-        const idx = dishes.findIndex(x => x.id === id);
-        if (idx >= 0) dishes.splice(idx, 1);
-        saveDishes(); renderAdminMenu(); renderMenu(); renderFeatured();
-        showToast('Dish deleted');
-      };
-    });
-    document.getElementById('addDishBtn').onclick = () => openDishEdit(null);
-    const addCard = document.getElementById('addDishCardBtn');
-    if (addCard) addCard.onclick = () => openDishEdit(null);
-  }
-
-  function renderDeAddons() {
-    document.getElementById('deAddonsList').innerHTML = editingDishAddons.map(a => `
-      <div style="display:flex;align-items:center;gap:5px;padding:4px 9px;background:var(--surface);border:1px solid var(--line);border-radius:4px;font-size:13px">
-        <span>${a.name}</span>
-        <span style="font-family:'Helvetica Neue',sans-serif;color:var(--burgundy);font-size:12px">+${a.price}฿</span>
-        <button data-aid="${a.id}" style="border:none;background:none;color:var(--ink-soft);cursor:pointer;font-size:13px;padding:0 2px;line-height:1">✕</button>
-      </div>
-    `).join('');
-    document.querySelectorAll('#deAddonsList button[data-aid]').forEach(btn => {
-      btn.onclick = () => { editingDishAddons = editingDishAddons.filter(a => a.id !== btn.dataset.aid); renderDeAddons(); };
-    });
-  }
-
-  document.getElementById('deAddonAdd').onclick = () => {
-    const name = document.getElementById('deAddonName').value.trim();
-    const price = parseInt(document.getElementById('deAddonPrice').value) || 0;
-    if (!name) return;
-    editingDishAddons.push({ id: 'ao' + Date.now(), name, price });
-    document.getElementById('deAddonName').value = '';
-    document.getElementById('deAddonPrice').value = '';
-    renderDeAddons();
-  };
-
-  // Image upload in dish edit
-  let editingDishImgData = null;
-  document.getElementById('deImgUpload').onchange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { showToast('Image too large — max 2MB'); return; }
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      editingDishImgData = ev.target.result;
-      document.getElementById('deImgPreview').innerHTML = `<img src="${editingDishImgData}" style="width:100%;height:100%;object-fit:cover;">`;
-    };
-    reader.readAsDataURL(file);
-  };
-  document.getElementById('deImgClear').onclick = () => {
-    editingDishImgData = null;
-    document.getElementById('deImgUpload').value = '';
-    document.getElementById('deImgPreview').innerHTML = document.getElementById('deEmoji').value || '🍽';
-  };
-  document.getElementById('deEmoji').oninput = () => {
-    if (!editingDishImgData) document.getElementById('deImgPreview').textContent = document.getElementById('deEmoji').value || '🍽';
-  };
-
-  function openDishEdit(id) {
-    editingDishId = id;
-    const d = id ? dishes.find(x => x.id === id) : null;
-    editingDishAddons = d?.addons ? JSON.parse(JSON.stringify(d.addons)) : [];
-    editingDishImgData = d?.imgData || null;
-    document.getElementById('dishEditTitle').innerHTML = d ? 'Edit <em>Dish</em>' : 'Add <em>New Dish</em>';
-    document.getElementById('deId').value = id || '';
-    document.getElementById('deEmoji').value = d?.emoji || '🍽';
-    document.getElementById('deCat').value = d?.cat || 'mains';
-    document.getElementById('deNameEn').value = d?.name.en || '';
-    document.getElementById('deNameTh').value = d?.name.th || '';
-    document.getElementById('deNameRu').value = d?.name.ru || '';
-    document.getElementById('deNative').value = d?.native.en || '';
-    document.getElementById('deDescEn').value = d?.desc.en || '';
-    document.getElementById('deDescTh').value = d?.desc.th || '';
-    document.getElementById('deDescRu').value = d?.desc.ru || '';
-    document.getElementById('dePrice').value = d?.price || '';
-    document.getElementById('deTag').value = d?.tag || '';
-    document.getElementById('deImgUpload').value = '';
-    // Image preview
-    const prev = document.getElementById('deImgPreview');
-    if (editingDishImgData) prev.innerHTML = `<img src="${editingDishImgData}" style="width:100%;height:100%;object-fit:cover;">`;
-    else prev.textContent = d?.emoji || '🍽';
-    renderDeAddons();
-    document.getElementById('dishEditModal').classList.add('show');
-  }
-
-  document.getElementById('dishEditCancel').onclick = () => document.getElementById('dishEditModal').classList.remove('show');
-
-  document.getElementById('dishEditSave').onclick = () => {
-    const nameEn = document.getElementById('deNameEn').value.trim();
-    if (!nameEn) { alert('English name is required'); return; }
-    const price = parseInt(document.getElementById('dePrice').value) || 0;
-    const tag = document.getElementById('deTag').value || null;
-    const tagText = tag ? {
-      en: tag === 'signature' ? 'CLASSIC' : tag === 'hot' ? 'POPULAR' : 'NEW',
-      th: tag === 'signature' ? 'คลาสสิก' : tag === 'hot' ? 'ยอดนิยม' : 'ใหม่',
-      ru: tag === 'signature' ? 'КЛАССИКА' : tag === 'hot' ? 'ПОПУЛЯРНО' : 'НОВИНКА'
-    } : null;
-    const cat = document.getElementById('deCat').value;
-    const bgMap = { appetizers:'bg-app', salads:'bg-salad', soups:'bg-soup', barbecue:'bg-kebab', mains:'bg-grill', sides:'bg-side', pastry:'bg-pastry', bread:'bg-bread', desserts:'bg-dessert', drinks:'bg-drink', extra:'bg-drink' };
-    const emojiVal = document.getElementById('deEmoji').value || '🍽';
-    const nativeName = document.getElementById('deNative').value || nameEn;
-
-    const dishData = {
-      cat, bg: bgMap[cat] || 'bg-app',
-      emoji: emojiVal,
-      imgData: editingDishImgData || null,
-      price, tag, tagText,
-      addons: editingDishAddons,
-      name: { en: nameEn, th: document.getElementById('deNameTh').value || nameEn, ru: document.getElementById('deNameRu').value || nameEn },
-      native: { en: nativeName, th: nativeName, ru: nativeName },
-      desc: { en: document.getElementById('deDescEn').value || '', th: document.getElementById('deDescTh').value || '', ru: document.getElementById('deDescRu').value || '' },
-      keywords: [nameEn.toLowerCase()]
-    };
-
-    if (editingDishId) {
-      const idx = dishes.findIndex(x => x.id === editingDishId);
-      if (idx >= 0) dishes[idx] = { ...dishes[idx], ...dishData };
-    } else {
-      const newId = Math.max(0, ...dishes.map(x => x.id)) + 1;
-      dishes.push({ id: newId, ...dishData });
-    }
-    saveDishes(); renderAdminMenu(); renderMenu(); renderFeatured();
-    document.getElementById('dishEditModal').classList.remove('show');
-    showToast(editingDishId ? 'Dish updated' : 'Dish added');
-  };
-
-  // saveDishes moved to Firebase sync block
-
-  // ============ PRINT BILL ============
-  function printBill(orderNum, items, total, tableNum) {
-    const w = window.open('', '_blank', 'width=340,height=700');
-    const restName = appSettings.restaurantName || 'ARMENIA RESTAURANT';
-    w.document.write(`
-      <html><head><style>
-        body { font-family: monospace; font-size: 13px; padding: 16px; max-width: 300px; }
-        h2 { text-align: center; margin: 4px 0; font-size: 16px; }
-        .sub { text-align: center; font-size: 11px; margin: 2px 0; }
-        .line { border-top: 1px dashed #000; margin: 10px 0; }
-        .item { display: flex; justify-content: space-between; margin: 5px 0; }
-        .note { font-style: italic; font-size: 11px; margin-left: 14px; color: #444; }
-        .total { font-size: 15px; font-weight: bold; }
-        .thanks { text-align: center; margin-top: 14px; font-size: 12px; }
-      </style></head><body>
-        <h2>${restName}</h2>
-        <p class="sub">${[appSettings.address, appSettings.phone].filter(Boolean).join(' · ')}</p>
-        <div class="line"></div>
-        <div class="item"><span>Order:</span><strong>${orderNum}</strong></div>
-        <div class="item"><span>Table:</span><strong>${tableNum || '?'}</strong></div>
-        <div class="item"><span>Time:</span><span>${new Date().toLocaleString()}</span></div>
-        <div class="line"></div>
-        ${items.map(i => `
-          <div class="item"><span>${i.qty > 1 ? i.qty + '× ' : ''}${i.name}</span><span>${(i.price * i.qty).toLocaleString()} ฿</span></div>
-          ${i.opts?.note ? `<div class="note">⚠ ${i.opts.note}</div>` : ''}
-          ${i.opts?.addonNames?.length ? `<div class="note">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
-        `).join('')}
-        <div class="line"></div>
-        <div class="item total"><span>TOTAL</span><span>${total.toLocaleString()} ฿</span></div>
-        <div class="thanks">Շնորհակալություն! · Thank you! · ขอบคุณ!</div>
-      </body></html>
-    `);
-    setTimeout(() => { w.print(); }, 300);
-  }
-
-  // KITCHEN TICKET — prints only unprinted items, then marks them printed
-  function printKitchenTicket(orderNum) {
-    const order = getOrders().find(o => o.num === orderNum);
-    if (!order || !order.items) return;
-    const newItems = order.items.filter(i => !i.printed);
-    if (newItems.length === 0) {
-      showToast('All items already sent to kitchen');
-      return;
-    }
-    const restName = appSettings.restaurantName || 'ARMENIA';
-    const w = window.open('', '_blank', 'width=340,height=600');
-    w.document.write(`
-      <html><head><style>
-        body { font-family: monospace; font-size: 14px; padding: 16px; max-width: 300px; }
-        h2 { text-align: center; margin: 4px 0; font-size: 17px; letter-spacing: 0.1em; }
-        .sub { text-align: center; font-size: 11px; margin: 2px 0; }
-        .line { border-top: 1px dashed #000; margin: 10px 0; }
-        .double-line { border-top: 2px solid #000; margin: 10px 0; }
-        .row { display: flex; justify-content: space-between; margin: 6px 0; font-size: 13px; }
-        .item { margin: 8px 0; padding: 6px 0; border-bottom: 1px dotted #ccc; }
-        .item-name { font-weight: bold; font-size: 15px; }
-        .qty { font-size: 22px; font-weight: bold; margin-right: 6px; }
-        .note { font-style: italic; font-size: 12px; margin-top: 3px; color: #000; background: #f0f0f0; padding: 3px 6px; }
-        .addons { font-size: 12px; margin-top: 2px; }
-      </style></head><body>
-        <h2>★ KITCHEN ★</h2>
-        <p class="sub">${restName}</p>
-        <div class="double-line"></div>
-        <div class="row"><span>Order:</span><strong>${order.num}</strong></div>
-        <div class="row"><span>Table:</span><strong style="font-size:18px">${order.table}</strong></div>
-        <div class="row"><span>Time:</span><span>${new Date().toLocaleTimeString()}</span></div>
-        <div class="row" style="color:#c00;font-weight:bold;font-size:12px"><span>★ NEW ITEMS — ${newItems.length} item(s)</span></div>
-        <div class="double-line"></div>
-        ${newItems.map(i => `
-          <div class="item">
-            <div class="item-name"><span class="qty">${i.qty}×</span>${i.name}</div>
-            ${i.opts?.addonNames?.length ? `<div class="addons">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
-            ${i.opts?.note ? `<div class="note">⚠ ${i.opts.note}</div>` : ''}
-          </div>
-        `).join('')}
-        <div class="double-line"></div>
-        <p class="sub" style="font-size:10px;margin-top:14px">--- Kitchen copy ---</p>
-      </body></html>
-    `);
-    setTimeout(() => { w.print(); }, 300);
-    // Mark these items as printed
-    const updatedItems = order.items.map(i => i.printed ? i : { ...i, printed: true });
-    updateOrder(order.num, { items: updatedItems, hasNewItems: false });
-  }
-
-  window._printOrder = (num) => {
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    printBill(order.num, order.items || [], order.total || 0, order.table);
-  };
-
-  // ============ HISTORY ============
-  function renderHistory(period) {
-    document.querySelectorAll('.hist-filter-btn').forEach(b => b.classList.toggle('active', b.dataset.period === period));
-    const now = Date.now();
-    const cutoffs = { day: 86400000, week: 604800000, month: 2592000000, all: Infinity };
-    const cutoff = cutoffs[period] || Infinity;
-    const allOrders = getOrders().filter(o => !o.type && (o.status === 'billed' || o.status === 'done' || o.status === 'open' || o.status === 'bill_requested') && (now - o.time) <= cutoff);
-    const rev = allOrders.reduce((s, o) => s + (o.total || 0), 0);
-    const tables = new Set(allOrders.map(o => o.table)).size;
-    document.getElementById('histStatOrders').textContent = allOrders.length;
-    document.getElementById('histStatRev').textContent = rev.toLocaleString();
-    document.getElementById('histStatAvg').textContent = allOrders.length ? Math.round(rev / allOrders.length).toLocaleString() : 0;
-    document.getElementById('histStatTables').textContent = tables;
-
-    if (!allOrders.length) {
-      document.getElementById('histOrdersList').innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">No orders in this period</div>`;
-      return;
-    }
-    document.getElementById('histOrdersList').innerHTML = allOrders.map(o => {
-      const itemsStr = (o.items || []).map(i => `${i.qty}× ${i.name}`).join(' · ');
-      const t = new Date(o.time).toLocaleString();
-      const statusLabel = o.status === 'done' ? '<span style="display:inline-block;padding:2px 8px;background:#2d6a4f;color:#fff;font-size:9px;letter-spacing:0.1em;border-radius:100px;margin-left:6px">DONE</span>'
-                        : o.status === 'billed' ? '<span style="display:inline-block;padding:2px 8px;background:var(--burgundy);color:var(--gold-soft);font-size:9px;letter-spacing:0.1em;border-radius:100px;margin-left:6px">BILLED</span>'
-                        : o.status === 'open' ? '<span style="display:inline-block;padding:2px 8px;background:#f39c12;color:#fff;font-size:9px;letter-spacing:0.1em;border-radius:100px;margin-left:6px">OPEN</span>'
-                        : '';
-      const canReopen = o.status === 'done' || o.status === 'billed';
-      return `
-        <div class="order-card">
-          <div class="order-num">#${o.num}</div>
-          <div class="order-info">
-            <div class="order-table">Table <strong>${o.table}</strong>${statusLabel}</div>
-            <div class="order-items">${itemsStr}</div>
-            <div class="order-time">${t}</div>
-          </div>
-          <div class="order-total">${(o.total || 0).toLocaleString()} ฿</div>
-          <div class="order-actions">
-            <button class="order-btn gold" onclick="window._printOrder('${o.num}')">🖨 Print Bill</button>
-            ${canReopen ? `<button class="order-btn assign-table" onclick="window._reopenOrder('${o.num}')">↻ Reopen</button>` : ''}
-          </div>
-        </div>`;
-    }).join('');
-  }
-
-  // Reopen a closed order — put it back into Live Orders so customer can add more
-  window._reopenOrder = (num) => {
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    if (!confirm(`Reopen order #${num}? It will become active again so the customer can add more items.`)) return;
-    updateOrder(num, { status: 'open', reopenedAt: Date.now() });
-    // Reoccupy table
-    const t = tables.find(x => x.num === order.table);
-    if (t) { t.status = 'occupied'; saveTables(); }
-    // Switch to Live Orders tab
-    document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active'));
-    document.querySelector('.admin-tab[data-tab="orders"]').classList.add('active');
-    ['orders', 'tables', 'menu', 'categories', 'history', 'branding', 'settings'].forEach(name => {
-      document.getElementById('tab-' + name).classList.toggle('hidden', name !== 'orders');
-    });
-    renderAdminOrders();
-    showToast(`Order #${num} reopened`);
-  };
-
-  document.querySelectorAll('.hist-filter-btn').forEach(b => {
-    b.onclick = () => renderHistory(b.dataset.period);
-  });
-
-  // Export to Excel (CSV)
-  document.getElementById('exportExcelBtn').onclick = () => {
-    const activeBtn = document.querySelector('.hist-filter-btn.active');
-    const period = activeBtn ? activeBtn.dataset.period : 'all';
-    const now = Date.now();
-    const cutoffs = { day: 86400000, week: 604800000, month: 2592000000, all: Infinity };
-    const cutoff = cutoffs[period] || Infinity;
-    const allOrders = getOrders().filter(o => !o.type && (now - o.time) <= cutoff);
-    let csv = 'Order No,Table,Date,Time,Items,Total (THB),Status\n';
-    allOrders.forEach(o => {
-      const d = new Date(o.time);
-      const items = (o.items || []).map(i => `${i.qty}x ${i.name}`).join(' | ');
-      csv += `"${o.num}","${o.table}","${d.toLocaleDateString()}","${d.toLocaleTimeString()}","${items}",${o.total || 0},"${o.status || ''}"\n`;
-    });
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = `armenia_orders_${period}_${new Date().toISOString().slice(0,10)}.csv`;
-    a.click(); URL.revokeObjectURL(url);
-  };
-
-  // ============ BRANDING SAVE ============
-  function populateSettingsFields() {
-    document.getElementById('headerText').value = appSettings.headerText || '';
-    document.getElementById('footerText').value = appSettings.footerText || '';
-    document.getElementById('bannerType').value = appSettings.bannerType || 'none';
-    document.getElementById('bannerUrl').value = appSettings.bannerUrl || '';
-    document.getElementById('fontSelect').value = appSettings.font || 'cormorant';
-    document.getElementById('settingName').value = appSettings.restaurantName || 'ARMENIA';
-    document.getElementById('settingTagline').value = appSettings.tagline || 'Restaurant · Pattaya';
-    document.getElementById('settingPhone').value = appSettings.phone || '';
-    document.getElementById('settingAddress').value = appSettings.address || '';
-    document.getElementById('printerType').value = appSettings.printerType || 'escpos';
-    document.getElementById('printerIP').value = appSettings.printerIP || '';
-    // Logo preview
-    const prev = document.getElementById('logoPreview');
-    if (appSettings.logoData) prev.innerHTML = `<img src="${appSettings.logoData}" style="width:100%;height:100%;object-fit:contain">`;
-    else prev.textContent = (appSettings.restaurantName || 'A').charAt(0);
-    // Font sizes
-    const fs = appSettings.fontSizes || {};
-    document.getElementById('fsBrand').value = fs.brand || '';
-    document.getElementById('fsTagline').value = fs.tagline || '';
-    document.getElementById('fsDishName').value = fs.dishName || '';
-    document.getElementById('fsDishDesc').value = fs.dishDesc || '';
-    document.getElementById('fsHeader').value = fs.header || '';
-    document.getElementById('fsFooter').value = fs.footer || '';
-    // Button labels
-    const lbl = appSettings.btnLabels || {};
-    ['askMe', 'callWaiter', 'askBill'].forEach(k => {
-      ['en', 'th', 'ru'].forEach(lang => {
-        const el = document.getElementById(`lbl_${k}_${lang}`);
-        if (el) el.value = (lbl[lang] && lbl[lang][k]) || '';
-      });
-    });
-    // Telegram
-    document.getElementById('telegramEnabled').value = appSettings.telegramEnabled || 'no';
-    document.getElementById('telegramToken').value = appSettings.telegramToken || '';
-    document.getElementById('telegramChatId').value = appSettings.telegramChatId || '';
-  }
-
-  document.getElementById('logoUpload').onchange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      appSettings.logoData = ev.target.result;
-      saveSettings();
-      applyBranding();
-      populateSettingsFields();
-      showToast('Logo uploaded');
-    };
-    reader.readAsDataURL(file);
-  };
-  document.getElementById('clearLogoBtn').onclick = () => {
-    delete appSettings.logoData;
-    saveSettings();
-    applyBranding();
-    populateSettingsFields();
-    showToast('Logo cleared');
-  };
-
-  document.getElementById('saveHeaderFooter').onclick = () => {
-    appSettings.headerText = document.getElementById('headerText').value.trim();
-    appSettings.footerText = document.getElementById('footerText').value.trim();
-    saveSettings();
-    applyBranding();
-    showToast('Header / Footer saved');
-  };
-  document.getElementById('saveBanner').onclick = () => {
-    appSettings.bannerType = document.getElementById('bannerType').value;
-    appSettings.bannerUrl = document.getElementById('bannerUrl').value.trim();
-    saveSettings();
-    applyBranding();
-    showToast('Banner saved');
-  };
-  document.getElementById('fontSelect').onchange = (e) => {
-    appSettings.font = e.target.value;
-    saveSettings();
-    document.documentElement.setAttribute('data-font', appSettings.font);
-  };
-  document.getElementById('saveInfo').onclick = () => {
-    appSettings.restaurantName = document.getElementById('settingName').value.trim();
-    appSettings.tagline = document.getElementById('settingTagline').value.trim();
-    appSettings.phone = document.getElementById('settingPhone').value.trim();
-    appSettings.address = document.getElementById('settingAddress').value.trim();
-    saveSettings();
-    applyBranding();
-    showToast('Restaurant info saved');
-  };
-
-  document.getElementById('savePrinter').onclick = () => {
-    appSettings.printerType = document.getElementById('printerType').value;
-    appSettings.printerIP = document.getElementById('printerIP').value.trim();
-    saveSettings();
-    showToast('Printer settings saved');
-  };
-
-  // ---- Font Sizes ----
-  document.getElementById('saveFontSizes').onclick = () => {
-    appSettings.fontSizes = {
-      brand: parseInt(document.getElementById('fsBrand').value) || 19,
-      tagline: parseInt(document.getElementById('fsTagline').value) || 13,
-      dishName: parseInt(document.getElementById('fsDishName').value) || 20,
-      dishDesc: parseInt(document.getElementById('fsDishDesc').value) || 12,
-      header: parseInt(document.getElementById('fsHeader').value) || 14,
-      footer: parseInt(document.getElementById('fsFooter').value) || 12,
-    };
-    saveSettings();
-    applyFontSizes();
-    showToast('Font sizes saved');
-  };
-  document.getElementById('resetFontSizes').onclick = () => {
-    if (!confirm('Reset all font sizes to default?')) return;
-    delete appSettings.fontSizes;
-    saveSettings();
-    applyFontSizes();
-    populateSettingsFields();
-    showToast('Font sizes reset');
-  };
-
-  // ---- Button Labels ----
-  document.getElementById('saveBtnLabels').onclick = () => {
-    const labels = { en: {}, th: {}, ru: {} };
-    ['askMe', 'callWaiter', 'askBill'].forEach(k => {
-      ['en', 'th', 'ru'].forEach(lang => {
-        const v = document.getElementById(`lbl_${k}_${lang}`).value.trim();
-        if (v) labels[lang][k] = v;
-      });
-    });
-    appSettings.btnLabels = labels;
-    saveSettings();
-    setLang(currentLang || 'en');
-    showToast('Button labels saved');
-  };
-
-  // ---- Telegram ----
-  document.getElementById('saveTelegram').onclick = () => {
-    appSettings.telegramEnabled = document.getElementById('telegramEnabled').value;
-    appSettings.telegramToken = document.getElementById('telegramToken').value.trim();
-    appSettings.telegramChatId = document.getElementById('telegramChatId').value.trim();
-    saveSettings();
-    showToast('Telegram settings saved');
-  };
-  document.getElementById('testTelegram').onclick = async () => {
-    const token = document.getElementById('telegramToken').value.trim();
-    const chatId = document.getElementById('telegramChatId').value.trim();
-    const msg = document.getElementById('telegramTestMsg');
-    if (!token || !chatId) {
-      msg.style.color = '#c0392b';
-      msg.textContent = 'Please enter both Bot Token and Chat ID first';
-      return;
-    }
-    msg.style.color = 'var(--ink-soft)';
-    msg.textContent = 'Sending test message...';
-    const ok = await sendTelegram('🧪 *Test Message*\n\nArmenia Restaurant ordering system is connected to Telegram successfully!', token, chatId);
-    if (ok) { msg.style.color = 'var(--green)'; msg.textContent = '✓ Test message sent successfully'; }
-    else { msg.style.color = '#c0392b'; msg.textContent = '✗ Failed — check Bot Token and Chat ID'; }
-    setTimeout(() => { msg.textContent = ''; }, 5000);
-  };
-
-  async function sendTelegram(text, token, chatId) {
-    if (!token) token = appSettings.telegramToken;
-    if (!chatId) chatId = appSettings.telegramChatId;
-    if (!token || !chatId) return false;
-    try {
-      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: 'Markdown' })
-      });
-      const data = await res.json();
-      return data.ok === true;
-    } catch (e) { console.error('Telegram error:', e); return false; }
-  }
-
-  function notifyTelegramNewOrder(order) {
-    if (appSettings.telegramEnabled !== 'yes') return;
-    if (!appSettings.telegramToken || !appSettings.telegramChatId) return;
-    const restName = appSettings.restaurantName || 'ARMENIA';
-    const itemsText = (order.items || []).filter(i => !i.printed || !i.notifiedTelegram).map(i => {
-      let line = `• ${i.qty}× *${i.name}* — ${(i.price * i.qty).toLocaleString()} ฿`;
-      if (i.opts?.addonNames?.length) line += `\n   _+ ${i.opts.addonNames.join(', ')}_`;
-      if (i.opts?.note) line += `\n   _⚠ ${i.opts.note}_`;
-      return line;
-    }).join('\n');
-    const msg = `🆕 *New Order at ${restName}*\n\n` +
-                `🏷️ Order: \`${order.num}\`\n` +
-                `🪑 Table: *${order.table}*\n` +
-                `🌐 Language: ${(order.language || 'EN').toUpperCase()}\n\n` +
-                `${itemsText}\n\n` +
-                `💰 *TOTAL: ${(order.total || 0).toLocaleString()} ฿*`;
-    sendTelegram(msg);
-  }
-  document.getElementById('deviceModeSelect').onchange = (e) => {
-    isAdminMode = e.target.value === 'admin';
-    if (isAdminMode) {
-      clearIdleTimer();
-      document.getElementById('tableSelect').classList.remove('show');
-      document.getElementById('idleScreen').classList.remove('show');
-      document.getElementById('admin').classList.add('show');
-    }
-  };
-
-  // ============ CATEGORIES ADMIN ============
-  // DEFAULT_CATS, appCats, loadCats now defined at top (before Firebase listeners)
-
-  function renderAdminCategories() {
-    const list = document.getElementById('catAdminList');
-    list.innerHTML = appCats.map((c, idx) => `
-      <div class="cat-admin-item" draggable="true" data-idx="${idx}">
-        <span class="cat-drag-handle">⠿</span>
-        <input class="cat-admin-name-input" type="text" value="${c.en}" data-idx="${idx}" data-lang="en" placeholder="English name">
-        <input class="cat-admin-name-input" type="text" value="${c.th}" data-idx="${idx}" data-lang="th" placeholder="ชื่อไทย" style="width:120px">
-        <input class="cat-admin-name-input" type="text" value="${c.ru}" data-idx="${idx}" data-lang="ru" placeholder="Название" style="width:120px">
-        <button class="cat-toggle-btn ${c.visible ? 'active' : ''}" data-idx="${idx}">${c.visible ? 'Visible' : 'Hidden'}</button>
-      </div>
-    `).join('');
-
-    list.querySelectorAll('.cat-admin-name-input').forEach(inp => {
-      inp.oninput = () => {
-        appCats[inp.dataset.idx][inp.dataset.lang] = inp.value;
-      };
-    });
-    list.querySelectorAll('.cat-toggle-btn').forEach(btn => {
-      btn.onclick = () => {
-        appCats[btn.dataset.idx].visible = !appCats[btn.dataset.idx].visible;
-        renderAdminCategories();
-      };
-    });
-
-    // Drag to reorder
-    let dragIdx = null;
-    list.querySelectorAll('.cat-admin-item').forEach(item => {
-      item.ondragstart = () => { dragIdx = parseInt(item.dataset.idx); item.style.opacity = '0.4'; };
-      item.ondragend = () => { item.style.opacity = '1'; };
-      item.ondragover = (e) => { e.preventDefault(); };
-      item.ondrop = () => {
-        const targetIdx = parseInt(item.dataset.idx);
-        if (dragIdx === null || dragIdx === targetIdx) return;
-        const moved = appCats.splice(dragIdx, 1)[0];
-        appCats.splice(targetIdx, 0, moved);
-        renderAdminCategories();
-      };
-    });
-  }
-
-  document.getElementById('saveCatsBtn').onclick = () => {
-    saveCats(appCats);
-    // Update i18n cats from appCats
-    appCats.forEach(c => {
-      i18n.en.cats[c.id] = c.en;
-      i18n.th.cats[c.id] = c.th;
-      i18n.ru.cats[c.id] = c.ru;
-    });
-    renderCategories();
-    showToast('Categories saved');
-  };
-
   // ============ IDLE SCREEN ============
   let idleTimer = null;
   const IDLE_TIMEOUT = 3 * 60 * 1000; // 3 minutes
@@ -5531,31 +4103,12 @@
   function showIdle() {
     clearIdleTimer();
     const area = document.getElementById('idleVideoArea');
-    area.innerHTML = '';
     if (appSettings.bannerType === 'youtube' && appSettings.bannerUrl) {
-      const url = appSettings.bannerUrl.trim();
-      const ytId = extractYouTubeId(url);
-      const vimeoId = extractVimeoId(url);
-      if (ytId) {
-        const params = 'autoplay=1&mute=1&loop=1&playlist=' + ytId +
-                       '&controls=0&rel=0&showinfo=0&modestbranding=1' +
-                       '&iv_load_policy=3&fs=0&disablekb=1&playsinline=1' +
-                       '&cc_load_policy=0';
-        area.innerHTML = `
-          <div style="position:absolute;top:-80px;bottom:-80px;left:0;right:0;pointer-events:none">
-            <iframe style="width:100%;height:100%;border:none;pointer-events:none"
-              src="https://www.youtube.com/embed/${ytId}?${params}"
-              allow="autoplay; encrypted-media"></iframe>
-          </div>
-          <div style="position:absolute;inset:0;pointer-events:none"></div>`;
-      } else if (vimeoId) {
-        area.innerHTML = `<iframe style="width:100%;height:100%;border:none;pointer-events:none" src="https://player.vimeo.com/video/${vimeoId}?autoplay=1&muted=1&loop=1&background=1" allow="autoplay"></iframe>`;
-      } else if (/\.(mp4|webm|ogg|mov)(\?|$)/i.test(url)) {
-        area.innerHTML = `<video src="${url}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>`;
-      }
+      const vid = extractYouTubeId(appSettings.bannerUrl);
+      if (vid) area.innerHTML = `<iframe src="https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&playlist=${vid}&controls=0&rel=0&showinfo=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
     } else if (appSettings.bannerType === 'image' && appSettings.bannerUrl) {
       area.innerHTML = `<img src="${appSettings.bannerUrl}" style="width:100%;height:100%;object-fit:cover;">`;
-    }
+    } else { area.innerHTML = ''; }
     if (selectedTable) {
       const t = tables.find(x => x.num === selectedTable);
       if (t && t.status === 'occupied' && Object.keys(cart).length === 0) { t.status = 'free'; saveTables(); }
@@ -5607,43 +4160,7 @@
     if (confirm('Return to idle screen?')) showIdle();
   };
 
-  // ============ INIT ============
-  async function initApp() {
-    // Load all state from Firebase
-    await Promise.all([
-      loadSettingsFromFirebase(),
-      loadTablesFromFirebase(),
-      loadDishesFromFirebase(),
-      loadFeaturedFromFirebase(),
-      loadCatsFromFirebase(),
-      loadAdminPinFromFirebase()
-    ]);
-
-    // Apply category translations
-    appCats.forEach(c => {
-      if (i18n.en.cats[c.id] !== undefined) {
-        i18n.en.cats[c.id] = c.en;
-        i18n.th.cats[c.id] = c.th;
-        i18n.ru.cats[c.id] = c.ru;
-      }
-    });
-
-    // Render
-    applyBranding();
-    renderCategories();
-    renderMenu();
-    renderCart();
-    renderFeatured();
-    renderTableSelect();
-
-    // Auto-heal orphaned tables (after orders listener has run once)
-    setTimeout(() => {
-      healOrphanedTables();
-      renderTableSelect();
-    }, 500);
-  }
-
-  initApp();
+  // ============ INIT — async initApp() called above ============
 </script>
 
 </body>
