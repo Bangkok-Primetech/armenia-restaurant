@@ -2339,10 +2339,16 @@
       <span class="bill-total-val"><span id="billTotalVal">0</span> ฿</span>
     </div>
     <div class="bill-thanks">Շնորհակալություն · Thank you · ขอบคุณ</div>
-    <div style="font-size:11px;text-align:center;color:var(--ink-soft);font-style:italic;margin-top:6px;margin-bottom:-4px">Tap Confirm to request the bill from staff</div>
-    <div class="bill-actions">
+    <div style="font-size:11px;text-align:center;color:var(--ink-soft);font-style:italic;margin-top:6px;margin-bottom:-4px" id="billCustomerHint">Tap Confirm to request the bill from staff</div>
+    <div class="bill-actions" id="billCustomerActions">
       <button class="bill-close-btn" id="billCloseBtn">Cancel</button>
       <button class="bill-print-btn" id="billConfirmBtn">✓ Confirm Bill Request</button>
+    </div>
+    <!-- Admin-only actions (shown when admin opens checkout) -->
+    <div class="bill-actions" id="billAdminActions" style="display:none;flex-direction:column;gap:8px">
+      <button class="bill-print-btn" onclick="window._printBillFromModal()" style="background:var(--gold);color:#fff">🖨 Print Bill</button>
+      <button class="bill-print-btn" onclick="window._completePayment()" style="background:#2d6a4f;color:#fff">✓ Confirm Paid &amp; Close Order</button>
+      <button class="bill-close-btn" onclick="document.getElementById('billModal').classList.remove('show')">Cancel</button>
     </div>
   </div>
 </div>
@@ -3227,10 +3233,26 @@
   // Persisted state
   // ============ STATE (must be declared before Firebase listeners) ============
   let featuredIds = [];
-  let appSettings = {};
+  let appSettings = {
+    headerText: '', footerText: '', bannerType: 'none', bannerUrl: '',
+    font: 'cormorant', restaurantName: 'ARMENIA', tagline: 'Restaurant · Pattaya',
+    phone: '+66 62 664 0700', address: '334/113-115 M12, Jomtien Beach, Pattaya',
+    printerType: 'escpos', printerIP: '192.168.1.100'
+  };
   let tables = [];
   let selectedTable = null;
   let _orders = []; // local cache, kept in sync by listener
+
+  function generateDefaultTables() {
+    const arr = [];
+    for (let i = 1; i <= 12; i++) {
+      arr.push({ num: String(i).padStart(2, '0'), maxSeats: i <= 4 ? 2 : (i <= 8 ? 4 : 6), status: 'free' });
+    }
+    return arr;
+  }
+
+  // Initialize with defaults synchronously so first render always works
+  tables = generateDefaultTables();
 
   // Categories — defined here so Firebase listener can reference DEFAULT_CATS
   const DEFAULT_CATS = [
@@ -3248,14 +3270,6 @@
     { id: 'extra', en: 'Extra', th: 'พิเศษ', ru: 'Дополнительно', visible: true },
   ];
   let appCats = JSON.parse(JSON.stringify(DEFAULT_CATS));
-
-  function generateDefaultTables() {
-    const arr = [];
-    for (let i = 1; i <= 12; i++) {
-      arr.push({ num: String(i).padStart(2, '0'), maxSeats: i <= 4 ? 2 : (i <= 8 ? 4 : 6), status: 'free' });
-    }
-    return arr;
-  }
 
   // ============ FIREBASE CONFIG ============
   const firebaseConfig = {
@@ -3296,22 +3310,25 @@
   function getOrders() { return _orders; }
 
   function saveOrder(order) {
-    // Write to Firebase — key = order.num (safe for Firebase paths)
     const safeKey = order.num.replace(/[.#$[\]]/g, '_');
-    db.ref('orders/' + safeKey).set(order);
+    try { db.ref('orders/' + safeKey).set(order); }
+    catch (e) { console.warn('Firebase saveOrder failed:', e); }
   }
 
   function deleteOrder(num) {
     const safeKey = num.replace(/[.#$[\]]/g, '_');
-    db.ref('orders/' + safeKey).remove();
+    try { db.ref('orders/' + safeKey).remove(); }
+    catch (e) { console.warn('Firebase deleteOrder failed:', e); }
   }
 
   function updateOrder(num, patch) {
     const safeKey = num.replace(/[.#$[\]]/g, '_');
-    db.ref('orders/' + safeKey).transaction(current => {
-      if (current === null) return current;
-      return { ...current, ...patch };
-    });
+    try {
+      db.ref('orders/' + safeKey).transaction(current => {
+        if (current === null) return current;
+        return { ...current, ...patch };
+      });
+    } catch (e) { console.warn('Firebase updateOrder failed:', e); }
   }
 
   // Listen for ANY order change → update local cache → re-render
@@ -3347,22 +3364,55 @@
   function saveTables() {
     const obj = {};
     tables.forEach(t => { obj['t' + t.num] = t; });
-    db.ref('tables').set(obj);
+    try { db.ref('tables').set(obj); }
+    catch (e) { console.warn('Firebase saveTables failed:', e); }
+  }
+
+  // Helper: race a Firebase once() against a timeout so app never hangs
+  function fbOnceWithTimeout(ref, ms = 5000) {
+    return Promise.race([
+      new Promise(resolve => {
+        try {
+          ref.once('value', snap => resolve(snap));
+        } catch (e) { resolve({ val: () => null }); }
+      }),
+      new Promise(resolve => setTimeout(() => resolve({ val: () => null, timedOut: true }), ms))
+    ]);
   }
 
   function loadTablesFromFirebase() {
-    return new Promise(resolve => {
-      db.ref('tables').once('value', snap => {
-        const data = snap.val();
-        if (data && Object.keys(data).length > 0) {
-          tables = Object.values(data).sort((a, b) => a.num.localeCompare(b.num));
-        } else {
-          tables = generateDefaultTables();
-          saveTables(); // write defaults to Firebase on first run
-        }
-        resolve();
-      });
+    return fbOnceWithTimeout(db.ref('tables')).then(snap => {
+      const data = snap.val();
+      if (data && Object.keys(data).length > 0) {
+        tables = Object.values(data).sort((a, b) => a.num.localeCompare(b.num));
+      } else {
+        tables = generateDefaultTables();
+        try { saveTables(); } catch (e) { console.warn('Failed to save default tables:', e); }
+      }
+    }).catch(e => {
+      console.warn('Tables load failed, using defaults:', e);
+      tables = generateDefaultTables();
     });
+  }
+
+  // Auto-heal: free up tables that have no active orders
+  // Call after both tables and orders are loaded
+  function healOrphanedTables() {
+    if (!tables.length) return;
+    const activeTableNums = new Set();
+    _orders.forEach(o => {
+      if (!o.type && (o.status === 'open' || o.status === 'bill_requested' || o.status === 'served' || !o.status)) {
+        if (o.table) activeTableNums.add(o.table);
+      }
+    });
+    let changed = false;
+    tables.forEach(t => {
+      if (t.status === 'occupied' && !activeTableNums.has(t.num)) {
+        t.status = 'free';
+        changed = true;
+      }
+    });
+    if (changed) saveTables();
   }
 
   // Live table updates
@@ -3380,27 +3430,18 @@
 
   // ---- SETTINGS ----
   function saveSettings() {
-    // All settings (including logo) go to Firebase so they sync across devices
-    db.ref('settings').set(appSettings);
+    try { db.ref('settings').set(appSettings); }
+    catch (e) { console.warn('Firebase saveSettings failed:', e); }
   }
 
   function loadSettingsFromFirebase() {
-    return new Promise(resolve => {
-      db.ref('settings').once('value', snap => {
-        const data = snap.val();
-        if (data) {
-          appSettings = data;
-        } else {
-          appSettings = {
-            headerText: '', footerText: '', bannerType: 'none', bannerUrl: '',
-            font: 'cormorant', restaurantName: 'ARMENIA', tagline: 'Restaurant · Pattaya',
-            phone: '+66 62 664 0700', address: '334/113-115 M12, Jomtien Beach, Pattaya',
-            printerType: 'escpos', printerIP: '192.168.1.100'
-          };
-        }
-        resolve();
-      });
-    });
+    return fbOnceWithTimeout(db.ref('settings')).then(snap => {
+      const data = snap.val();
+      if (data) {
+        appSettings = { ...appSettings, ...data };
+      }
+      // else: keep the defaults already initialized at top
+    }).catch(e => { console.warn('Settings load failed:', e); });
   }
 
   // Live settings updates (font, branding changes propagate to all tablets)
@@ -3409,6 +3450,10 @@
     if (!data) return;
     appSettings = data;
     applyBranding();
+    // Refresh admin settings form if open
+    if (isAdminMode && document.getElementById('admin').classList.contains('show')) {
+      try { populateSettingsFields(); } catch(e) {}
+    }
   });
 
   // ---- ORDER COUNTER ----
@@ -3437,19 +3482,17 @@
   // These were localStorage-only before. Now all tablets stay in sync.
 
   function saveFeatured() {
-    db.ref('featuredIds').set(featuredIds);
-    localStorage.setItem(STORAGE.featured, JSON.stringify(featuredIds)); // local backup
+    try { db.ref('featuredIds').set(featuredIds); } catch (e) { console.warn('Firebase saveFeatured failed:', e); }
+    localStorage.setItem(STORAGE.featured, JSON.stringify(featuredIds));
   }
 
   function saveDishes() {
-    // Dishes may have large imgData (base64). Firebase Realtime DB has 256MB limit per write.
-    // For ~50 dishes with photos ~50KB each = ~2.5MB, well within limits.
-    db.ref('dishes').set(dishes);
+    try { db.ref('dishes').set(dishes); } catch (e) { console.warn('Firebase saveDishes failed:', e); }
     localStorage.setItem('armenia_dishes_v2', JSON.stringify(dishes));
   }
 
   function saveCats(cats) {
-    db.ref('cats').set(cats);
+    try { db.ref('cats').set(cats); } catch (e) { console.warn('Firebase saveCats failed:', e); }
     localStorage.setItem('armenia_cats_v2', JSON.stringify(cats));
   }
 
@@ -3489,49 +3532,45 @@
   });
 
   function loadDishesFromFirebase() {
-    return new Promise(resolve => {
-      db.ref('dishes').once('value', snap => {
-        const data = snap.val();
-        if (data && Array.isArray(data) && data.length) {
-          dishes.length = 0;
-          dishes.push(...data);
-        } else {
-          // Use local backup if Firebase is empty
-          const saved = localStorage.getItem('armenia_dishes_v2');
-          if (saved) {
-            try { const d = JSON.parse(saved); if (Array.isArray(d) && d.length) { dishes.length = 0; dishes.push(...d); } } catch {}
-          }
+    return fbOnceWithTimeout(db.ref('dishes')).then(snap => {
+      const data = snap.val();
+      if (data && Array.isArray(data) && data.length) {
+        dishes.length = 0;
+        dishes.push(...data);
+      } else {
+        const saved = localStorage.getItem('armenia_dishes_v2');
+        if (saved) {
+          try { const d = JSON.parse(saved); if (Array.isArray(d) && d.length) { dishes.length = 0; dishes.push(...d); } } catch {}
         }
-        resolve();
-      });
-    });
+      }
+    }).catch(e => { console.warn('Dishes load failed:', e); });
   }
 
   function loadFeaturedFromFirebase() {
-    return new Promise(resolve => {
-      db.ref('featuredIds').once('value', snap => {
-        const data = snap.val();
-        if (data && Array.isArray(data)) featuredIds = data;
-        else {
-          const stored = localStorage.getItem(STORAGE.featured);
-          featuredIds = stored ? JSON.parse(stored) : [11, 16, 22, 42];
-        }
-        resolve();
-      });
+    return fbOnceWithTimeout(db.ref('featuredIds')).then(snap => {
+      const data = snap.val();
+      if (data && Array.isArray(data)) featuredIds = data;
+      else {
+        const stored = localStorage.getItem(STORAGE.featured);
+        featuredIds = stored ? JSON.parse(stored) : [11, 16, 22, 42];
+      }
+    }).catch(e => {
+      console.warn('Featured load failed:', e);
+      featuredIds = [11, 16, 22, 42];
     });
   }
 
   function loadCatsFromFirebase() {
-    return new Promise(resolve => {
-      db.ref('cats').once('value', snap => {
-        const data = snap.val();
-        if (data && Array.isArray(data)) appCats = data;
-        else {
-          const stored = localStorage.getItem('armenia_cats_v2');
-          appCats = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_CATS));
-        }
-        resolve();
-      });
+    return fbOnceWithTimeout(db.ref('cats')).then(snap => {
+      const data = snap.val();
+      if (data && Array.isArray(data)) appCats = data;
+      else {
+        const stored = localStorage.getItem('armenia_cats_v2');
+        appCats = stored ? JSON.parse(stored) : JSON.parse(JSON.stringify(DEFAULT_CATS));
+      }
+    }).catch(e => {
+      console.warn('Cats load failed:', e);
+      appCats = JSON.parse(JSON.stringify(DEFAULT_CATS));
     });
   }
 
@@ -4159,9 +4198,14 @@
     `).join('');
     document.getElementById('billTotalVal').textContent = total.toLocaleString();
     window._billData = { orderNum, items, total };
-    // Reset to customer view (Confirm button visible)
+    // Reset to customer view (Confirm button visible, admin actions hidden)
     document.getElementById('billConfirmBtn').style.display = '';
     document.getElementById('billCloseBtn').textContent = 'Cancel';
+    document.getElementById('billCustomerActions').style.display = 'flex';
+    const hint = document.getElementById('billCustomerHint');
+    if (hint) hint.style.display = '';
+    const adminActions = document.getElementById('billAdminActions');
+    if (adminActions) adminActions.style.display = 'none';
     document.getElementById('billModal').classList.add('show');
   }
 
@@ -4322,7 +4366,8 @@
   function getAdminPin() { return _adminPin; }
   function setAdminPin(p) {
     _adminPin = p;
-    db.ref('adminPin').set(p);
+    try { db.ref('adminPin').set(p); } catch (e) { console.warn('Firebase setAdminPin failed:', e); }
+    localStorage.setItem('armenia_admin_pin', p); // local backup
   }
 
   // Listen for PIN changes from other devices
@@ -4332,12 +4377,19 @@
   });
 
   function loadAdminPinFromFirebase() {
-    return new Promise(resolve => {
-      db.ref('adminPin').once('value', snap => {
-        const val = snap.val();
-        if (val) _adminPin = val;
-        resolve();
-      });
+    return fbOnceWithTimeout(db.ref('adminPin')).then(snap => {
+      const val = snap.val();
+      if (val) {
+        _adminPin = val;
+      } else {
+        // Fallback to localStorage
+        const localPin = localStorage.getItem('armenia_admin_pin');
+        if (localPin) _adminPin = localPin;
+      }
+    }).catch(e => {
+      console.warn('AdminPin load failed:', e);
+      const localPin = localStorage.getItem('armenia_admin_pin');
+      if (localPin) _adminPin = localPin;
     });
   }
 
@@ -4499,8 +4551,8 @@
 
   function renderAdminOrders() {
     const orders = getOrders();
-    // Live Orders shows: alerts + open orders + bill_requested orders
-    const liveOrders = orders.filter(o => o.type || o.status === 'open' || o.status === 'bill_requested' || !o.status);
+    // Live Orders shows: alerts + open + bill_requested + served (still need to bill or done)
+    const liveOrders = orders.filter(o => o.type || o.status === 'open' || o.status === 'bill_requested' || o.status === 'served' || !o.status);
     const realOrders = liveOrders.filter(o => !o.type);
     let totalRev = 0;
     realOrders.forEach(o => totalRev += (o.total || 0));
@@ -4566,16 +4618,34 @@
       const notesStr = o.items.filter(i => i.opts && i.opts.note).map(i => `<div class="order-note">${i.name}: "${i.opts.note}"</div>`).join('');
       const newItemCount = o.items.filter(i => !i.printed).length;
       const hasNew = newItemCount > 0;
+      const allPrinted = o.items.every(i => i.printed);
       const isBillReq = o.status === 'bill_requested';
+      const isServed = o.status === 'served';
+
+      // Determine status badge
+      let statusBadge = '';
+      let borderColor = '';
+      if (isBillReq) {
+        statusBadge = `<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">🧾 BILL REQUESTED</span>`;
+        borderColor = 'var(--burgundy)';
+      } else if (isServed) {
+        statusBadge = `<span style="background:#2d6a4f;color:#fff;font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">🍽 SERVED</span>`;
+        borderColor = '#2d6a4f';
+      } else if (hasNew) {
+        statusBadge = `<span style="background:#3498db;color:#fff;font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">★ ${newItemCount} NEW · ORDER RECEIVED</span>`;
+        borderColor = '#3498db';
+      } else if (allPrinted) {
+        statusBadge = `<span style="background:#f39c12;color:#fff;font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">⏳ IN PROGRESS</span>`;
+        borderColor = '#f39c12';
+      }
 
       return `
-        <div class="order-card ${idx === 0 ? 'new' : ''} ${hasNew ? '' : ''}" ${isBillReq ? 'style="border-left:3px solid var(--burgundy)"' : (hasNew ? 'style="border-left:3px solid #f39c12"' : '')}>
+        <div class="order-card ${idx === 0 ? 'new' : ''}" ${borderColor ? `style="border-left:3px solid ${borderColor}"` : ''}>
           <div class="order-num">#${o.num}</div>
           <div class="order-info">
             <div class="order-table">
               Table <strong>${o.table}</strong> · ${(o.language || 'en').toUpperCase()}
-              ${hasNew ? `<span style="background:#f39c12;color:#fff;font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">★ ${newItemCount} NEW</span>` : ''}
-              ${isBillReq ? `<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 7px;border-radius:100px;margin-left:6px;letter-spacing:0.05em;font-weight:600">BILL REQUESTED</span>` : ''}
+              ${statusBadge}
             </div>
             <div class="order-items">${itemsStr}</div>
             ${notesStr}
@@ -4586,17 +4656,85 @@
             ${isBillReq ? `
               <button class="order-btn assign-table" onclick="window._viewBill('${o.num}')">👁 View Bill</button>
               <button class="order-btn gold" onclick="window._printBill('${o.num}')">🖨 Print Bill</button>
-              <button class="order-btn primary" onclick="window._markDone('${o.num}')">✓ Done</button>
+              <button class="order-btn primary" onclick="window._checkoutOrder('${o.num}')">💳 Complete Payment</button>
             ` : `
               <button class="order-btn assign-table" onclick="window._reassign('${o.num}')">Reassign</button>
-              <button class="order-btn ${hasNew ? 'primary' : 'gold'}" onclick="window._printKitchen('${o.num}')">🍳 ${hasNew ? 'Print Kitchen' : 'Reprint Kitchen'}</button>
-              ${!hasNew && o.status !== 'served' ? `<button class="order-btn assign-table" onclick="window._markServed('${o.num}')">🍽 Mark Served</button>` : ''}
-              <button class="order-btn primary" onclick="window._markDone('${o.num}')">✓ Done</button>
+              ${hasNew ? `<button class="order-btn primary" onclick="window._confirmKitchen('${o.num}')">✓ Confirm & Print Kitchen</button>` : `<button class="order-btn gold" onclick="window._printKitchen('${o.num}')">🍳 Reprint Kitchen</button>`}
+              ${allPrinted && !isServed ? `<button class="order-btn assign-table" onclick="window._markServed('${o.num}')">🍽 Mark Served</button>` : ''}
+              <button class="order-btn primary" onclick="window._checkoutOrder('${o.num}')">💳 Checkout</button>
+              <button class="order-btn assign-table" onclick="window._markDone('${o.num}')">✕ Close (no bill)</button>
             `}
           </div>
         </div>`;
     }).join('');
   }
+
+  // Admin Checkout — works for any order, regardless of bill_requested status
+  // Opens bill preview, allows print, then mark as paid (status: billed)
+  window._checkoutOrder = (num) => {
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    document.getElementById('billRestName').textContent = appSettings.restaurantName || 'ARMENIA RESTAURANT';
+    document.getElementById('billAddress').textContent = [appSettings.address, appSettings.phone].filter(Boolean).join(' · ');
+    document.getElementById('billTableNum').textContent = order.table || '?';
+    document.getElementById('billOrderNum').textContent = order.num;
+    document.getElementById('billTimeRow').innerHTML = `Time: <strong>${new Date().toLocaleTimeString()}</strong>`;
+    document.getElementById('billItemsList').innerHTML = (order.items || []).map(i => `
+      <div class="bill-item">
+        <div>
+          <div class="bill-item-name">${i.qty > 1 ? i.qty + '× ' : ''}${i.nameLocal || i.name}</div>
+          ${i.opts?.note ? `<div class="bill-item-note">⚠ ${i.opts.note}</div>` : ''}
+          ${i.opts?.addonNames?.length ? `<div class="bill-item-note">+ ${i.opts.addonNames.join(', ')}</div>` : ''}
+        </div>
+        <div class="bill-item-price">${(i.price * i.qty).toLocaleString()} ฿</div>
+      </div>
+    `).join('');
+    document.getElementById('billTotalVal').textContent = (order.total || 0).toLocaleString();
+    window._billData = { orderNum: order.num, items: order.items, total: order.total, isAdminCheckout: true };
+    // Show admin actions, hide customer-only UI
+    document.getElementById('billConfirmBtn').style.display = 'none';
+    document.getElementById('billCustomerActions').style.display = 'none';
+    const hint = document.getElementById('billCustomerHint');
+    if (hint) hint.style.display = 'none';
+    const adminActions = document.getElementById('billAdminActions');
+    if (adminActions) adminActions.style.display = 'flex';
+    document.getElementById('billModal').classList.add('show');
+  };
+
+  // Print bill from inside the admin checkout modal
+  window._printBillFromModal = () => {
+    if (!window._billData) return;
+    const { orderNum, items, total } = window._billData;
+    const order = getOrders().find(o => o.num === orderNum);
+    const tableNum = order ? order.table : '?';
+    printBill(orderNum, items, total, tableNum);
+  };
+
+  // Mark order as paid + close (from admin checkout flow)
+  window._completePayment = () => {
+    if (!window._billData) return;
+    const num = window._billData.orderNum;
+    const order = getOrders().find(o => o.num === num);
+    if (!order) return;
+    if (!confirm(`Mark order #${num} as paid (${(order.total || 0).toLocaleString()} ฿)?\n\nThis will close the order and free up table ${order.table}.`)) return;
+    updateOrder(num, { status: 'billed', billedTime: Date.now(), paidByAdmin: true });
+    // Free up the table
+    const t = tables.find(x => x.num === order.table);
+    if (t && t.status === 'occupied') { t.status = 'free'; saveTables(); }
+    // Remove any bill alert for this order
+    const billAlert = getOrders().find(o => o.type === 'bill' && o.orderRef === num);
+    if (billAlert) deleteOrder(billAlert.num);
+    document.getElementById('billModal').classList.remove('show');
+    renderAdminOrders();
+    showToast(`Order #${num} marked as paid`);
+  };
+
+  // Confirm order + print to kitchen — marks items as printed (status: open → preparing flow)
+  window._confirmKitchen = (num) => {
+    printKitchenTicket(num);
+    // The printKitchenTicket function already marks items as printed
+    setTimeout(renderAdminOrders, 400);
+  };
 
   // Mark items as served (customer sees status update)
   window._markServed = (num) => {
@@ -4639,9 +4777,14 @@
       </div>
     `).join('');
     document.getElementById('billTotalVal').textContent = (order.total || 0).toLocaleString();
-    // Hide Confirm button for admin view (admin doesn't need to confirm)
+    // Admin VIEW only — hide Confirm + admin checkout actions + customer hint
     document.getElementById('billConfirmBtn').style.display = 'none';
     document.getElementById('billCloseBtn').textContent = 'Close';
+    document.getElementById('billCustomerActions').style.display = 'flex';
+    const hint = document.getElementById('billCustomerHint');
+    if (hint) hint.style.display = 'none';
+    const adminActions = document.getElementById('billAdminActions');
+    if (adminActions) adminActions.style.display = 'none';
     document.getElementById('billModal').classList.add('show');
   };
 
@@ -4665,11 +4808,11 @@
     renderAdminOrders();
   };
 
-  // Mark order Done (for orders without bill request) — keeps for history
+  // Mark order Done — close without billing (comp, error, customer left, etc.)
   window._markDone = (num) => {
     const order = getOrders().find(o => o.num === num);
     if (!order) return;
-    if (!confirm(`Mark order #${num} as Done?`)) return;
+    if (!confirm(`Close order #${num} WITHOUT billing?\n\nThis is for comped meals, errors, or when the customer left without paying. The order will NOT count as revenue. Use Checkout instead if the customer paid.`)) return;
     updateOrder(num, { status: 'done', doneTime: Date.now() });
     const t = tables.find(x => x.num === order.table);
     if (t && t.status === 'occupied') { t.status = 'free'; saveTables(); }
@@ -4680,45 +4823,6 @@
   window._removeOrder = (num) => {
     deleteOrder(num);
     renderAdminOrders();
-  };
-  window._printOrder = (num) => {
-    const order = getOrders().find(o => o.num === num);
-    if (!order) return;
-    const w = window.open('', '_blank', 'width=300,height=600');
-    w.document.write(`
-      <html><head><style>
-        body { font-family: monospace; font-size: 12px; padding: 16px; max-width: 280px; }
-        h2 { text-align: center; margin: 4px 0; }
-        .line { border-top: 1px dashed #000; margin: 8px 0; }
-        .item { display: flex; justify-content: space-between; margin: 4px 0; }
-        .note { font-style: italic; font-size: 11px; margin-left: 12px; color: #444; }
-        .total { font-size: 14px; font-weight: bold; margin-top: 8px; }
-      </style></head><body>
-        <h2>ARMENIA RESTAURANT</h2>
-        <p style="text-align:center;margin:4px 0">Pattaya · Jomtien</p>
-        <div class="line"></div>
-        <p>Order: <strong>${order.num}</strong></p>
-        <p>Table: ${order.table}</p>
-        <p>Time: ${new Date(order.time).toLocaleString()}</p>
-        <div class="line"></div>
-        ${order.items.map(i => `
-          <div class="item">
-            <span>${i.qty}× ${i.name}</span>
-            <span>${(i.price * i.qty)} ฿</span>
-          </div>
-          ${i.opts && i.opts.note ? `<div class="note">⚠ "${i.opts.note}"</div>` : ''}
-          ${i.opts && i.opts.toppings && i.opts.toppings.length ? `<div class="note">+ ${i.opts.toppings.join(', ')}</div>` : ''}
-        `).join('')}
-        <div class="line"></div>
-        <div class="item total">
-          <span>TOTAL</span>
-          <span>${order.total} ฿</span>
-        </div>
-        <p style="text-align:center;margin-top:16px">Շնորհակալություն!</p>
-        <p style="text-align:center;font-size:10px">Thank you</p>
-      </body></html>
-    `);
-    setTimeout(() => w.print(), 300);
   };
   window._reassign = (num) => {
     assignTargetOrder = num;
@@ -5531,6 +5635,12 @@
     renderCart();
     renderFeatured();
     renderTableSelect();
+
+    // Auto-heal orphaned tables (after orders listener has run once)
+    setTimeout(() => {
+      healOrphanedTables();
+      renderTableSelect();
+    }, 500);
   }
 
   initApp();
