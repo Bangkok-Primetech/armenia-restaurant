@@ -2392,8 +2392,8 @@
         <h3>Restaurant <em>Information</em></h3>
         <div class="field"><label>Restaurant Name</label><input type="text" id="settingName" value="ARMENIA"></div>
         <div class="field"><label>Tagline</label><input type="text" id="settingTagline" value="Restaurant · Pattaya"></div>
-        <div class="field"><label>Phone</label><input type="text" value="+66 62 664 0700"></div>
-        <div class="field"><label>Address</label><input type="text" value="334/113-115 M12, Jomtien Beach, Pattaya"></div>
+        <div class="field"><label>Phone</label><input type="text" id="settingPhone" value="+66 62 664 0700"></div>
+        <div class="field"><label>Address</label><input type="text" id="settingAddress" value="334/113-115 M12, Jomtien Beach, Pattaya"></div>
         <button class="save-btn" id="saveInfo">Save</button>
       </div>
 
@@ -2413,13 +2413,40 @@
         <h3>Kitchen <em>Printer</em></h3>
         <div class="field">
           <label>Printer Type</label>
-          <select>
-            <option>ESC/POS Network Printer</option>
-            <option>Bluetooth Thermal Printer</option>
-            <option>PrintNode Cloud</option>
+          <select id="printerType">
+            <option value="escpos">ESC/POS Network Printer</option>
+            <option value="bluetooth">Bluetooth Thermal Printer</option>
+            <option value="printnode">PrintNode Cloud</option>
           </select>
         </div>
-        <div class="field"><label>Printer IP Address</label><input type="text" value="192.168.1.100"></div>
+        <div class="field"><label>Printer IP Address</label><input type="text" id="printerIP" value="192.168.1.100"></div>
+        <button class="save-btn" id="savePrinter">Save Printer</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>Telegram <em>Notifications</em></h3>
+        <div class="help" style="margin-bottom:14px;line-height:1.6">
+          Send new order notifications to a Telegram chat or group.<br>
+          <strong>Setup steps:</strong><br>
+          1. On Telegram, message <code style="background:var(--bg);padding:2px 5px">@BotFather</code> → send <code style="background:var(--bg);padding:2px 5px">/newbot</code> → follow prompts → copy the <strong>Bot Token</strong>.<br>
+          2. Create a group (or use DM). Add your bot to the group.<br>
+          3. Send any message to the group.<br>
+          4. Visit <code style="background:var(--bg);padding:2px 5px;font-size:10px;word-break:break-all">https://api.telegram.org/bot[YOUR_TOKEN]/getUpdates</code> in browser → find <code style="background:var(--bg);padding:2px 5px">"chat":{"id":-100xxxxxxxxxx}</code> → that's your <strong>Chat ID</strong>.
+        </div>
+        <div class="field">
+          <label>Enable Telegram Notifications</label>
+          <select id="telegramEnabled">
+            <option value="no">Disabled</option>
+            <option value="yes">Enabled</option>
+          </select>
+        </div>
+        <div class="field"><label>Bot Token</label><input type="text" id="telegramToken" placeholder="123456789:ABCDEFghijk-LMNOPqrstuvWXYZ"></div>
+        <div class="field"><label>Chat ID (group: starts with -100; personal: positive number)</label><input type="text" id="telegramChatId" placeholder="-1001234567890 or 987654321"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="save-btn" id="saveTelegram">Save Telegram</button>
+          <button class="save-btn" id="testTelegram" style="background:transparent;color:var(--ink);border:1px solid var(--line)">📨 Send Test Message</button>
+        </div>
+        <div id="telegramTestMsg" style="margin-top:10px;font-size:13px;height:18px;font-style:italic"></div>
       </div>
     </div>
   </div>
@@ -4572,6 +4599,23 @@
     document.getElementById('fontSelect').value = appSettings.font || 'cormorant';
     document.getElementById('settingName').value = appSettings.restaurantName || 'ARMENIA';
     document.getElementById('settingTagline').value = appSettings.tagline || 'Restaurant · Pattaya';
+    // Phone + Address (need to find inputs by position since they have no IDs)
+    const phoneInput = document.querySelector('#tab-settings input[type="text"][value*="+66"]') || document.getElementById('settingPhone');
+    const addrInput  = document.querySelector('#tab-settings input[type="text"][value*="Jomtien"]') || document.getElementById('settingAddress');
+    if (phoneInput) phoneInput.value = appSettings.phone || '+66 62 664 0700';
+    if (addrInput)  addrInput.value  = appSettings.address || '334/113-115 M12, Jomtien Beach, Pattaya';
+    // Printer
+    const pt = document.getElementById('printerType');
+    const pip = document.getElementById('printerIP');
+    if (pt) pt.value = appSettings.printerType || 'escpos';
+    if (pip) pip.value = appSettings.printerIP || '192.168.1.100';
+    // Telegram
+    const tEn = document.getElementById('telegramEnabled');
+    const tTok = document.getElementById('telegramToken');
+    const tCid = document.getElementById('telegramChatId');
+    if (tEn) tEn.value = appSettings.telegramEnabled || 'no';
+    if (tTok) tTok.value = appSettings.telegramToken || '';
+    if (tCid) tCid.value = appSettings.telegramChatId || '';
     // Logo preview
     const prev = document.getElementById('logoPreview');
     if (appSettings.logoData) prev.innerHTML = `<img src="${appSettings.logoData}" style="width:100%;height:100%;object-fit:contain">`;
@@ -4621,10 +4665,71 @@
   document.getElementById('saveInfo').onclick = () => {
     appSettings.restaurantName = document.getElementById('settingName').value.trim();
     appSettings.tagline = document.getElementById('settingTagline').value.trim();
+    const ph = document.getElementById('settingPhone');
+    const ad = document.getElementById('settingAddress');
+    if (ph) appSettings.phone = ph.value.trim();
+    if (ad) appSettings.address = ad.value.trim();
     saveSettings();
     applyBranding();
     showToast('Restaurant info saved');
   };
+
+  // ── Printer ──
+  const savePrinterBtn = document.getElementById('savePrinter');
+  if (savePrinterBtn) savePrinterBtn.onclick = () => {
+    appSettings.printerType = document.getElementById('printerType').value;
+    appSettings.printerIP   = document.getElementById('printerIP').value.trim();
+    saveSettings();
+    showToast('Printer settings saved');
+  };
+
+  // ── Telegram ──
+  const saveTelegramBtn = document.getElementById('saveTelegram');
+  if (saveTelegramBtn) saveTelegramBtn.onclick = () => {
+    appSettings.telegramEnabled = document.getElementById('telegramEnabled').value;
+    appSettings.telegramToken   = document.getElementById('telegramToken').value.trim();
+    appSettings.telegramChatId  = document.getElementById('telegramChatId').value.trim();
+    saveSettings();
+    showToast('Telegram settings saved · synced to all devices');
+  };
+
+  const testTelegramBtn = document.getElementById('testTelegram');
+  if (testTelegramBtn) testTelegramBtn.onclick = async () => {
+    const token  = document.getElementById('telegramToken').value.trim();
+    const chatId = document.getElementById('telegramChatId').value.trim();
+    const msg    = document.getElementById('telegramTestMsg');
+    if (!token || !chatId) {
+      msg.style.color = '#c0392b';
+      msg.textContent = '✗ Please enter both Bot Token and Chat ID first';
+      return;
+    }
+    msg.style.color = 'var(--ink-soft)';
+    msg.textContent = 'Sending test message...';
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: `🧪 *Test Message*\n\n${appSettings.restaurantName || 'Armenia'} ordering system is connected to Telegram successfully! ✓\n\n_Sent at ${new Date().toLocaleString()}_`,
+          parse_mode: 'Markdown'
+        })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        msg.style.color = '#2d6a4f';
+        msg.textContent = '✓ Test message sent — check your Telegram group';
+      } else {
+        msg.style.color = '#c0392b';
+        msg.textContent = '✗ Failed: ' + (data.description || 'Unknown error') + ' — check Bot Token and Chat ID';
+      }
+    } catch (e) {
+      msg.style.color = '#c0392b';
+      msg.textContent = '✗ Network error — check internet connection';
+    }
+    setTimeout(() => { msg.textContent = ''; }, 8000);
+  };
+
   document.getElementById('deviceModeSelect').onchange = (e) => {
     isAdminMode = e.target.value === 'admin';
     if (isAdminMode) {
