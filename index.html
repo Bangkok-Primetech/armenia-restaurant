@@ -1274,6 +1274,18 @@
     cursor: pointer;
   }
   .admin-tab.active { background: var(--burgundy); color: var(--surface); }
+  .admin-lang-btn {
+    padding: 5px 9px;
+    border: 1px solid var(--line);
+    background: transparent;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .admin-lang-btn.active { background: var(--burgundy); color: var(--gold-soft); border-color: var(--burgundy); }
   .admin-body {
     flex: 1;
     overflow-y: auto;
@@ -1608,21 +1620,6 @@
     color: var(--ink-soft);
     margin-top: 4px;
     font-style: italic;
-  }
-  .font-preview {
-    margin-top: 10px;
-    padding: 16px;
-    border: 1px solid var(--line);
-    background: var(--bg);
-  }
-  .font-preview .preview-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .font-preview .preview-body {
-    font-size: 13px;
-    color: var(--ink-soft);
   }
   .save-btn {
     padding: 10px 22px;
@@ -2240,16 +2237,21 @@
 <!-- ============ ADMIN DASHBOARD ============ -->
 <div class="admin" id="admin">
   <div class="admin-head">
-    <h2>Admin <em>Dashboard</em></h2>
+    <h2><span data-ai18n="dashTitle">Admin</span> <em data-ai18n="dashTitleEm">Dashboard</em></h2>
     <div class="admin-tabs">
-      <button class="admin-tab active" data-tab="orders">Live Orders</button>
-      <button class="admin-tab" data-tab="tables">Tables</button>
-      <button class="admin-tab" data-tab="menu">Menu</button>
-      <button class="admin-tab" data-tab="categories">Categories</button>
-      <button class="admin-tab" data-tab="history">History</button>
-      <button class="admin-tab" data-tab="branding">Branding</button>
-      <button class="admin-tab" data-tab="settings">Settings</button>
+      <button class="admin-tab active" data-tab="orders" data-ai18n="tabOrders">Live Orders</button>
+      <button class="admin-tab" data-tab="tables" data-ai18n="tabTables">Tables</button>
+      <button class="admin-tab" data-tab="menu" data-ai18n="tabMenu">Menu</button>
+      <button class="admin-tab" data-tab="categories" data-ai18n="tabCategories">Categories</button>
+      <button class="admin-tab" data-tab="history" data-ai18n="tabHistory">History</button>
+      <button class="admin-tab" data-tab="branding" data-ai18n="tabBranding">Branding</button>
+      <button class="admin-tab" data-tab="settings" data-ai18n="tabSettings">Settings</button>
       <span id="fbStatus" style="margin-left:auto;font-size:11px;opacity:.7;align-self:center;padding-right:8px">⏳</span>
+    </div>
+    <div class="admin-lang-row" style="display:flex;gap:4px;align-items:center;margin-right:8px">
+      <button class="admin-lang-btn active" data-alang="en">EN</button>
+      <button class="admin-lang-btn" data-alang="th">ไทย</button>
+      <button class="admin-lang-btn" data-alang="ru">RU</button>
     </div>
     <button class="icon-btn" id="adminClose">✕</button>
   </div>
@@ -2258,10 +2260,10 @@
     <!-- ORDERS -->
     <div id="tab-orders">
       <div class="stats-row">
-        <div class="stat-card"><div class="stat-label">Today's Orders</div><div class="stat-val" id="statOrders">0</div></div>
-        <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-val"><span id="statRevenue">0</span> <span class="unit">฿</span></div></div>
-        <div class="stat-card"><div class="stat-label">Free Tables</div><div class="stat-val"><span id="statFreeTables">0</span><span class="unit">/<span id="statTotalTables">0</span></span></div></div>
-        <div class="stat-card"><div class="stat-label">Avg Order</div><div class="stat-val"><span id="statAvg">0</span> <span class="unit">฿</span></div></div>
+        <div class="stat-card"><div class="stat-label" data-ai18n="statToday">Today's Orders</div><div class="stat-val" id="statOrders">0</div></div>
+        <div class="stat-card"><div class="stat-label" data-ai18n="statRevenue">Revenue</div><div class="stat-val"><span id="statRevenue">0</span> <span class="unit">฿</span></div></div>
+        <div class="stat-card"><div class="stat-label" data-ai18n="statFree">Free Tables</div><div class="stat-val"><span id="statFreeTables">0</span><span class="unit">/<span id="statTotalTables">0</span></span></div></div>
+        <div class="stat-card"><div class="stat-label" data-ai18n="statAvg">Avg Order</div><div class="stat-val"><span id="statAvg">0</span> <span class="unit">฿</span></div></div>
       </div>
       <div class="orders-list" id="ordersList"></div>
     </div>
@@ -2289,28 +2291,28 @@
 
     <!-- CATEGORIES -->
     <div id="tab-categories" class="hidden">
-      <p style="margin-bottom:14px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px">Drag to reorder. Toggle visibility. Edit display names for each language.</p>
+      <p style="margin-bottom:14px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px" data-ai18n="catsHelp">Drag to reorder. Toggle visibility. Edit display names for each language.</p>
       <div class="cat-admin-list" id="catAdminList"></div>
-      <button class="cat-save-btn" id="saveCatsBtn">Save Categories</button>
+      <button class="cat-save-btn" id="saveCatsBtn" data-ai18n="saveCategories">Save Categories</button>
     </div>
 
     <!-- HISTORY -->
     <div id="tab-history" class="hidden">
       <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
         <div style="display:flex;gap:6px">
-          <button class="hist-filter-btn active" data-period="day">Today</button>
-          <button class="hist-filter-btn" data-period="week">This Week</button>
-          <button class="hist-filter-btn" data-period="month">This Month</button>
-          <button class="hist-filter-btn" data-period="all">All</button>
+          <button class="hist-filter-btn active" data-period="day" data-ai18n="histToday">Today</button>
+          <button class="hist-filter-btn" data-period="week" data-ai18n="histWeek">This Week</button>
+          <button class="hist-filter-btn" data-period="month" data-ai18n="histMonth">This Month</button>
+          <button class="hist-filter-btn" data-period="all" data-ai18n="histAll">All</button>
         </div>
         <div style="flex:1"></div>
         <button class="save-btn" id="exportExcelBtn">⬇ Export Excel</button>
       </div>
       <div class="stats-row" id="histStats" style="margin-bottom:16px">
-        <div class="stat-card"><div class="stat-label">Orders</div><div class="stat-val" id="histStatOrders">0</div></div>
-        <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-val"><span id="histStatRev">0</span><span class="unit"> ฿</span></div></div>
-        <div class="stat-card"><div class="stat-label">Avg Order</div><div class="stat-val"><span id="histStatAvg">0</span><span class="unit"> ฿</span></div></div>
-        <div class="stat-card"><div class="stat-label">Tables Served</div><div class="stat-val" id="histStatTables">0</div></div>
+        <div class="stat-card"><div class="stat-label" data-ai18n="histOrders">Orders</div><div class="stat-val" id="histStatOrders">0</div></div>
+        <div class="stat-card"><div class="stat-label" data-ai18n="histRevenue">Revenue</div><div class="stat-val"><span id="histStatRev">0</span><span class="unit"> ฿</span></div></div>
+        <div class="stat-card"><div class="stat-label" data-ai18n="histAvg">Avg Order</div><div class="stat-val"><span id="histStatAvg">0</span><span class="unit"> ฿</span></div></div>
+        <div class="stat-card"><div class="stat-label" data-ai18n="histServed">Tables Served</div><div class="stat-val" id="histStatTables">0</div></div>
       </div>
       <div class="orders-list" id="histOrdersList"></div>
     </div>
@@ -2319,56 +2321,76 @@
     <div id="tab-branding" class="hidden">
 
       <div class="settings-section">
-        <h3>Logo <em>Upload</em></h3>
+        <h3><span data-ai18n="logoUpload">Logo</span> <em data-ai18n="logoUploadEm">Upload</em></h3>
         <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
           <div id="logoPreview" style="width:72px;height:72px;border:1px solid var(--gold);background:var(--burgundy);display:grid;place-items:center;font-family:'Cinzel',serif;font-size:30px;color:var(--gold-soft);position:relative;flex-shrink:0;overflow:hidden">A</div>
           <div style="flex:1">
-            <label style="display:block;font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:5px;font-weight:500">Upload Logo Image</label>
+            <label style="display:block;font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:5px;font-weight:500" data-ai18n="logoLabel">Upload Logo Image</label>
             <input type="file" id="logoUpload" accept="image/*" style="display:none">
-            <button class="save-btn" onclick="document.getElementById('logoUpload').click()" style="margin-right:8px">Choose File</button>
-            <button class="save-btn" id="clearLogoBtn" style="background:transparent;color:var(--ink-soft);border-color:var(--line)">Clear Logo</button>
-            <div class="help" style="margin-top:6px">PNG/JPG/SVG. Displays in header and table selection screen.</div>
+            <button class="save-btn" onclick="document.getElementById('logoUpload').click()" style="margin-right:8px" data-ai18n="chooseFile">Choose File</button>
+            <button class="save-btn" id="clearLogoBtn" style="background:transparent;color:var(--ink-soft);border-color:var(--line)" data-ai18n="clearLogo">Clear Logo</button>
+            <div class="help" style="margin-top:6px" data-ai18n="logoHelp">PNG/JPG/SVG. Displays in header and table selection screen.</div>
           </div>
         </div>
       </div>
 
       <div class="settings-section">
-        <h3><em>Header</em> & Footer</h3>
+        <h3><em data-ai18n="hfHeaderEm">Header</em> <span data-ai18n="hfFooter">& Footer</span></h3>
         <div class="field">
-          <label>Top Header Text (above main menu)</label>
+          <label data-ai18n="topHeader">Top Header Text (above main menu)</label>
           <input type="text" id="headerText" placeholder='e.g. "Welcome — Special Friday Discount 10% on All BBQ"'>
-          <div class="help">Leave empty to hide. Shown in burgundy banner above the menu.</div>
+          <div class="help" data-ai18n="topHeaderHelp">Leave empty to hide. Shown in the banner above the menu.</div>
         </div>
         <div class="field">
-          <label>Bottom Footer Text</label>
+          <label data-ai18n="bottomFooter">Bottom Footer Text</label>
           <input type="text" id="footerText" placeholder='e.g. "Thank you for dining with us · Free Wi-Fi: armenia_guest"'>
-          <div class="help">Leave empty to hide. Shown in dark banner at the bottom.</div>
+          <div class="help" data-ai18n="bottomFooterHelp">Leave empty to hide. Shown in the dark banner at the bottom.</div>
         </div>
-        <button class="save-btn" id="saveHeaderFooter">Save Header/Footer</button>
+        <button class="save-btn" id="saveHeaderFooter" data-ai18n="saveHF">Save Header/Footer</button>
       </div>
 
       <div class="settings-section">
-        <h3>Banner / <em>Video</em></h3>
+        <h3><span data-ai18n="idleBannerTitle">Welcome Screen</span> <em data-ai18n="idleBannerEm">Banner</em></h3>
+        <div class="help" style="margin-bottom:14px" data-ai18n="idleBannerHelp">Background image or video on the idle screen guests see first. Fills the screen in any orientation.</div>
         <div class="field">
-          <label>Banner Type</label>
+          <label data-ai18n="bannerType">Banner Type</label>
+          <select id="idleBannerType">
+            <option value="none" data-ai18n="bannerNone">None</option>
+            <option value="image" data-ai18n="bannerImage">Image URL</option>
+            <option value="youtube" data-ai18n="bannerYoutube">YouTube Video</option>
+          </select>
+        </div>
+        <div class="field">
+          <label data-ai18n="bannerUrlLabel">Image URL or YouTube URL</label>
+          <input type="text" id="idleBannerUrl" placeholder="https://example.com/banner.jpg or https://youtube.com/watch?v=...">
+          <div class="help" data-ai18n="bannerYtHelp">For YouTube, paste any standard URL — auto-converts to embed format.</div>
+        </div>
+        <button class="save-btn" id="saveIdleBanner" data-ai18n="saveBanner">Save Banner</button>
+      </div>
+
+      <div class="settings-section">
+        <h3><span data-ai18n="mainBannerTitle">Menu</span> <em data-ai18n="mainBannerEm">Banner</em></h3>
+        <div class="help" style="margin-bottom:14px" data-ai18n="mainBannerHelp">Image or video shown at the top of the ordering menu.</div>
+        <div class="field">
+          <label data-ai18n="bannerType">Banner Type</label>
           <select id="bannerType">
-            <option value="none">None</option>
-            <option value="image">Image URL</option>
-            <option value="youtube">YouTube Video</option>
+            <option value="none" data-ai18n="bannerNone">None</option>
+            <option value="image" data-ai18n="bannerImage">Image URL</option>
+            <option value="youtube" data-ai18n="bannerYoutube">YouTube Video</option>
           </select>
         </div>
         <div class="field" id="bannerUrlField">
-          <label>Banner Image URL or YouTube URL</label>
+          <label data-ai18n="bannerUrlLabel">Image URL or YouTube URL</label>
           <input type="text" id="bannerUrl" placeholder="https://example.com/banner.jpg or https://youtube.com/watch?v=...">
-          <div class="help">For YouTube, paste any standard URL — auto-converts to embed format.</div>
+          <div class="help" data-ai18n="bannerYtHelp">For YouTube, paste any standard URL — auto-converts to embed format.</div>
         </div>
-        <button class="save-btn" id="saveBanner">Save Banner</button>
+        <button class="save-btn" id="saveBanner" data-ai18n="saveBanner">Save Banner</button>
       </div>
 
       <div class="settings-section">
-        <h3>Display <em>Font</em></h3>
+        <h3><span data-ai18n="fontTitle">Display</span> <em data-ai18n="fontEm">Font</em></h3>
         <div class="field">
-          <label>Font Family</label>
+          <label data-ai18n="fontFamily">Font Family</label>
           <select id="fontSelect">
             <option value="cormorant">Cormorant Garamond (Classic Elegant)</option>
             <option value="cinzel">Cinzel (Roman Carved Stone)</option>
@@ -2376,12 +2398,59 @@
             <option value="helvetica">Helvetica Neue (Classic Sans)</option>
             <option value="sans">Inter Sans-Serif (Modern Clean)</option>
           </select>
-          <div class="help">Changes the display font across the entire app instantly.</div>
+          <div class="help" data-ai18n="fontHelp">Changes the display font across the entire app instantly.</div>
         </div>
-        <div class="font-preview">
-          <div class="preview-title font-display">Phở Bò Khorovats</div>
-          <div class="preview-body">Traditional Armenian shashlik grilled over open flame with herbs.</div>
+      </div>
+
+      <div class="settings-section">
+        <h3><span data-ai18n="welcomeTitle">Welcome</span> <em data-ai18n="welcomeEm">Screen</em></h3>
+        <div class="help" style="margin-bottom:14px" data-ai18n="welcomeHelp">The idle screen guests see before they start ordering. Leave a field empty to fall back to the restaurant name.</div>
+        <div class="field">
+          <label data-ai18n="welcomeTitleLabel">Welcome Title</label>
+          <input type="text" id="idleTitleInput" placeholder="e.g. ARMENIA">
+          <div class="help" data-ai18n="welcomeTitleHelp">Large title shown in the centre. Defaults to the restaurant name.</div>
         </div>
+        <div class="field">
+          <label data-ai18n="welcomeSubLabel">Welcome Subtitle / Details</label>
+          <input type="text" id="idleSubInput" placeholder="e.g. Restaurant · Pattaya · Est. 2024">
+          <div class="help" data-ai18n="welcomeSubHelp">Smaller line under the title.</div>
+        </div>
+        <button class="save-btn" id="saveIdle" data-ai18n="saveWelcome">Save Welcome Screen</button>
+      </div>
+
+      <div class="settings-section">
+        <h3><span data-ai18n="themeTitle">Theme</span> <em data-ai18n="themeEm">Colours</em></h3>
+        <div class="help" style="margin-bottom:14px" data-ai18n="themeHelp">Pick your four core colours — every screen, card and button updates together automatically.</div>
+        <div class="field" style="display:flex;align-items:center;gap:14px">
+          <div style="flex:1"><label data-ai18n="colBg">Background</label><div class="help" style="margin:0" data-ai18n="colBgHelp">Page background colour</div></div>
+          <input type="color" id="colBg" value="#f8f3e9" style="width:54px;height:40px;border:1px solid var(--line);border-radius:6px;cursor:pointer;background:none">
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:14px">
+          <div style="flex:1"><label data-ai18n="colInk">Text</label><div class="help" style="margin:0" data-ai18n="colInkHelp">Main text colour</div></div>
+          <input type="color" id="colInk" value="#1a1209" style="width:54px;height:40px;border:1px solid var(--line);border-radius:6px;cursor:pointer;background:none">
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:14px">
+          <div style="flex:1"><label data-ai18n="colBtn">Button</label><div class="help" style="margin:0" data-ai18n="colBtnHelp">Main button / accent colour</div></div>
+          <input type="color" id="colBtn" value="#722f37" style="width:54px;height:40px;border:1px solid var(--line);border-radius:6px;cursor:pointer;background:none">
+        </div>
+        <div class="field" style="display:flex;align-items:center;gap:14px">
+          <div style="flex:1"><label data-ai18n="colBtnText">Button Text</label><div class="help" style="margin:0" data-ai18n="colBtnTextHelp">Text colour inside buttons</div></div>
+          <input type="color" id="colBtnText" value="#d4a44a" style="width:54px;height:40px;border:1px solid var(--line);border-radius:6px;cursor:pointer;background:none">
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+          <button class="save-btn" id="saveColors" data-ai18n="saveColors">Save Colours</button>
+          <button class="save-btn" id="resetColors" style="background:transparent;color:var(--ink-soft);border:1px solid var(--line)" data-ai18n="resetColors">Reset to Default</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3><span data-ai18n="btnLabelsTitle">Button</span> <em data-ai18n="btnLabelsEm">Labels</em></h3>
+        <div class="field">
+          <label data-ai18n="ctaLabel">"Tap to Begin" Button Text</label>
+          <input type="text" id="idleCtaInput" placeholder="e.g. TAP TO BEGIN · เลือกโต๊ะ · Начать">
+          <div class="help" data-ai18n="ctaHelp">The button on the welcome screen guests tap to start ordering.</div>
+        </div>
+        <button class="save-btn" id="saveButtonText" data-ai18n="saveButtonText">Save Button Text</button>
       </div>
 
     </div>
@@ -2389,42 +2458,51 @@
     <!-- SETTINGS -->
     <div id="tab-settings" class="hidden">
       <div class="settings-section">
-        <h3>Restaurant <em>Information</em></h3>
-        <div class="field"><label>Restaurant Name</label><input type="text" id="settingName" value="ARMENIA"></div>
-        <div class="field"><label>Tagline</label><input type="text" id="settingTagline" value="Restaurant · Pattaya"></div>
-        <div class="field"><label>Phone</label><input type="text" id="settingPhone" value="+66 62 664 0700"></div>
-        <div class="field"><label>Address</label><input type="text" id="settingAddress" value="334/113-115 M12, Jomtien Beach, Pattaya"></div>
-        <button class="save-btn" id="saveInfo">Save</button>
+        <h3><span data-ai18n="secTitle">Admin</span> <em data-ai18n="secEm">Security</em></h3>
+        <div class="help" style="margin-bottom:14px" data-ai18n="secHelp">The 6-digit PIN that protects the admin dashboard. Default is 000000 — change it now. Synced to all devices instantly.</div>
+        <div class="field"><label data-ai18n="newPin">New PIN (6 digits)</label><input type="password" inputmode="numeric" maxlength="6" id="newPinInput" placeholder="••••••" autocomplete="new-password"></div>
+        <div class="field"><label data-ai18n="confirmPin">Confirm New PIN</label><input type="password" inputmode="numeric" maxlength="6" id="confirmPinInput" placeholder="••••••" autocomplete="new-password"></div>
+        <div id="pinChangeMsg" style="font-size:13px;height:18px;margin-bottom:8px;font-style:italic"></div>
+        <button class="save-btn" id="saveNewPin" data-ai18n="changePin">Change PIN</button>
       </div>
 
       <div class="settings-section">
-        <h3>Device <em>Mode</em></h3>
+        <h3><span data-ai18n="infoTitle">Restaurant</span> <em data-ai18n="infoEm">Information</em></h3>
+        <div class="field"><label data-ai18n="restName">Restaurant Name</label><input type="text" id="settingName" value="ARMENIA"></div>
+        <div class="field"><label data-ai18n="tagline">Tagline</label><input type="text" id="settingTagline" value="Restaurant · Pattaya"></div>
+        <div class="field"><label data-ai18n="phone">Phone</label><input type="text" id="settingPhone" value="+66 62 664 0700"></div>
+        <div class="field"><label data-ai18n="address">Address</label><input type="text" id="settingAddress" value="334/113-115 M12, Jomtien Beach, Pattaya"></div>
+        <button class="save-btn" id="saveInfo" data-ai18n="saveInfo">Save</button>
+      </div>
+
+      <div class="settings-section">
+        <h3><span data-ai18n="deviceTitle">Device</span> <em data-ai18n="deviceEm">Mode</em></h3>
         <div class="field">
-          <label>This device is</label>
+          <label data-ai18n="deviceThis">This device is</label>
           <select id="deviceModeSelect">
-            <option value="customer">Customer Tablet</option>
-            <option value="admin">Admin / Kitchen Display</option>
+            <option value="customer" data-ai18n="deviceCustomer">Customer Tablet</option>
+            <option value="admin" data-ai18n="deviceAdmin">Admin / Kitchen Display</option>
           </select>
-          <div class="help">Customer = ordering interface. Admin = receives orders and manages everything.</div>
+          <div class="help" data-ai18n="deviceHelp">Customer = ordering interface. Admin = receives orders and manages everything.</div>
         </div>
       </div>
 
       <div class="settings-section">
-        <h3>Kitchen <em>Printer</em></h3>
+        <h3><span data-ai18n="printerTitle">Kitchen</span> <em data-ai18n="printerEm">Printer</em></h3>
         <div class="field">
-          <label>Printer Type</label>
+          <label data-ai18n="printerType">Printer Type</label>
           <select id="printerType">
             <option value="escpos">ESC/POS Network Printer</option>
             <option value="bluetooth">Bluetooth Thermal Printer</option>
             <option value="printnode">PrintNode Cloud</option>
           </select>
         </div>
-        <div class="field"><label>Printer IP Address</label><input type="text" id="printerIP" value="192.168.1.100"></div>
-        <button class="save-btn" id="savePrinter">Save Printer</button>
+        <div class="field"><label data-ai18n="printerIP">Printer IP Address</label><input type="text" id="printerIP" value="192.168.1.100"></div>
+        <button class="save-btn" id="savePrinter" data-ai18n="savePrinter">Save Printer</button>
       </div>
 
       <div class="settings-section">
-        <h3>Telegram <em>Notifications</em></h3>
+        <h3><span data-ai18n="tgTitle">Telegram</span> <em data-ai18n="tgEm">Notifications</em></h3>
         <div class="help" style="margin-bottom:14px;line-height:1.6">
           Send new order notifications to a Telegram chat or group.<br>
           <strong>Setup steps:</strong><br>
@@ -2434,17 +2512,17 @@
           4. Visit <code style="background:var(--bg);padding:2px 5px;font-size:10px;word-break:break-all">https://api.telegram.org/bot[YOUR_TOKEN]/getUpdates</code> in browser → find <code style="background:var(--bg);padding:2px 5px">"chat":{"id":-100xxxxxxxxxx}</code> → that's your <strong>Chat ID</strong>.
         </div>
         <div class="field">
-          <label>Enable Telegram Notifications</label>
+          <label data-ai18n="tgEnable">Enable Telegram Notifications</label>
           <select id="telegramEnabled">
-            <option value="no">Disabled</option>
-            <option value="yes">Enabled</option>
+            <option value="no" data-ai18n="tgDisabled">Disabled</option>
+            <option value="yes" data-ai18n="tgEnabled">Enabled</option>
           </select>
         </div>
-        <div class="field"><label>Bot Token</label><input type="text" id="telegramToken" placeholder="123456789:ABCDEFghijk-LMNOPqrstuvWXYZ"></div>
-        <div class="field"><label>Chat ID (group: starts with -100; personal: positive number)</label><input type="text" id="telegramChatId" placeholder="-1001234567890 or 987654321"></div>
+        <div class="field"><label data-ai18n="tgToken">Bot Token</label><input type="text" id="telegramToken" placeholder="123456789:ABCDEFghijk-LMNOPqrstuvWXYZ"></div>
+        <div class="field"><label data-ai18n="tgChatId">Chat ID (group: starts with -100; personal: positive number)</label><input type="text" id="telegramChatId" placeholder="-1001234567890 or 987654321"></div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <button class="save-btn" id="saveTelegram">Save Telegram</button>
-          <button class="save-btn" id="testTelegram" style="background:transparent;color:var(--ink);border:1px solid var(--line)">📨 Send Test Message</button>
+          <button class="save-btn" id="saveTelegram" data-ai18n="saveTg">Save Telegram</button>
+          <button class="save-btn" id="testTelegram" style="background:transparent;color:var(--ink);border:1px solid var(--line)" data-ai18n="testTg">📨 Send Test Message</button>
         </div>
         <div id="telegramTestMsg" style="margin-top:10px;font-size:13px;height:18px;font-style:italic"></div>
       </div>
@@ -2639,6 +2717,84 @@
       }
     }
   };
+
+  // ============ ADMIN DASHBOARD TRANSLATIONS (EN / TH / RU) ============
+  const adminI18n = {
+    en: {
+      dashTitle:'Admin', dashTitleEm:'Dashboard',
+      tabOrders:'Live Orders', tabTables:'Tables', tabMenu:'Menu', tabCategories:'Categories', tabHistory:'History', tabBranding:'Branding', tabSettings:'Settings',
+      statToday:"Today's Orders", statRevenue:'Revenue', statFree:'Free Tables', statAvg:'Avg Order',
+      legendFree:'Available', legendOccupied:'Occupied', legendReserved:'Reserved',
+      catsHelp:'Drag to reorder. Toggle visibility. Edit display names for each language.', saveCategories:'Save Categories',
+      histToday:'Today', histWeek:'This Week', histMonth:'This Month', histAll:'All',
+      histOrders:'Orders', histRevenue:'Revenue', histAvg:'Avg Order', histServed:'Tables Served',
+      logoUpload:'Logo', logoUploadEm:'Upload', logoLabel:'Upload Logo Image', chooseFile:'Choose File', clearLogo:'Clear Logo', logoHelp:'PNG/JPG/SVG. Displays in header and table selection screen.',
+      hfHeaderEm:'Header', hfFooter:'& Footer', topHeader:'Top Header Text (above main menu)', topHeaderHelp:'Leave empty to hide. Shown in the banner above the menu.', bottomFooter:'Bottom Footer Text', bottomFooterHelp:'Leave empty to hide. Shown in the dark banner at the bottom.', saveHF:'Save Header/Footer',
+      idleBannerTitle:'Welcome Screen', idleBannerEm:'Banner', idleBannerHelp:'Background image or video on the idle screen guests see first. Fills the screen in any orientation.',
+      mainBannerTitle:'Menu', mainBannerEm:'Banner', mainBannerHelp:'Image or video shown at the top of the ordering menu.',
+      bannerType:'Banner Type', bannerNone:'None', bannerImage:'Image URL', bannerYoutube:'YouTube Video', bannerUrlLabel:'Image URL or YouTube URL', bannerYtHelp:'For YouTube, paste any standard URL — auto-converts to embed format.', saveBanner:'Save Banner',
+      fontTitle:'Display', fontEm:'Font', fontFamily:'Font Family', fontHelp:'Changes the display font across the entire app instantly.',
+      welcomeTitle:'Welcome', welcomeEm:'Screen', welcomeHelp:'The idle screen guests see before they start ordering. Leave a field empty to fall back to the restaurant name.', welcomeTitleLabel:'Welcome Title', welcomeTitleHelp:'Large title shown in the centre. Defaults to the restaurant name.', welcomeSubLabel:'Welcome Subtitle / Details', welcomeSubHelp:'Smaller line under the title.', saveWelcome:'Save Welcome Screen',
+      themeTitle:'Theme', themeEm:'Colours', themeHelp:'Pick your four core colours — every screen, card and button updates together automatically.', colBg:'Background', colBgHelp:'Page background colour', colInk:'Text', colInkHelp:'Main text colour', colBtn:'Button', colBtnHelp:'Main button / accent colour', colBtnText:'Button Text', colBtnTextHelp:'Text colour inside buttons', saveColors:'Save Colours', resetColors:'Reset to Default',
+      btnLabelsTitle:'Button', btnLabelsEm:'Labels', ctaLabel:'"Tap to Begin" Button Text', ctaHelp:'The button on the welcome screen guests tap to start ordering.', saveButtonText:'Save Button Text',
+      secTitle:'Admin', secEm:'Security', secHelp:'The 6-digit PIN that protects the admin dashboard. Default is 000000 — change it now. Synced to all devices instantly.', newPin:'New PIN (6 digits)', confirmPin:'Confirm New PIN', changePin:'Change PIN',
+      infoTitle:'Restaurant', infoEm:'Information', restName:'Restaurant Name', tagline:'Tagline', phone:'Phone', address:'Address', saveInfo:'Save',
+      deviceTitle:'Device', deviceEm:'Mode', deviceThis:'This device is', deviceCustomer:'Customer Tablet', deviceAdmin:'Admin / Kitchen Display', deviceHelp:'Customer = ordering interface. Admin = receives orders and manages everything.',
+      printerTitle:'Kitchen', printerEm:'Printer', printerType:'Printer Type', printerIP:'Printer IP Address', savePrinter:'Save Printer',
+      tgTitle:'Telegram', tgEm:'Notifications', tgEnable:'Enable Telegram Notifications', tgDisabled:'Disabled', tgEnabled:'Enabled', tgToken:'Bot Token', tgChatId:'Chat ID (group: starts with -100; personal: positive number)', saveTg:'Save Telegram', testTg:'📨 Send Test Message',
+      pinMustBe:'PIN must be exactly 6 digits.', pinNoMatch:'The two PINs do not match.', pinSuccess:'PIN changed successfully.'
+    },
+    th: {
+      dashTitle:'แอดมิน', dashTitleEm:'แดชบอร์ด',
+      tabOrders:'ออเดอร์สด', tabTables:'โต๊ะ', tabMenu:'เมนู', tabCategories:'หมวดหมู่', tabHistory:'ประวัติ', tabBranding:'แบรนด์', tabSettings:'ตั้งค่า',
+      statToday:'ออเดอร์วันนี้', statRevenue:'รายได้', statFree:'โต๊ะว่าง', statAvg:'เฉลี่ย/ออเดอร์',
+      legendFree:'ว่าง', legendOccupied:'มีลูกค้า', legendReserved:'จองแล้ว',
+      catsHelp:'ลากเพื่อจัดลำดับ สลับการแสดงผล แก้ไขชื่อแต่ละภาษา', saveCategories:'บันทึกหมวดหมู่',
+      histToday:'วันนี้', histWeek:'สัปดาห์นี้', histMonth:'เดือนนี้', histAll:'ทั้งหมด',
+      histOrders:'ออเดอร์', histRevenue:'รายได้', histAvg:'เฉลี่ย/ออเดอร์', histServed:'โต๊ะที่เสิร์ฟ',
+      logoUpload:'โลโก้', logoUploadEm:'อัปโหลด', logoLabel:'อัปโหลดรูปโลโก้', chooseFile:'เลือกไฟล์', clearLogo:'ลบโลโก้', logoHelp:'PNG/JPG/SVG แสดงในส่วนหัวและหน้าจอเลือกโต๊ะ',
+      hfHeaderEm:'ส่วนหัว', hfFooter:'และส่วนท้าย', topHeader:'ข้อความส่วนหัว (เหนือเมนู)', topHeaderHelp:'เว้นว่างเพื่อซ่อน แสดงในแบนเนอร์เหนือเมนู', bottomFooter:'ข้อความส่วนท้าย', bottomFooterHelp:'เว้นว่างเพื่อซ่อน แสดงในแบนเนอร์ด้านล่าง', saveHF:'บันทึกส่วนหัว/ท้าย',
+      idleBannerTitle:'หน้าจอต้อนรับ', idleBannerEm:'แบนเนอร์', idleBannerHelp:'รูปหรือวิดีโอพื้นหลังบนหน้าจอพักที่ลูกค้าเห็นก่อน เต็มหน้าจอทุกแนว',
+      mainBannerTitle:'เมนู', mainBannerEm:'แบนเนอร์', mainBannerHelp:'รูปหรือวิดีโอที่แสดงด้านบนของเมนูสั่งอาหาร',
+      bannerType:'ประเภทแบนเนอร์', bannerNone:'ไม่มี', bannerImage:'ลิงก์รูปภาพ', bannerYoutube:'วิดีโอ YouTube', bannerUrlLabel:'ลิงก์รูปภาพหรือ YouTube', bannerYtHelp:'สำหรับ YouTube วางลิงก์ปกติได้เลย ระบบแปลงให้อัตโนมัติ', saveBanner:'บันทึกแบนเนอร์',
+      fontTitle:'แสดงผล', fontEm:'แบบอักษร', fontFamily:'แบบอักษร', fontHelp:'เปลี่ยนแบบอักษรทั้งแอปทันที',
+      welcomeTitle:'หน้าจอ', welcomeEm:'ต้อนรับ', welcomeHelp:'หน้าจอพักที่ลูกค้าเห็นก่อนเริ่มสั่ง เว้นว่างเพื่อใช้ชื่อร้านแทน', welcomeTitleLabel:'หัวข้อต้อนรับ', welcomeTitleHelp:'หัวข้อใหญ่ตรงกลาง ค่าเริ่มต้นคือชื่อร้าน', welcomeSubLabel:'คำบรรยายต้อนรับ', welcomeSubHelp:'บรรทัดเล็กใต้หัวข้อ', saveWelcome:'บันทึกหน้าจอต้อนรับ',
+      themeTitle:'ธีม', themeEm:'สี', themeHelp:'เลือกสีหลักสี่สี ทุกหน้าจอ การ์ด และปุ่มจะอัปเดตพร้อมกัน', colBg:'พื้นหลัง', colBgHelp:'สีพื้นหลังหน้า', colInk:'ตัวอักษร', colInkHelp:'สีตัวอักษรหลัก', colBtn:'ปุ่ม', colBtnHelp:'สีปุ่มหลัก', colBtnText:'ตัวอักษรในปุ่ม', colBtnTextHelp:'สีตัวอักษรในปุ่ม', saveColors:'บันทึกสี', resetColors:'รีเซ็ตค่าเริ่มต้น',
+      btnLabelsTitle:'ข้อความ', btnLabelsEm:'ปุ่ม', ctaLabel:'ข้อความปุ่ม "แตะเพื่อเริ่ม"', ctaHelp:'ปุ่มบนหน้าจอต้อนรับที่ลูกค้าแตะเพื่อเริ่มสั่ง', saveButtonText:'บันทึกข้อความปุ่ม',
+      secTitle:'ความปลอดภัย', secEm:'แอดมิน', secHelp:'รหัส PIN 6 หลักที่ป้องกันแดชบอร์ด ค่าเริ่มต้น 000000 — เปลี่ยนเลย ซิงค์ทุกเครื่องทันที', newPin:'PIN ใหม่ (6 หลัก)', confirmPin:'ยืนยัน PIN ใหม่', changePin:'เปลี่ยน PIN',
+      infoTitle:'ข้อมูล', infoEm:'ร้าน', restName:'ชื่อร้าน', tagline:'สโลแกน', phone:'โทรศัพท์', address:'ที่อยู่', saveInfo:'บันทึก',
+      deviceTitle:'โหมด', deviceEm:'อุปกรณ์', deviceThis:'อุปกรณ์นี้คือ', deviceCustomer:'แท็บเล็ตลูกค้า', deviceAdmin:'แอดมิน / จอครัว', deviceHelp:'ลูกค้า = หน้าจอสั่งอาหาร แอดมิน = รับออเดอร์และจัดการทุกอย่าง',
+      printerTitle:'เครื่องพิมพ์', printerEm:'ครัว', printerType:'ประเภทเครื่องพิมพ์', printerIP:'IP เครื่องพิมพ์', savePrinter:'บันทึกเครื่องพิมพ์',
+      tgTitle:'Telegram', tgEm:'แจ้งเตือน', tgEnable:'เปิดแจ้งเตือน Telegram', tgDisabled:'ปิด', tgEnabled:'เปิด', tgToken:'Bot Token', tgChatId:'Chat ID (กลุ่ม: ขึ้นต้น -100; ส่วนตัว: เลขบวก)', saveTg:'บันทึก Telegram', testTg:'📨 ส่งข้อความทดสอบ',
+      pinMustBe:'PIN ต้องเป็นตัวเลข 6 หลัก', pinNoMatch:'PIN ทั้งสองไม่ตรงกัน', pinSuccess:'เปลี่ยน PIN สำเร็จ'
+    },
+    ru: {
+      dashTitle:'Админ', dashTitleEm:'Панель',
+      tabOrders:'Заказы', tabTables:'Столы', tabMenu:'Меню', tabCategories:'Категории', tabHistory:'История', tabBranding:'Брендинг', tabSettings:'Настройки',
+      statToday:'Заказы сегодня', statRevenue:'Выручка', statFree:'Свободные столы', statAvg:'Средний чек',
+      legendFree:'Свободен', legendOccupied:'Занят', legendReserved:'Бронь',
+      catsHelp:'Перетащите для сортировки. Переключайте видимость. Изменяйте названия для каждого языка.', saveCategories:'Сохранить категории',
+      histToday:'Сегодня', histWeek:'Эта неделя', histMonth:'Этот месяц', histAll:'Все',
+      histOrders:'Заказы', histRevenue:'Выручка', histAvg:'Средний чек', histServed:'Обслужено столов',
+      logoUpload:'Логотип', logoUploadEm:'Загрузка', logoLabel:'Загрузить логотип', chooseFile:'Выбрать файл', clearLogo:'Удалить логотип', logoHelp:'PNG/JPG/SVG. Показывается в шапке и на экране выбора стола.',
+      hfHeaderEm:'Шапка', hfFooter:'и подвал', topHeader:'Текст шапки (над меню)', topHeaderHelp:'Оставьте пустым, чтобы скрыть. Показывается в баннере над меню.', bottomFooter:'Текст подвала', bottomFooterHelp:'Оставьте пустым, чтобы скрыть. Показывается в тёмном баннере внизу.', saveHF:'Сохранить шапку/подвал',
+      idleBannerTitle:'Экран приветствия', idleBannerEm:'Баннер', idleBannerHelp:'Фоновое изображение или видео на экране ожидания, который гости видят первым. Заполняет экран в любой ориентации.',
+      mainBannerTitle:'Меню', mainBannerEm:'Баннер', mainBannerHelp:'Изображение или видео вверху меню заказа.',
+      bannerType:'Тип баннера', bannerNone:'Нет', bannerImage:'Ссылка на изображение', bannerYoutube:'Видео YouTube', bannerUrlLabel:'Ссылка на изображение или YouTube', bannerYtHelp:'Для YouTube вставьте обычную ссылку — преобразуется автоматически.', saveBanner:'Сохранить баннер',
+      fontTitle:'Шрифт', fontEm:'Дисплея', fontFamily:'Семейство шрифтов', fontHelp:'Мгновенно меняет шрифт во всём приложении.',
+      welcomeTitle:'Экран', welcomeEm:'Приветствия', welcomeHelp:'Экран ожидания перед началом заказа. Оставьте поле пустым, чтобы использовать название ресторана.', welcomeTitleLabel:'Заголовок приветствия', welcomeTitleHelp:'Крупный заголовок в центре. По умолчанию — название ресторана.', welcomeSubLabel:'Подзаголовок / Детали', welcomeSubHelp:'Меньшая строка под заголовком.', saveWelcome:'Сохранить экран',
+      themeTitle:'Тема', themeEm:'Цвета', themeHelp:'Выберите четыре основных цвета — все экраны, карточки и кнопки обновятся вместе.', colBg:'Фон', colBgHelp:'Цвет фона страницы', colInk:'Текст', colInkHelp:'Основной цвет текста', colBtn:'Кнопка', colBtnHelp:'Основной цвет кнопок', colBtnText:'Текст кнопки', colBtnTextHelp:'Цвет текста на кнопках', saveColors:'Сохранить цвета', resetColors:'Сбросить по умолчанию',
+      btnLabelsTitle:'Надписи', btnLabelsEm:'Кнопок', ctaLabel:'Текст кнопки «Нажмите, чтобы начать»', ctaHelp:'Кнопка на экране приветствия, которую гости нажимают для начала заказа.', saveButtonText:'Сохранить текст кнопки',
+      secTitle:'Безопасность', secEm:'Админа', secHelp:'6-значный PIN для защиты панели. По умолчанию 000000 — смените сейчас. Синхронизируется на всех устройствах.', newPin:'Новый PIN (6 цифр)', confirmPin:'Подтвердите новый PIN', changePin:'Сменить PIN',
+      infoTitle:'Информация', infoEm:'о ресторане', restName:'Название ресторана', tagline:'Слоган', phone:'Телефон', address:'Адрес', saveInfo:'Сохранить',
+      deviceTitle:'Режим', deviceEm:'устройства', deviceThis:'Это устройство —', deviceCustomer:'Планшет клиента', deviceAdmin:'Админ / Кухонный экран', deviceHelp:'Клиент = интерфейс заказа. Админ = приём заказов и управление всем.',
+      printerTitle:'Кухонный', printerEm:'Принтер', printerType:'Тип принтера', printerIP:'IP-адрес принтера', savePrinter:'Сохранить принтер',
+      tgTitle:'Telegram', tgEm:'Уведомления', tgEnable:'Включить уведомления Telegram', tgDisabled:'Выключено', tgEnabled:'Включено', tgToken:'Токен бота', tgChatId:'Chat ID (группа: начинается с -100; личный: положительное число)', saveTg:'Сохранить Telegram', testTg:'📨 Отправить тест',
+      pinMustBe:'PIN должен состоять ровно из 6 цифр.', pinNoMatch:'PIN-коды не совпадают.', pinSuccess:'PIN успешно изменён.'
+    }
+  };
+  let adminLang = 'en';
+  try { const _al = localStorage.getItem('_arm_admin_lang'); if (_al && ['en','th','ru'].includes(_al)) adminLang = _al; } catch(e){}
 
   // ============ FULL MENU (50 items based on foodmenu.online structure) ============
   const dishes = [
@@ -2966,8 +3122,11 @@
     headerText:'', footerText:'', bannerType:'none', bannerUrl:'',
     font:'cormorant', restaurantName:'ARMENIA', tagline:'Restaurant · Pattaya',
     phone:'+66 62 664 0700', address:'334/113-115 M12, Jomtien Beach, Pattaya',
-    printerType:'escpos', printerIP:'192.168.1.100'
+    printerType:'escpos', printerIP:'192.168.1.100',
+    idleTitle:'', idleSub:'', idleCta:'', colors:null,
+    idleBannerType:'none', idleBannerUrl:''
   };
+  const DEFAULT_COLORS = { bg:'#f8f3e9', ink:'#1a1209', btn:'#722f37', btnText:'#d4a44a' };
   let tables = [];
   let selectedTable = null;
   let _orders = [];          // Firebase-synced cache
@@ -3284,7 +3443,11 @@
       else idleLogo.textContent = name.charAt(0);
     }
     const idleTitle = document.querySelector('.idle-title');
-    if (idleTitle) idleTitle.textContent = name;
+    if (idleTitle) idleTitle.textContent = appSettings.idleTitle || name;
+    const idleSub = document.querySelector('.idle-sub');
+    if (idleSub) idleSub.textContent = appSettings.idleSub || (appSettings.tagline || 'Restaurant · Pattaya');
+    const idleCta = document.getElementById('idleCtaBtn');
+    if (idleCta) idleCta.textContent = appSettings.idleCta || 'TAP TO BEGIN · เลือกโต๊ะ · Начать';
     // Header / Footer text banners
     const ch = document.getElementById('customHeader');
     if (appSettings.headerText) { ch.textContent = appSettings.headerText; ch.classList.add('show'); } else { ch.classList.remove('show'); }
@@ -3292,29 +3455,106 @@
     if (appSettings.footerText) { cf.textContent = appSettings.footerText; cf.classList.add('show'); } else { cf.classList.remove('show'); }
     renderBanner();
     document.documentElement.setAttribute('data-font', appSettings.font || 'cormorant');
+    applyThemeColors();
   }
 
+  // Apply custom theme colours by overriding the core CSS variables.
+  // Changing these four cascades to every screen, card and button automatically.
+  function applyThemeColors() {
+    const root = document.documentElement;
+    const c = appSettings.colors;
+    if (c && c.bg)      root.style.setProperty('--bg', c.bg);
+    else                root.style.removeProperty('--bg');
+    if (c && c.bg)      root.style.setProperty('--surface', shadeColor(c.bg, 6));
+    else                root.style.removeProperty('--surface');
+    if (c && c.bg)      root.style.setProperty('--bg-deep', shadeColor(c.bg, -8));
+    else                root.style.removeProperty('--bg-deep');
+    if (c && c.ink)     root.style.setProperty('--ink', c.ink);
+    else                root.style.removeProperty('--ink');
+    if (c && c.ink)     root.style.setProperty('--ink-soft', mixColor(c.ink, c.bg || '#f8f3e9', 0.45));
+    else                root.style.removeProperty('--ink-soft');
+    if (c && c.btn)     { root.style.setProperty('--burgundy', c.btn); root.style.setProperty('--accent', c.btn); }
+    else                { root.style.removeProperty('--burgundy'); root.style.removeProperty('--accent'); }
+    if (c && c.btn)     root.style.setProperty('--burgundy-deep', shadeColor(c.btn, -22));
+    else                root.style.removeProperty('--burgundy-deep');
+    if (c && c.btnText) { root.style.setProperty('--gold-soft', c.btnText); root.style.setProperty('--gold', c.btnText); }
+    else                { root.style.removeProperty('--gold-soft'); root.style.removeProperty('--gold'); }
+  }
+
+  // Lighten (+) or darken (-) a hex colour by a percentage.
+  function shadeColor(hex, percent) {
+    try {
+      let h = hex.replace('#',''); if (h.length===3) h = h.split('').map(x=>x+x).join('');
+      let r=parseInt(h.substr(0,2),16), g=parseInt(h.substr(2,2),16), b=parseInt(h.substr(4,2),16);
+      const t = percent < 0 ? 0 : 255, p = Math.abs(percent)/100;
+      r=Math.round((t-r)*p)+r; g=Math.round((t-g)*p)+g; b=Math.round((t-b)*p)+b;
+      return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');
+    } catch(e){ return hex; }
+  }
+  // Blend colour a toward colour b by ratio (0..1).
+  function mixColor(a, b, ratio) {
+    try {
+      const px = h => { h=h.replace('#',''); if(h.length===3)h=h.split('').map(x=>x+x).join(''); return [parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)]; };
+      const [r1,g1,b1]=px(a), [r2,g2,b2]=px(b);
+      const r=Math.round(r1+(r2-r1)*ratio), g=Math.round(g1+(g2-g1)*ratio), bl=Math.round(b1+(b2-b1)*ratio);
+      return '#'+[r,g,bl].map(x=>x.toString(16).padStart(2,'0')).join('');
+    } catch(e){ return a; }
+  }
+
+  // ============ ADMIN LANGUAGE ============
+  // Translates every element tagged with data-ai18n into the chosen admin language.
+  function applyAdminLang(lang) {
+    if (lang) adminLang = lang;
+    const dict = adminI18n[adminLang] || adminI18n.en;
+    document.querySelectorAll('[data-ai18n]').forEach(el => {
+      const key = el.getAttribute('data-ai18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    // Highlight the active language button
+    document.querySelectorAll('.admin-lang-btn').forEach(b => b.classList.toggle('active', b.dataset.alang === adminLang));
+    try { localStorage.setItem('_arm_admin_lang', adminLang); } catch(e){}
+  }
+  // Convenience: current admin dictionary (for JS-generated messages)
+  function aT(key) { return (adminI18n[adminLang] || adminI18n.en)[key] || (adminI18n.en[key] || key); }
+
   function renderBanner() {
+    // Main menu banner
     const ba = document.getElementById('bannerArea');
-    if (!appSettings.bannerType || appSettings.bannerType === 'none') {
-      ba.classList.remove('show');
-      ba.innerHTML = '';
-      return;
+    paintBanner(ba, appSettings.bannerType, appSettings.bannerUrl);
+    // Idle / welcome screen banner
+    renderIdleBanner();
+  }
+
+  function renderIdleBanner() {
+    const iv = document.getElementById('idleVideoArea');
+    if (!iv) return;
+    const type = appSettings.idleBannerType, url = appSettings.idleBannerUrl;
+    if (!type || type === 'none' || !url) { iv.innerHTML = ''; return; }
+    if (type === 'image') {
+      // object-fit:cover on the container fills the screen in any orientation
+      iv.innerHTML = `<img src="${url}" alt="welcome banner" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML=''">`;
+    } else if (type === 'youtube') {
+      const vid = extractYouTubeId(url);
+      iv.innerHTML = vid ? `<iframe src="https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&playlist=${vid}&controls=0&rel=0&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>` : '';
     }
-    if (appSettings.bannerType === 'image' && appSettings.bannerUrl) {
-      ba.innerHTML = `<img src="${appSettings.bannerUrl}" alt="banner" onerror="this.parentElement.innerHTML='<div class=placeholder>Banner image failed to load</div>'">`;
-      ba.classList.add('show');
-    } else if (appSettings.bannerType === 'youtube' && appSettings.bannerUrl) {
-      const videoId = extractYouTubeId(appSettings.bannerUrl);
-      if (videoId) {
-        ba.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-        ba.classList.add('show');
-      } else {
-        ba.innerHTML = '<div class="placeholder">Invalid YouTube URL</div>';
-        ba.classList.add('show');
-      }
+  }
+
+  // Shared helper: paint a banner area with image or youtube. Image uses
+  // object-fit:cover so it fills the frame whether the source is wide or tall.
+  function paintBanner(el, type, url) {
+    if (!el) return;
+    if (!type || type === 'none' || !url) { el.classList.remove('show'); el.innerHTML = ''; return; }
+    if (type === 'image') {
+      el.innerHTML = `<img src="${url}" alt="banner" onerror="this.parentElement.innerHTML='<div class=placeholder>Banner image failed to load</div>'">`;
+      el.classList.add('show');
+    } else if (type === 'youtube') {
+      const vid = extractYouTubeId(url);
+      el.innerHTML = vid
+        ? `<iframe src="https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&loop=1&playlist=${vid}&controls=0&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`
+        : '<div class="placeholder">Invalid YouTube URL</div>';
+      el.classList.add('show');
     } else {
-      ba.classList.remove('show');
+      el.classList.remove('show');
     }
   }
 
@@ -3874,6 +4114,7 @@
     renderAdminTables();
     renderAdminMenu();
     try { populateSettingsFields(); } catch(e){}
+    try { applyAdminLang(); } catch(e){}
   }
   function openAdminDashboard() {
     if (getAdminPin() === '000000') {
@@ -4596,6 +4837,10 @@
     document.getElementById('footerText').value = appSettings.footerText || '';
     document.getElementById('bannerType').value = appSettings.bannerType || 'none';
     document.getElementById('bannerUrl').value = appSettings.bannerUrl || '';
+    const ibt = document.getElementById('idleBannerType');
+    const ibu = document.getElementById('idleBannerUrl');
+    if (ibt) ibt.value = appSettings.idleBannerType || 'none';
+    if (ibu) ibu.value = appSettings.idleBannerUrl || '';
     document.getElementById('fontSelect').value = appSettings.font || 'cormorant';
     document.getElementById('settingName').value = appSettings.restaurantName || 'ARMENIA';
     document.getElementById('settingTagline').value = appSettings.tagline || 'Restaurant · Pattaya';
@@ -4620,6 +4865,23 @@
     const prev = document.getElementById('logoPreview');
     if (appSettings.logoData) prev.innerHTML = `<img src="${appSettings.logoData}" style="width:100%;height:100%;object-fit:contain">`;
     else prev.textContent = (appSettings.restaurantName || 'A').charAt(0);
+    // Welcome screen + button label
+    const it = document.getElementById('idleTitleInput');
+    const is = document.getElementById('idleSubInput');
+    const ic = document.getElementById('idleCtaInput');
+    if (it) it.value = appSettings.idleTitle || '';
+    if (is) is.value = appSettings.idleSub || '';
+    if (ic) ic.value = appSettings.idleCta || '';
+    // Theme colours
+    const c = appSettings.colors || DEFAULT_COLORS;
+    const cb = document.getElementById('colBg');
+    const ci = document.getElementById('colInk');
+    const cbt = document.getElementById('colBtn');
+    const cbtt = document.getElementById('colBtnText');
+    if (cb) cb.value = c.bg || DEFAULT_COLORS.bg;
+    if (ci) ci.value = c.ink || DEFAULT_COLORS.ink;
+    if (cbt) cbt.value = c.btn || DEFAULT_COLORS.btn;
+    if (cbtt) cbtt.value = c.btnText || DEFAULT_COLORS.btnText;
   }
 
   document.getElementById('logoUpload').onchange = (e) => {
@@ -4657,6 +4919,18 @@
     applyBranding();
     showToast('Banner saved');
   };
+  const saveIdleBannerBtn = document.getElementById('saveIdleBanner');
+  if (saveIdleBannerBtn) saveIdleBannerBtn.onclick = () => {
+    appSettings.idleBannerType = document.getElementById('idleBannerType').value;
+    appSettings.idleBannerUrl  = document.getElementById('idleBannerUrl').value.trim();
+    saveSettings();
+    applyBranding();
+    showToast('Banner saved');
+  };
+  // Admin language buttons
+  document.querySelectorAll('.admin-lang-btn').forEach(b => {
+    b.onclick = () => applyAdminLang(b.dataset.alang);
+  });
   document.getElementById('fontSelect').onchange = (e) => {
     appSettings.font = e.target.value;
     saveSettings();
@@ -4674,7 +4948,67 @@
     showToast('Restaurant info saved');
   };
 
-  // ── Printer ──
+  // ── Welcome Screen ──
+  const saveIdleBtn = document.getElementById('saveIdle');
+  if (saveIdleBtn) saveIdleBtn.onclick = () => {
+    appSettings.idleTitle = document.getElementById('idleTitleInput').value.trim();
+    appSettings.idleSub   = document.getElementById('idleSubInput').value.trim();
+    saveSettings();
+    applyBranding();
+    showToast('Welcome screen saved');
+  };
+
+  // ── Theme Colours ──
+  const saveColorsBtn = document.getElementById('saveColors');
+  if (saveColorsBtn) saveColorsBtn.onclick = () => {
+    appSettings.colors = {
+      bg:      document.getElementById('colBg').value,
+      ink:     document.getElementById('colInk').value,
+      btn:     document.getElementById('colBtn').value,
+      btnText: document.getElementById('colBtnText').value
+    };
+    saveSettings();
+    applyThemeColors();
+    showToast('Colours saved · synced to all devices');
+  };
+  const resetColorsBtn = document.getElementById('resetColors');
+  if (resetColorsBtn) resetColorsBtn.onclick = () => {
+    appSettings.colors = null;
+    document.getElementById('colBg').value      = DEFAULT_COLORS.bg;
+    document.getElementById('colInk').value     = DEFAULT_COLORS.ink;
+    document.getElementById('colBtn').value     = DEFAULT_COLORS.btn;
+    document.getElementById('colBtnText').value = DEFAULT_COLORS.btnText;
+    saveSettings();
+    applyThemeColors();
+    showToast('Colours reset to default');
+  };
+
+  // ── Button Labels ──
+  const saveButtonTextBtn = document.getElementById('saveButtonText');
+  if (saveButtonTextBtn) saveButtonTextBtn.onclick = () => {
+    appSettings.idleCta = document.getElementById('idleCtaInput').value.trim();
+    saveSettings();
+    applyBranding();
+    showToast('Button text saved');
+  };
+
+  // ── Admin PIN change ──
+  const saveNewPinBtn = document.getElementById('saveNewPin');
+  if (saveNewPinBtn) saveNewPinBtn.onclick = () => {
+    const msg = document.getElementById('pinChangeMsg');
+    const p1 = document.getElementById('newPinInput').value.trim();
+    const p2 = document.getElementById('confirmPinInput').value.trim();
+    msg.style.color = '#c0392b';
+    if (!/^\d{6}$/.test(p1)) { msg.textContent = aT('pinMustBe'); return; }
+    if (p1 !== p2) { msg.textContent = aT('pinNoMatch'); return; }
+    setAdminPin(p1);
+    document.getElementById('newPinInput').value = '';
+    document.getElementById('confirmPinInput').value = '';
+    msg.style.color = 'var(--green)';
+    msg.textContent = aT('pinSuccess');
+    showToast('Admin PIN updated · synced to all devices');
+    setTimeout(() => { msg.textContent = ''; }, 4000);
+  };
   const savePrinterBtn = document.getElementById('savePrinter');
   if (savePrinterBtn) savePrinterBtn.onclick = () => {
     appSettings.printerType = document.getElementById('printerType').value;
