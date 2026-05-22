@@ -98,6 +98,15 @@
   html[data-font="helvetica"] .font-display { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: -0.02em; }
   html[data-font="sans"] .font-display { font-family: 'Inter', system-ui, sans-serif; letter-spacing: -0.02em; }
 
+  /* Per-area font overrides (set via JS on :root). Fall back to display font. */
+  .brand-text h1 { font-family: var(--font-brand, 'Cinzel', serif) !important; }
+  .idle-title    { font-family: var(--font-idle, 'Cinzel', serif) !important; }
+  .idle-sub      { font-family: var(--font-idle, 'Cormorant Garamond', serif) !important; }
+  .featured-name,
+  .dish-name,
+  .menu-item-name,
+  .cart-item-name { font-family: var(--font-dish, 'Cormorant Garamond', serif) !important; }
+
   /* ============ TABLE SELECT SCREEN ============ */
   .table-select {
     position: fixed; inset: 0;
@@ -1751,12 +1760,26 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
+    overflow: hidden;
     z-index: 0;
   }
+  /* YouTube iframes keep 16:9; scale + center so the video always COVERS the
+     whole idle screen (full width on landscape, full height on portrait) with
+     no black bars, on any device or orientation. */
   .idle-video iframe {
-    width: 100%; height: 100%;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 56.25vw;            /* 16:9 of viewport width */
+    min-height: 100vh;
+    min-width: 177.78vh;        /* 16:9 of viewport height */
     border: none;
     pointer-events: none;
+  }
+  .idle-video img {
+    width: 100%; height: 100%;
+    object-fit: cover;
   }
   .idle-overlay {
     position: absolute; inset: 0;
@@ -1927,6 +1950,98 @@
   .de-actions { display: flex; gap: 10px; margin-top: 16px; }
   .de-btn { flex: 1; padding: 12px; border: 1px solid var(--line); background: transparent; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; color: var(--ink); }
   .de-btn.primary { background: var(--burgundy); color: var(--gold-soft); border-color: var(--gold); font-family: 'Cinzel',serif; }
+
+  /* ============ MOBILE / PHONE RESPONSIVE (≤640px) ============ */
+  @media (max-width: 640px) {
+    /* Prevent any horizontal overflow at the root */
+    .app { overflow-x: hidden; max-width: 100vw; }
+    header, main { max-width: 100vw; overflow-x: hidden; }
+    .brand-text { min-width: 0; overflow: hidden; }
+    .brand-text h1, .brand-text p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* Header */
+    header { padding: 0 14px; height: 60px; gap: 8px; }
+    .brand { gap: 9px; }
+    .brand-mark { width: 38px; height: 38px; font-size: 18px; }
+    .brand-text h1 { font-size: 15px; letter-spacing: 0.04em; }
+    .brand-text p { font-size: 11px; }
+    .header-right { gap: 5px; }
+    .lang-switcher { gap: 1px; }
+    .lang-btn { padding: 5px 7px; font-size: 10px; }
+    .icon-btn { width: 34px; height: 34px; font-size: 15px; }
+    .table-badge { font-size: 10px; padding: 4px 8px; }
+
+    /* Main content */
+    main { padding: 14px 14px 90px; }
+    .hero { gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .hero-text h2 { font-size: 30px; }
+    .hero-num { font-size: 11px; }
+
+    /* Grids → single / tighter columns */
+    .featured-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .menu-grid { grid-template-columns: 1fr; gap: 12px; }
+    .ts-grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 9px; }
+
+    /* Idle / welcome screen */
+    .idle-title { font-size: 36px; letter-spacing: 0.04em; }
+    .idle-sub { font-size: 16px; margin-bottom: 30px; }
+    .idle-logo { width: 64px; height: 64px; }
+    .idle-content { padding: 24px; }
+    .idle-cta { font-size: 12px; padding: 13px 22px; }
+
+    /* Banner */
+    .banner-area img, .banner-area iframe { max-height: 180px; }
+
+    /* Bottom cart bar */
+    .bottom-bar { padding: 10px 14px; }
+
+    /* ===== ADMIN ===== */
+    .admin-head { padding: 12px 14px; gap: 10px; }
+    .admin-head h2 { font-size: 18px; }
+    /* Tabs scroll horizontally instead of wrapping into a tall stack */
+    .admin-tabs {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      width: 100%;
+      order: 3;
+    }
+    .admin-tabs::-webkit-scrollbar { display: none; }
+    .admin-tab { white-space: nowrap; flex: 0 0 auto; padding: 7px 12px; }
+    .admin-lang-row { order: 2; }
+    .admin-body { padding: 16px 14px; }
+
+    /* Stats: 2 columns instead of 4 */
+    .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* Admin grids single column */
+    .tables-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    .admin-menu-grid { grid-template-columns: 1fr; }
+
+    /* Orders: stack info + actions vertically */
+    .order-card { grid-template-columns: 1fr; gap: 10px; }
+    .order-actions { flex-wrap: wrap; }
+    .order-btn { flex: 1 1 auto; }
+
+    /* Settings forms full width */
+    .settings-section { padding: 16px; }
+    .cat-admin-list { max-width: 100%; }
+
+    /* Dish edit modal */
+    .dish-edit-card { padding: 18px; max-height: 92vh; }
+    .de-row { grid-template-columns: 1fr; }
+
+    /* Generic: stop accidental horizontal overflow */
+    img, iframe, video { max-width: 100%; }
+  }
+
+  /* Very small phones */
+  @media (max-width: 380px) {
+    .hero-text h2 { font-size: 26px; }
+    .idle-title { font-size: 30px; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -2227,10 +2342,10 @@
 <!-- ============ ASSIGN TABLE MODAL ============ -->
 <div class="assign-modal" id="assignModal">
   <div class="assign-card">
-    <h3>Assign Table</h3>
-    <p class="sub">Select a free table to assign this order to</p>
+    <h3 data-ai18n="assignTitle">Assign Table</h3>
+    <p class="sub" data-ai18n="assignSub">Select a free table to assign this order to</p>
     <div class="assign-grid" id="assignGrid"></div>
-    <button class="order-btn" id="assignCancel" style="width:100%">Cancel</button>
+    <button class="order-btn" id="assignCancel" style="width:100%" data-ai18n="cancel">Cancel</button>
   </div>
 </div>
 
@@ -2275,7 +2390,7 @@
         <div class="stat-pill"><span data-i18n="occupied">Occupied</span>: <strong id="poolOccupied">0</strong></div>
         <div class="stat-pill"><span data-i18n="reserved">Reserved</span>: <strong id="poolReserved">0</strong></div>
         <div style="flex:1"></div>
-        <button class="add-table-btn" id="addTableBtn">+ Add Table</button>
+        <button class="add-table-btn" id="addTableBtn" data-ai18n="addTable">+ Add Table</button>
       </div>
       <div class="tables-grid" id="tablesGrid"></div>
     </div>
@@ -2283,8 +2398,8 @@
     <!-- MENU -->
     <div id="tab-menu" class="hidden">
       <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap">
-        <p style="color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;flex:1">Click <span style="color:var(--gold)">★</span> to feature (max 4) · ✏️ to edit · 🗑 to delete. Add-ons are managed per dish in the edit form.</p>
-        <button class="save-btn" id="addDishBtn">+ Add Dish</button>
+        <p style="color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;flex:1" data-ai18n="menuHelp">Click ★ to feature (max 4) · ✏️ to edit · 🗑 to delete. Add-ons are managed per dish in the edit form.</p>
+        <button class="save-btn" id="addDishBtn" data-ai18n="addDish">+ Add Dish</button>
       </div>
       <div class="admin-menu-grid" id="adminMenuGrid"></div>
     </div>
@@ -2306,7 +2421,7 @@
           <button class="hist-filter-btn" data-period="all" data-ai18n="histAll">All</button>
         </div>
         <div style="flex:1"></div>
-        <button class="save-btn" id="exportExcelBtn">⬇ Export Excel</button>
+        <button class="save-btn" id="exportExcelBtn" data-ai18n="exportExcel">⬇ Export Excel</button>
       </div>
       <div class="stats-row" id="histStats" style="margin-bottom:16px">
         <div class="stat-card"><div class="stat-label" data-ai18n="histOrders">Orders</div><div class="stat-val" id="histStatOrders">0</div></div>
@@ -2390,7 +2505,7 @@
       <div class="settings-section">
         <h3><span data-ai18n="fontTitle">Display</span> <em data-ai18n="fontEm">Font</em></h3>
         <div class="field">
-          <label data-ai18n="fontFamily">Font Family</label>
+          <label data-ai18n="fontFamily">Overall Font</label>
           <select id="fontSelect">
             <option value="cormorant">Cormorant Garamond (Classic Elegant)</option>
             <option value="cinzel">Cinzel (Roman Carved Stone)</option>
@@ -2400,6 +2515,40 @@
           </select>
           <div class="help" data-ai18n="fontHelp">Changes the display font across the entire app instantly.</div>
         </div>
+        <div class="field">
+          <label data-ai18n="fontBrand">Restaurant Name Font</label>
+          <select id="fontBrandSelect">
+            <option value="" data-ai18n="fontInherit">Same as Overall</option>
+            <option value="cormorant">Cormorant Garamond</option>
+            <option value="cinzel">Cinzel</option>
+            <option value="montserrat">Montserrat</option>
+            <option value="helvetica">Helvetica Neue</option>
+            <option value="sans">Inter Sans-Serif</option>
+          </select>
+        </div>
+        <div class="field">
+          <label data-ai18n="fontDish">Dish Name Font</label>
+          <select id="fontDishSelect">
+            <option value="" data-ai18n="fontInherit">Same as Overall</option>
+            <option value="cormorant">Cormorant Garamond</option>
+            <option value="cinzel">Cinzel</option>
+            <option value="montserrat">Montserrat</option>
+            <option value="helvetica">Helvetica Neue</option>
+            <option value="sans">Inter Sans-Serif</option>
+          </select>
+        </div>
+        <div class="field">
+          <label data-ai18n="fontIdle">Welcome Screen Font</label>
+          <select id="fontIdleSelect">
+            <option value="" data-ai18n="fontInherit">Same as Overall</option>
+            <option value="cormorant">Cormorant Garamond</option>
+            <option value="cinzel">Cinzel</option>
+            <option value="montserrat">Montserrat</option>
+            <option value="helvetica">Helvetica Neue</option>
+            <option value="sans">Inter Sans-Serif</option>
+          </select>
+        </div>
+        <button class="save-btn" id="saveFonts" data-ai18n="saveFonts">Save Fonts</button>
       </div>
 
       <div class="settings-section">
@@ -2733,7 +2882,7 @@
       idleBannerTitle:'Welcome Screen', idleBannerEm:'Banner', idleBannerHelp:'Background image or video on the idle screen guests see first. Fills the screen in any orientation.',
       mainBannerTitle:'Menu', mainBannerEm:'Banner', mainBannerHelp:'Image or video shown at the top of the ordering menu.',
       bannerType:'Banner Type', bannerNone:'None', bannerImage:'Image URL', bannerYoutube:'YouTube Video', bannerUrlLabel:'Image URL or YouTube URL', bannerYtHelp:'For YouTube, paste any standard URL — auto-converts to embed format.', saveBanner:'Save Banner',
-      fontTitle:'Display', fontEm:'Font', fontFamily:'Font Family', fontHelp:'Changes the display font across the entire app instantly.',
+      fontTitle:'Display', fontEm:'Font', fontFamily:'Overall Font', fontHelp:'Changes the display font across the entire app instantly.', fontBrand:'Restaurant Name Font', fontDish:'Dish Name Font', fontIdle:'Welcome Screen Font', fontInherit:'Same as Overall', saveFonts:'Save Fonts',
       welcomeTitle:'Welcome', welcomeEm:'Screen', welcomeHelp:'The idle screen guests see before they start ordering. Leave a field empty to fall back to the restaurant name.', welcomeTitleLabel:'Welcome Title', welcomeTitleHelp:'Large title shown in the centre. Defaults to the restaurant name.', welcomeSubLabel:'Welcome Subtitle / Details', welcomeSubHelp:'Smaller line under the title.', saveWelcome:'Save Welcome Screen',
       themeTitle:'Theme', themeEm:'Colours', themeHelp:'Pick your four core colours — every screen, card and button updates together automatically.', colBg:'Background', colBgHelp:'Page background colour', colInk:'Text', colInkHelp:'Main text colour', colBtn:'Button', colBtnHelp:'Main button / accent colour', colBtnText:'Button Text', colBtnTextHelp:'Text colour inside buttons', saveColors:'Save Colours', resetColors:'Reset to Default',
       btnLabelsTitle:'Button', btnLabelsEm:'Labels', ctaLabel:'"Tap to Begin" Button Text', ctaHelp:'The button on the welcome screen guests tap to start ordering.', saveButtonText:'Save Button Text',
@@ -2742,7 +2891,16 @@
       deviceTitle:'Device', deviceEm:'Mode', deviceThis:'This device is', deviceCustomer:'Customer Tablet', deviceAdmin:'Admin / Kitchen Display', deviceHelp:'Customer = ordering interface. Admin = receives orders and manages everything.',
       printerTitle:'Kitchen', printerEm:'Printer', printerType:'Printer Type', printerIP:'Printer IP Address', savePrinter:'Save Printer',
       tgTitle:'Telegram', tgEm:'Notifications', tgEnable:'Enable Telegram Notifications', tgDisabled:'Disabled', tgEnabled:'Enabled', tgToken:'Bot Token', tgChatId:'Chat ID (group: starts with -100; personal: positive number)', saveTg:'Save Telegram', testTg:'📨 Send Test Message',
-      pinMustBe:'PIN must be exactly 6 digits.', pinNoMatch:'The two PINs do not match.', pinSuccess:'PIN changed successfully.'
+      pinMustBe:'PIN must be exactly 6 digits.', pinNoMatch:'The two PINs do not match.', pinSuccess:'PIN changed successfully.',
+      noActiveOrders:'No active orders — waiting for customers...', noOrdersPeriod:'No orders in this period',
+      justNow:'just now', minAgo:'min ago', tableWord:'Table',
+      waiterCalling:'Customer calling for a waiter', orderCancelled:'Order Cancelled', cancelledByCustomer:'cancelled by customer', billRequest:'BILL REQUEST',
+      btnAcknowledge:'Acknowledge', btnViewBill:'👁 View Bill', btnPrintBill:'🖨 Print Bill', btnCompletePayment:'✓ Complete Payment',
+      btnReassign:'Reassign', btnConfirmKitchen:'✓ Confirm & Print Kitchen', btnReprintKitchen:'🍳 Reprint Kitchen',
+      btnMarkServed:'🍽 Mark Served', btnCheckout:'💳 Checkout', btnCloseNoBill:'✕ Close (no bill)', btnReopen:'↻ Reopen',
+      bMNEW:'NEW', bInProgress:'⏳ IN PROGRESS', bServed:'🍽 SERVED', bBillRequested:'🧾 BILL REQUESTED', bBilled:'BILLED', bDone:'DONE',
+      addTable:'+ Add Table', addDish:'+ Add Dish', menuHelp:'Click ★ to feature (max 4) · ✏️ to edit · 🗑 to delete. Add-ons are managed per dish in the edit form.',
+      exportExcel:'⬇ Export Excel', assignTitle:'Assign Table', assignSub:'Select a free table to assign this order to', cancel:'Cancel'
     },
     th: {
       dashTitle:'แอดมิน', dashTitleEm:'แดชบอร์ด',
@@ -2757,7 +2915,7 @@
       idleBannerTitle:'หน้าจอต้อนรับ', idleBannerEm:'แบนเนอร์', idleBannerHelp:'รูปหรือวิดีโอพื้นหลังบนหน้าจอพักที่ลูกค้าเห็นก่อน เต็มหน้าจอทุกแนว',
       mainBannerTitle:'เมนู', mainBannerEm:'แบนเนอร์', mainBannerHelp:'รูปหรือวิดีโอที่แสดงด้านบนของเมนูสั่งอาหาร',
       bannerType:'ประเภทแบนเนอร์', bannerNone:'ไม่มี', bannerImage:'ลิงก์รูปภาพ', bannerYoutube:'วิดีโอ YouTube', bannerUrlLabel:'ลิงก์รูปภาพหรือ YouTube', bannerYtHelp:'สำหรับ YouTube วางลิงก์ปกติได้เลย ระบบแปลงให้อัตโนมัติ', saveBanner:'บันทึกแบนเนอร์',
-      fontTitle:'แสดงผล', fontEm:'แบบอักษร', fontFamily:'แบบอักษร', fontHelp:'เปลี่ยนแบบอักษรทั้งแอปทันที',
+      fontTitle:'แสดงผล', fontEm:'แบบอักษร', fontFamily:'แบบอักษรหลัก', fontHelp:'เปลี่ยนแบบอักษรทั้งแอปทันที', fontBrand:'แบบอักษรชื่อร้าน', fontDish:'แบบอักษรชื่อเมนู', fontIdle:'แบบอักษรหน้าจอต้อนรับ', fontInherit:'เหมือนแบบอักษรหลัก', saveFonts:'บันทึกแบบอักษร',
       welcomeTitle:'หน้าจอ', welcomeEm:'ต้อนรับ', welcomeHelp:'หน้าจอพักที่ลูกค้าเห็นก่อนเริ่มสั่ง เว้นว่างเพื่อใช้ชื่อร้านแทน', welcomeTitleLabel:'หัวข้อต้อนรับ', welcomeTitleHelp:'หัวข้อใหญ่ตรงกลาง ค่าเริ่มต้นคือชื่อร้าน', welcomeSubLabel:'คำบรรยายต้อนรับ', welcomeSubHelp:'บรรทัดเล็กใต้หัวข้อ', saveWelcome:'บันทึกหน้าจอต้อนรับ',
       themeTitle:'ธีม', themeEm:'สี', themeHelp:'เลือกสีหลักสี่สี ทุกหน้าจอ การ์ด และปุ่มจะอัปเดตพร้อมกัน', colBg:'พื้นหลัง', colBgHelp:'สีพื้นหลังหน้า', colInk:'ตัวอักษร', colInkHelp:'สีตัวอักษรหลัก', colBtn:'ปุ่ม', colBtnHelp:'สีปุ่มหลัก', colBtnText:'ตัวอักษรในปุ่ม', colBtnTextHelp:'สีตัวอักษรในปุ่ม', saveColors:'บันทึกสี', resetColors:'รีเซ็ตค่าเริ่มต้น',
       btnLabelsTitle:'ข้อความ', btnLabelsEm:'ปุ่ม', ctaLabel:'ข้อความปุ่ม "แตะเพื่อเริ่ม"', ctaHelp:'ปุ่มบนหน้าจอต้อนรับที่ลูกค้าแตะเพื่อเริ่มสั่ง', saveButtonText:'บันทึกข้อความปุ่ม',
@@ -2766,7 +2924,16 @@
       deviceTitle:'โหมด', deviceEm:'อุปกรณ์', deviceThis:'อุปกรณ์นี้คือ', deviceCustomer:'แท็บเล็ตลูกค้า', deviceAdmin:'แอดมิน / จอครัว', deviceHelp:'ลูกค้า = หน้าจอสั่งอาหาร แอดมิน = รับออเดอร์และจัดการทุกอย่าง',
       printerTitle:'เครื่องพิมพ์', printerEm:'ครัว', printerType:'ประเภทเครื่องพิมพ์', printerIP:'IP เครื่องพิมพ์', savePrinter:'บันทึกเครื่องพิมพ์',
       tgTitle:'Telegram', tgEm:'แจ้งเตือน', tgEnable:'เปิดแจ้งเตือน Telegram', tgDisabled:'ปิด', tgEnabled:'เปิด', tgToken:'Bot Token', tgChatId:'Chat ID (กลุ่ม: ขึ้นต้น -100; ส่วนตัว: เลขบวก)', saveTg:'บันทึก Telegram', testTg:'📨 ส่งข้อความทดสอบ',
-      pinMustBe:'PIN ต้องเป็นตัวเลข 6 หลัก', pinNoMatch:'PIN ทั้งสองไม่ตรงกัน', pinSuccess:'เปลี่ยน PIN สำเร็จ'
+      pinMustBe:'PIN ต้องเป็นตัวเลข 6 หลัก', pinNoMatch:'PIN ทั้งสองไม่ตรงกัน', pinSuccess:'เปลี่ยน PIN สำเร็จ',
+      noActiveOrders:'ไม่มีออเดอร์ — กำลังรอลูกค้า...', noOrdersPeriod:'ไม่มีออเดอร์ในช่วงนี้',
+      justNow:'เมื่อสักครู่', minAgo:'นาทีที่แล้ว', tableWord:'โต๊ะ',
+      waiterCalling:'ลูกค้าเรียกพนักงาน', orderCancelled:'ออเดอร์ถูกยกเลิก', cancelledByCustomer:'ลูกค้ายกเลิก', billRequest:'ขอบิล',
+      btnAcknowledge:'รับทราบ', btnViewBill:'👁 ดูบิล', btnPrintBill:'🖨 พิมพ์บิล', btnCompletePayment:'✓ ชำระเงินเสร็จ',
+      btnReassign:'ย้ายโต๊ะ', btnConfirmKitchen:'✓ ยืนยัน & พิมพ์ครัว', btnReprintKitchen:'🍳 พิมพ์ครัวซ้ำ',
+      btnMarkServed:'🍽 เสิร์ฟแล้ว', btnCheckout:'💳 ชำระเงิน', btnCloseNoBill:'✕ ปิด (ไม่มีบิล)', btnReopen:'↻ เปิดใหม่',
+      bMNEW:'ใหม่', bInProgress:'⏳ กำลังทำ', bServed:'🍽 เสิร์ฟแล้ว', bBillRequested:'🧾 ขอบิล', bBilled:'ชำระแล้ว', bDone:'เสร็จ',
+      addTable:'+ เพิ่มโต๊ะ', addDish:'+ เพิ่มเมนู', menuHelp:'แตะ ★ เพื่อแนะนำ (สูงสุด 4) · ✏️ แก้ไข · 🗑 ลบ จัดการเพิ่มเติมในฟอร์มแก้ไขแต่ละจาน',
+      exportExcel:'⬇ ส่งออก Excel', assignTitle:'ย้ายโต๊ะ', assignSub:'เลือกโต๊ะว่างเพื่อย้ายออเดอร์นี้', cancel:'ยกเลิก'
     },
     ru: {
       dashTitle:'Админ', dashTitleEm:'Панель',
@@ -2781,7 +2948,7 @@
       idleBannerTitle:'Экран приветствия', idleBannerEm:'Баннер', idleBannerHelp:'Фоновое изображение или видео на экране ожидания, который гости видят первым. Заполняет экран в любой ориентации.',
       mainBannerTitle:'Меню', mainBannerEm:'Баннер', mainBannerHelp:'Изображение или видео вверху меню заказа.',
       bannerType:'Тип баннера', bannerNone:'Нет', bannerImage:'Ссылка на изображение', bannerYoutube:'Видео YouTube', bannerUrlLabel:'Ссылка на изображение или YouTube', bannerYtHelp:'Для YouTube вставьте обычную ссылку — преобразуется автоматически.', saveBanner:'Сохранить баннер',
-      fontTitle:'Шрифт', fontEm:'Дисплея', fontFamily:'Семейство шрифтов', fontHelp:'Мгновенно меняет шрифт во всём приложении.',
+      fontTitle:'Шрифт', fontEm:'Дисплея', fontFamily:'Общий шрифт', fontHelp:'Мгновенно меняет шрифт во всём приложении.', fontBrand:'Шрифт названия ресторана', fontDish:'Шрифт названий блюд', fontIdle:'Шрифт экрана приветствия', fontInherit:'Как общий', saveFonts:'Сохранить шрифты',
       welcomeTitle:'Экран', welcomeEm:'Приветствия', welcomeHelp:'Экран ожидания перед началом заказа. Оставьте поле пустым, чтобы использовать название ресторана.', welcomeTitleLabel:'Заголовок приветствия', welcomeTitleHelp:'Крупный заголовок в центре. По умолчанию — название ресторана.', welcomeSubLabel:'Подзаголовок / Детали', welcomeSubHelp:'Меньшая строка под заголовком.', saveWelcome:'Сохранить экран',
       themeTitle:'Тема', themeEm:'Цвета', themeHelp:'Выберите четыре основных цвета — все экраны, карточки и кнопки обновятся вместе.', colBg:'Фон', colBgHelp:'Цвет фона страницы', colInk:'Текст', colInkHelp:'Основной цвет текста', colBtn:'Кнопка', colBtnHelp:'Основной цвет кнопок', colBtnText:'Текст кнопки', colBtnTextHelp:'Цвет текста на кнопках', saveColors:'Сохранить цвета', resetColors:'Сбросить по умолчанию',
       btnLabelsTitle:'Надписи', btnLabelsEm:'Кнопок', ctaLabel:'Текст кнопки «Нажмите, чтобы начать»', ctaHelp:'Кнопка на экране приветствия, которую гости нажимают для начала заказа.', saveButtonText:'Сохранить текст кнопки',
@@ -2790,7 +2957,16 @@
       deviceTitle:'Режим', deviceEm:'устройства', deviceThis:'Это устройство —', deviceCustomer:'Планшет клиента', deviceAdmin:'Админ / Кухонный экран', deviceHelp:'Клиент = интерфейс заказа. Админ = приём заказов и управление всем.',
       printerTitle:'Кухонный', printerEm:'Принтер', printerType:'Тип принтера', printerIP:'IP-адрес принтера', savePrinter:'Сохранить принтер',
       tgTitle:'Telegram', tgEm:'Уведомления', tgEnable:'Включить уведомления Telegram', tgDisabled:'Выключено', tgEnabled:'Включено', tgToken:'Токен бота', tgChatId:'Chat ID (группа: начинается с -100; личный: положительное число)', saveTg:'Сохранить Telegram', testTg:'📨 Отправить тест',
-      pinMustBe:'PIN должен состоять ровно из 6 цифр.', pinNoMatch:'PIN-коды не совпадают.', pinSuccess:'PIN успешно изменён.'
+      pinMustBe:'PIN должен состоять ровно из 6 цифр.', pinNoMatch:'PIN-коды не совпадают.', pinSuccess:'PIN успешно изменён.',
+      noActiveOrders:'Нет активных заказов — ожидание гостей...', noOrdersPeriod:'Нет заказов за этот период',
+      justNow:'только что', minAgo:'мин назад', tableWord:'Стол',
+      waiterCalling:'Гость зовёт официанта', orderCancelled:'Заказ отменён', cancelledByCustomer:'отменён гостем', billRequest:'ЗАПРОС СЧЁТА',
+      btnAcknowledge:'Принять', btnViewBill:'👁 Счёт', btnPrintBill:'🖨 Печать счёта', btnCompletePayment:'✓ Завершить оплату',
+      btnReassign:'Сменить стол', btnConfirmKitchen:'✓ Подтвердить и печать', btnReprintKitchen:'🍳 Печать заново',
+      btnMarkServed:'🍽 Подано', btnCheckout:'💳 Оплата', btnCloseNoBill:'✕ Закрыть (без счёта)', btnReopen:'↻ Открыть снова',
+      bMNEW:'НОВЫЙ', bInProgress:'⏳ ГОТОВИТСЯ', bServed:'🍽 ПОДАНО', bBillRequested:'🧾 ЗАПРОС СЧЁТА', bBilled:'ОПЛАЧЕНО', bDone:'ГОТОВО',
+      addTable:'+ Добавить стол', addDish:'+ Добавить блюдо', menuHelp:'Нажмите ★ для рекомендуемых (макс. 4) · ✏️ изменить · 🗑 удалить. Добавки настраиваются для каждого блюда в форме.',
+      exportExcel:'⬇ Экспорт Excel', assignTitle:'Сменить стол', assignSub:'Выберите свободный стол для этого заказа', cancel:'Отмена'
     }
   };
   let adminLang = 'en';
@@ -3124,7 +3300,15 @@
     phone:'+66 62 664 0700', address:'334/113-115 M12, Jomtien Beach, Pattaya',
     printerType:'escpos', printerIP:'192.168.1.100',
     idleTitle:'', idleSub:'', idleCta:'', colors:null,
-    idleBannerType:'none', idleBannerUrl:''
+    idleBannerType:'none', idleBannerUrl:'',
+    fontBrand:'', fontDish:'', fontIdle:''
+  };
+  const FONT_MAP = {
+    cormorant: "'Cormorant Garamond', serif",
+    cinzel: "'Cinzel', serif",
+    montserrat: "'Montserrat', sans-serif",
+    helvetica: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    sans: "'Inter', system-ui, sans-serif"
   };
   const DEFAULT_COLORS = { bg:'#f8f3e9', ink:'#1a1209', btn:'#722f37', btnText:'#d4a44a' };
   let tables = [];
@@ -3456,6 +3640,16 @@
     renderBanner();
     document.documentElement.setAttribute('data-font', appSettings.font || 'cormorant');
     applyThemeColors();
+    applyFonts();
+  }
+
+  // Apply per-area fonts. Empty value = inherit the overall display font.
+  function applyFonts() {
+    const root = document.documentElement;
+    const set = (varName, val) => { if (val && FONT_MAP[val]) root.style.setProperty(varName, FONT_MAP[val]); else root.style.removeProperty(varName); };
+    set('--font-brand', appSettings.fontBrand);
+    set('--font-dish',  appSettings.fontDish);
+    set('--font-idle',  appSettings.fontIdle);
   }
 
   // Apply custom theme colours by overriding the core CSS variables.
@@ -3513,6 +3707,14 @@
     // Highlight the active language button
     document.querySelectorAll('.admin-lang-btn').forEach(b => b.classList.toggle('active', b.dataset.alang === adminLang));
     try { localStorage.setItem('_arm_admin_lang', adminLang); } catch(e){}
+    // Re-render dynamic admin content so buttons/badges pick up the new language
+    try { if (typeof renderAdminOrders === 'function') renderAdminOrders(); } catch(e){}
+    try { if (typeof renderAdminTables === 'function') renderAdminTables(); } catch(e){}
+    try {
+      const histActive = document.querySelector('.hist-filter-btn.active');
+      if (typeof renderHistory === 'function' && document.getElementById('tab-history') && !document.getElementById('tab-history').classList.contains('hidden'))
+        renderHistory(histActive ? histActive.dataset.period : 'day');
+    } catch(e){}
   }
   // Convenience: current admin dictionary (for JS-generated messages)
   function aT(key) { return (adminI18n[adminLang] || adminI18n.en)[key] || (adminI18n.en[key] || key); }
@@ -4204,35 +4406,35 @@
     if (live.length === 0) {
       document.getElementById('ordersList').innerHTML = `
         <div style="text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">
-          No active orders — waiting for customers...
+          ${aT('noActiveOrders')}
         </div>`;
       return;
     }
     document.getElementById('ordersList').innerHTML = live.map((o, idx) => {
       const ago = Math.floor((Date.now() - o.time) / 60000);
-      const timeStr = ago < 1 ? 'just now' : ago + ' min ago';
+      const timeStr = ago < 1 ? aT('justNow') : ago + ' ' + aT('minAgo');
 
       // Alerts
       if (o.type === 'waiter') {
         return `<div class="order-card" style="border-left:3px solid var(--gold)">
           <div class="order-num">🛎</div>
           <div class="order-info">
-            <div class="order-table">Table <strong>${o.table}</strong></div>
-            <div class="order-items">Customer calling for a waiter</div>
+            <div class="order-table">${aT('tableWord')} <strong>${o.table}</strong></div>
+            <div class="order-items">${aT('waiterCalling')}</div>
             <div class="order-time">${timeStr}</div>
           </div><div></div>
-          <div class="order-actions"><button class="order-btn primary" onclick="window._ack('${o.num}')">Acknowledge</button></div>
+          <div class="order-actions"><button class="order-btn primary" onclick="window._ack('${o.num}')">${aT('btnAcknowledge')}</button></div>
         </div>`;
       }
       if (o.type === 'cancel') {
         return `<div class="order-card" style="border-left:3px solid #c0392b">
           <div class="order-num">✕</div>
           <div class="order-info">
-            <div class="order-table">Table <strong>${o.table}</strong> — Order Cancelled</div>
-            <div class="order-items">Order ${o.orderRef||''} cancelled by customer</div>
+            <div class="order-table">${aT('tableWord')} <strong>${o.table}</strong> — ${aT('orderCancelled')}</div>
+            <div class="order-items">Order ${o.orderRef||''} ${aT('cancelledByCustomer')}</div>
             <div class="order-time">${timeStr}</div>
           </div><div></div>
-          <div class="order-actions"><button class="order-btn primary" onclick="window._ack('${o.num}')">Acknowledge</button></div>
+          <div class="order-actions"><button class="order-btn primary" onclick="window._ack('${o.num}')">${aT('btnAcknowledge')}</button></div>
         </div>`;
       }
       if (o.type === 'bill') {
@@ -4240,16 +4442,16 @@
         return `<div class="order-card" style="border-left:3px solid var(--burgundy)">
           <div class="order-num">🧾</div>
           <div class="order-info">
-            <div class="order-table">Table <strong>${o.table}</strong> — BILL REQUEST</div>
+            <div class="order-table">${aT('tableWord')} <strong>${o.table}</strong> — ${aT('billRequest')}</div>
             <div class="order-items">Order ${o.orderRef} · ${(o.total||0).toLocaleString()} ฿</div>
             <div class="order-time">${timeStr}</div>
           </div><div></div>
           <div class="order-actions">
             ${ref ? `
-              <button class="order-btn assign-table" onclick="window._adminViewBill('${o.orderRef}')">👁 View Bill</button>
-              <button class="order-btn gold" onclick="window._adminPrintBill('${o.orderRef}')">🖨 Print Bill</button>
-              <button class="order-btn primary" onclick="window._payAndClose('${o.num}','${o.orderRef}')">✓ Complete Payment</button>
-            ` : `<button class="order-btn primary" onclick="window._ack('${o.num}')">Acknowledge</button>`}
+              <button class="order-btn assign-table" onclick="window._adminViewBill('${o.orderRef}')">${aT('btnViewBill')}</button>
+              <button class="order-btn gold" onclick="window._adminPrintBill('${o.orderRef}')">${aT('btnPrintBill')}</button>
+              <button class="order-btn primary" onclick="window._payAndClose('${o.num}','${o.orderRef}')">${aT('btnCompletePayment')}</button>
+            ` : `<button class="order-btn primary" onclick="window._ack('${o.num}')">${aT('btnAcknowledge')}</button>`}
           </div>
         </div>`;
       }
@@ -4264,15 +4466,15 @@
       const notesStr = o.items.filter(i=>i.opts?.note).map(i=>`<div class="order-note">${i.name}: "${i.opts.note}"</div>`).join('');
 
       let badge='', borderColor='';
-      if (isBillR) { badge=`<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">🧾 BILL REQUESTED</span>`; borderColor='var(--burgundy)'; }
-      else if (isServed) { badge=`<span style="background:#2d6a4f;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">🍽 SERVED</span>`; borderColor='#2d6a4f'; }
-      else if (allPrint) { badge=`<span style="background:#f39c12;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">⏳ IN PROGRESS</span>`; borderColor='#f39c12'; }
-      else { badge=`<span style="background:#3498db;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">★ ${newCnt} NEW</span>`; borderColor='#3498db'; }
+      if (isBillR) { badge=`<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">${aT('bBillRequested')}</span>`; borderColor='var(--burgundy)'; }
+      else if (isServed) { badge=`<span style="background:#2d6a4f;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">${aT('bServed')}</span>`; borderColor='#2d6a4f'; }
+      else if (allPrint) { badge=`<span style="background:#f39c12;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">${aT('bInProgress')}</span>`; borderColor='#f39c12'; }
+      else { badge=`<span style="background:#3498db;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">★ ${newCnt} ${aT('bMNEW')}</span>`; borderColor='#3498db'; }
 
       return `<div class="order-card ${idx===0?'new':''}" style="${borderColor?'border-left:3px solid '+borderColor:''}">
         <div class="order-num">#${o.num}</div>
         <div class="order-info">
-          <div class="order-table">Table <strong>${o.table}</strong> · ${(o.language||'en').toUpperCase()} ${badge}</div>
+          <div class="order-table">${aT('tableWord')} <strong>${o.table}</strong> · ${(o.language||'en').toUpperCase()} ${badge}</div>
           <div class="order-items">${itemsStr}</div>
           ${notesStr}
           <div class="order-time">${timeStr}</div>
@@ -4280,19 +4482,19 @@
         <div class="order-total">${(o.total||0).toLocaleString()} ฿</div>
         <div class="order-actions">
           ${isBillR ? `
-            <button class="order-btn assign-table" onclick="window._adminViewBill('${o.num}')">👁 View Bill</button>
-            <button class="order-btn gold" onclick="window._adminPrintBill('${o.num}')">🖨 Print Bill</button>
-            <button class="order-btn primary" onclick="window._checkout('${o.num}')">💳 Complete Payment</button>
+            <button class="order-btn assign-table" onclick="window._adminViewBill('${o.num}')">${aT('btnViewBill')}</button>
+            <button class="order-btn gold" onclick="window._adminPrintBill('${o.num}')">${aT('btnPrintBill')}</button>
+            <button class="order-btn primary" onclick="window._checkout('${o.num}')">${aT('btnCompletePayment')}</button>
           ` : `
-            <button class="order-btn assign-table" onclick="window._reassign('${o.num}')">Reassign</button>
+            <button class="order-btn assign-table" onclick="window._reassign('${o.num}')">${aT('btnReassign')}</button>
             ${!allPrint
-              ? `<button class="order-btn primary" onclick="window._confirmKitchen('${o.num}')">✓ Confirm &amp; Print Kitchen</button>`
-              : `<button class="order-btn gold" onclick="window._printKitchen('${o.num}')">🍳 Reprint Kitchen</button>`}
+              ? `<button class="order-btn primary" onclick="window._confirmKitchen('${o.num}')">${aT('btnConfirmKitchen')}</button>`
+              : `<button class="order-btn gold" onclick="window._printKitchen('${o.num}')">${aT('btnReprintKitchen')}</button>`}
             ${allPrint && !isServed
-              ? `<button class="order-btn assign-table" onclick="window._markServed('${o.num}')">🍽 Mark Served</button>`
+              ? `<button class="order-btn assign-table" onclick="window._markServed('${o.num}')">${aT('btnMarkServed')}</button>`
               : ''}
-            <button class="order-btn primary" onclick="window._checkout('${o.num}')">💳 Checkout</button>
-            <button class="order-btn assign-table" onclick="window._closeNoBill('${o.num}')">✕ Close (no bill)</button>
+            <button class="order-btn primary" onclick="window._checkout('${o.num}')">${aT('btnCheckout')}</button>
+            <button class="order-btn assign-table" onclick="window._closeNoBill('${o.num}')">${aT('btnCloseNoBill')}</button>
           `}
         </div>
       </div>`;
@@ -4426,9 +4628,18 @@
   };
   window._doAssign = (tableNum) => {
     if (assignTargetOrder) {
+      const ord = _orders.find(x => x.num === assignTargetOrder);
+      const oldTable = ord ? ord.table : null;
       updateOrder(assignTargetOrder, { table: tableNum });
       const t = tables.find(x => x.num === tableNum);
-      if (t) { t.status = 'occupied'; saveTables(); }
+      if (t) { t.status = 'occupied'; }
+      // Free the old table if no other active orders remain on it
+      if (oldTable && oldTable !== tableNum) {
+        const stillActive = _orders.some(o => o.num !== assignTargetOrder && o.table === oldTable && !o.type && o.status !== 'billed' && o.status !== 'done');
+        const ot = tables.find(x => x.num === oldTable);
+        if (ot && !stillActive) ot.status = 'free';
+      }
+      saveTables();
       renderAdminOrders();
       renderAdminTables();
     }
@@ -4768,39 +4979,41 @@
     const now = Date.now();
     const cutoffs = { day: 86400000, week: 604800000, month: 2592000000, all: Infinity };
     const cutoff = cutoffs[period] || Infinity;
-    const allOrders = getOrders().filter(o => !o.type && (o.status === 'billed' || o.status === 'done' || o.status === 'open') && (now - o.time) <= cutoff);
-    const rev = allOrders.reduce((s, o) => s + (o.total || 0), 0);
+    const allOrders = getOrders().filter(o => !o.type && (o.status === 'billed' || o.status === 'done') && (now - o.time) <= cutoff);
+    // Revenue counts PAID orders only. 'done' = closed without bill (comp/test/void) → excluded per spec.
+    const rev = allOrders.filter(o => o.status === 'billed').reduce((s, o) => s + (o.total || 0), 0);
+    const revOrders = allOrders.filter(o => o.status === 'billed');
     const tables = new Set(allOrders.map(o => o.table)).size;
     document.getElementById('histStatOrders').textContent = allOrders.length;
     document.getElementById('histStatRev').textContent = rev.toLocaleString();
-    document.getElementById('histStatAvg').textContent = allOrders.length ? Math.round(rev / allOrders.length).toLocaleString() : 0;
+    document.getElementById('histStatAvg').textContent = revOrders.length ? Math.round(rev / revOrders.length).toLocaleString() : 0;
     document.getElementById('histStatTables').textContent = tables;
 
     if (!allOrders.length) {
-      document.getElementById('histOrdersList').innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">No orders in this period</div>`;
+      document.getElementById('histOrdersList').innerHTML = `<div style="text-align:center;padding:60px 20px;color:var(--ink-soft);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px">${aT('noOrdersPeriod')}</div>`;
       return;
     }
     document.getElementById('histOrdersList').innerHTML = allOrders.map(o => {
       const itemsStr = (o.items || []).map(i => `${i.qty}× ${i.name}`).join(' · ');
       const t = new Date(o.time).toLocaleString();
       const stBadge = o.status==='billed'
-        ? `<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">BILLED</span>`
+        ? `<span style="background:var(--burgundy);color:var(--gold-soft);font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">${aT('bBilled')}</span>`
         : o.status==='done'
-        ? `<span style="background:#555;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">DONE</span>`
+        ? `<span style="background:#555;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">${aT('bDone')}</span>`
         : `<span style="background:#f39c12;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;margin-left:6px">${(o.status||'').toUpperCase()}</span>`;
       const canReopen = o.status==='billed' || o.status==='done';
       return `
         <div class="order-card">
           <div class="order-num">#${o.num}</div>
           <div class="order-info">
-            <div class="order-table">Table <strong>${o.table}</strong> ${stBadge}</div>
+            <div class="order-table">${aT('tableWord')} <strong>${o.table}</strong> ${stBadge}</div>
             <div class="order-items">${itemsStr}</div>
             <div class="order-time">${t}</div>
           </div>
           <div class="order-total">${(o.total || 0).toLocaleString()} ฿</div>
           <div class="order-actions">
-            <button class="order-btn gold" onclick="window._adminPrintBill('${o.num}')">🖨 Print Bill</button>
-            ${canReopen ? `<button class="order-btn assign-table" onclick="window._reopen('${o.num}')">↻ Reopen</button>` : ''}
+            <button class="order-btn gold" onclick="window._adminPrintBill('${o.num}')">${aT('btnPrintBill')}</button>
+            ${canReopen ? `<button class="order-btn assign-table" onclick="window._reopen('${o.num}')">${aT('btnReopen')}</button>` : ''}
           </div>
         </div>`;
     }).join('');
@@ -4842,6 +5055,10 @@
     if (ibt) ibt.value = appSettings.idleBannerType || 'none';
     if (ibu) ibu.value = appSettings.idleBannerUrl || '';
     document.getElementById('fontSelect').value = appSettings.font || 'cormorant';
+    const fb=document.getElementById('fontBrandSelect'), fd=document.getElementById('fontDishSelect'), fi=document.getElementById('fontIdleSelect');
+    if (fb) fb.value = appSettings.fontBrand || '';
+    if (fd) fd.value = appSettings.fontDish || '';
+    if (fi) fi.value = appSettings.fontIdle || '';
     document.getElementById('settingName').value = appSettings.restaurantName || 'ARMENIA';
     document.getElementById('settingTagline').value = appSettings.tagline || 'Restaurant · Pattaya';
     // Phone + Address (need to find inputs by position since they have no IDs)
@@ -4935,6 +5152,15 @@
     appSettings.font = e.target.value;
     saveSettings();
     document.documentElement.setAttribute('data-font', appSettings.font);
+  };
+  const saveFontsBtn = document.getElementById('saveFonts');
+  if (saveFontsBtn) saveFontsBtn.onclick = () => {
+    appSettings.fontBrand = document.getElementById('fontBrandSelect').value;
+    appSettings.fontDish  = document.getElementById('fontDishSelect').value;
+    appSettings.fontIdle  = document.getElementById('fontIdleSelect').value;
+    saveSettings();
+    applyFonts();
+    showToast(aT('saveFonts') || 'Fonts saved');
   };
   document.getElementById('saveInfo').onclick = () => {
     appSettings.restaurantName = document.getElementById('settingName').value.trim();
